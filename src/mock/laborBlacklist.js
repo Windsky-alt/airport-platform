@@ -35,7 +35,7 @@ export function logBlacklistIdCardView({ id, name }) {
   appendOperationLog({
     module: '人员实名制管理',
     type: '查询',
-    content: `查看劳务黑名单证件号码：${name || '—'}（${id || '—'}）`,
+    content: `查看劳务黑名单证件号码：${name || '--'}（${id || '--'}）`,
     requestUrl: `/api/labor/blacklist/${id}/id-card/view`,
   })
 }

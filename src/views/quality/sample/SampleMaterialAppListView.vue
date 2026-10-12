@@ -52,11 +52,11 @@ function onExportTemplate() {
 }
 
 function sampleName(row) {
-  return row.sample_name || row.material_name || '—'
+  return row.sample_name || row.material_name || '--'
 }
 
 function brandLedgerLabel(row) {
-  return formatBrandLedgerLabel(row) || '—'
+  return formatBrandLedgerLabel(row) || '--'
 }
 </script>
 
@@ -110,7 +110,7 @@ function brandLedgerLabel(row) {
           <template #default="{ row }">{{ sampleName(row) }}</template>
         </el-table-column>
         <el-table-column label="类型" width="80">
-          <template #default="{ row }">{{ MATERIAL_TYPE[row.material_type] || '—' }}</template>
+          <template #default="{ row }">{{ MATERIAL_TYPE[row.material_type] || '--' }}</template>
         </el-table-column>
         <el-table-column label="品牌台账" min-width="220" show-overflow-tooltip>
           <template #default="{ row }">{{ brandLedgerLabel(row) }}</template>
@@ -124,7 +124,7 @@ function brandLedgerLabel(row) {
           </template>
         </el-table-column>
         <el-table-column label="当前节点" width="120">
-          <template #default="{ row }">{{ NODE_LABEL[row.current_node] || '—' }}</template>
+          <template #default="{ row }">{{ NODE_LABEL[row.current_node] || '--' }}</template>
         </el-table-column>
         <el-table-column prop="submit_time" label="提交时间" width="170" />
         <el-table-column label="操作" width="160" fixed="right">

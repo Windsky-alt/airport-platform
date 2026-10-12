@@ -483,7 +483,7 @@ watch([activeTotal, pageSize], () => {
         <el-table-column prop="processName" label="流程名称" min-width="220" show-overflow-tooltip />
         <el-table-column prop="applyTime" label="申请时间" width="170" />
         <el-table-column prop="endTime" label="结束时间" width="170">
-          <template #default="{ row }">{{ row.endTime || '—' }}</template>
+          <template #default="{ row }">{{ row.endTime || '--' }}</template>
         </el-table-column>
         <el-table-column label="操作" width="90" fixed="right">
           <template #default="{ row }">
@@ -521,7 +521,7 @@ watch([activeTotal, pageSize], () => {
         <el-table-column prop="readStatus" label="阅读状态" width="100" />
         <el-table-column prop="applyTime" label="申请时间" width="170" />
         <el-table-column prop="endTime" label="结束时间" width="170">
-          <template #default="{ row }">{{ row.endTime || '—' }}</template>
+          <template #default="{ row }">{{ row.endTime || '--' }}</template>
         </el-table-column>
         <el-table-column label="操作" width="90" fixed="right">
           <template #default="{ row }">

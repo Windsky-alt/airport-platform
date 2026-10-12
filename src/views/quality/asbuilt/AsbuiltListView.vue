@@ -43,7 +43,7 @@ function copyFromRejected(row) {
 
 function nodeSummary(row) {
   const nodes = row.nodes || []
-  if (!nodes.length) return '—'
+  if (!nodes.length) return '--'
   if (nodes.length === 1) return nodes[0].wbs_node_path || nodes[0].wbs_node_id
   return `${nodes[0].wbs_node_path || nodes[0].wbs_node_id} 等 ${nodes.length} 项`
 }
@@ -103,7 +103,7 @@ function nodeSummary(row) {
           </template>
         </el-table-column>
         <el-table-column label="当前审批环节" width="120">
-          <template #default="{ row }">{{ NODE_LABEL[row.current_node] || '—' }}</template>
+          <template #default="{ row }">{{ NODE_LABEL[row.current_node] || '--' }}</template>
         </el-table-column>
         <el-table-column prop="submitted_at" label="提交时间" width="170" />
         <el-table-column label="操作" width="160" fixed="right">

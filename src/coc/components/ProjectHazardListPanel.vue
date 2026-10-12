@@ -60,7 +60,7 @@ function levelClass(level) {
 }
 
 function sourceLabel(row) {
-  return CHANNEL_LABEL[row.channel] || CHANNEL_LABEL[row.source] || '—'
+  return CHANNEL_LABEL[row.channel] || CHANNEL_LABEL[row.source] || '--'
 }
 
 function openDetail(row) {
@@ -117,7 +117,7 @@ function closeDetail() {
               </td>
               <td>
                 <span class="cat-tag" :class="row.hazardCategory === '安全' ? 'safety' : 'quality'">
-                  {{ row.hazardCategory || '—' }}
+                  {{ row.hazardCategory || '--' }}
                 </span>
               </td>
               <td class="desc-cell" :title="row.desc">{{ row.desc }}</td>

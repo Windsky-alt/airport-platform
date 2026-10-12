@@ -33,9 +33,17 @@ const filters = reactive({
   risk_status: '',
 })
 
+/** 点「搜索」后才生效的查询条件（工具栏内为待提交的条件） */
+const query = reactive({
+  report_date: '',
+  risk_type: '',
+  approval_status: '',
+  risk_status: '',
+})
+
 const tableData = computed(() => {
   if (!laborProjectId.value) return []
-  return listRiskPointControls(laborProjectId.value, { ...filters })
+  return listRiskPointControls(laborProjectId.value, { ...query })
 })
 
 const metrics = computed(() => {
@@ -45,11 +53,15 @@ const metrics = computed(() => {
 
 const typeOptions = computed(() => listConfigRiskTypes(laborProjectId.value))
 
+function doSearch() {
+  query.report_date = filters.report_date
+  query.risk_type = filters.risk_type
+  query.approval_status = filters.approval_status
+  query.risk_status = filters.risk_status
+}
+
 watch(laborProjectId, () => {
-  filters.report_date = ''
-  filters.risk_type = ''
-  filters.approval_status = ''
-  filters.risk_status = ''
+  resetFilters()
 })
 
 function resetFilters() {
@@ -57,6 +69,7 @@ function resetFilters() {
   filters.risk_type = ''
   filters.approval_status = ''
   filters.risk_status = ''
+  doSearch()
 }
 
 function goCreate() {
@@ -156,7 +169,7 @@ function goResubmit(row) {
         >
           <el-option v-for="(label, key) in RISK_RUN_STATUS_LABEL" :key="key" :label="label" :value="key" />
         </el-select>
-        <el-button type="primary" @click="() => {}">搜索</el-button>
+        <el-button type="primary" @click="doSearch">搜索</el-button>
         <el-button @click="resetFilters">重置</el-button>
         <div class="toolbar-spacer" />
         <el-button type="primary" @click="goCreate">+ 新增</el-button>

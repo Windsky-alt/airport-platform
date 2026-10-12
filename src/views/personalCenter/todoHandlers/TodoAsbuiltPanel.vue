@@ -32,7 +32,7 @@ const currentNodeLabel = computed(() => {
     )
   }
   if (row.status !== 'pending_approval') return NODE_LABEL.none
-  return NODE_LABEL[row.current_node] || '—'
+  return NODE_LABEL[row.current_node] || '--'
 })
 
 const nodeRows = computed(() => acceptance.value?.nodes || [])
@@ -47,7 +47,7 @@ const reportFiles = computed(() => {
 })
 
 function fileSizeLabel(size) {
-  if (!size) return '—'
+  if (!size) return '--'
   const kb = Math.max(1, Math.round(size / 1024))
   if (kb >= 1024) return `${(kb / 1024).toFixed(1)} MB`
   return `${kb} KB`
@@ -71,7 +71,7 @@ function openSource(id) {
       <div class="section-body">
         <el-descriptions :column="2" border class="detail-desc">
           <el-descriptions-item label="验收单号">
-            {{ acceptance?.biz_no || todo.detail?.bizNo || todo.asbuiltAcceptanceId || '—' }}
+            {{ acceptance?.biz_no || todo.detail?.bizNo || todo.asbuiltAcceptanceId || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="状态">
             <el-tag
@@ -81,20 +81,20 @@ function openSource(id) {
             >
               {{ STATUS_LABEL[acceptance.status] }}
             </el-tag>
-            <span v-else>—</span>
+            <span v-else>--</span>
           </el-descriptions-item>
           <el-descriptions-item label="验收任务名称" :span="2">
-            {{ acceptance?.title || todo.detail?.title || '—' }}
+            {{ acceptance?.title || todo.detail?.title || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="备注" :span="2">
-            {{ acceptance?.remark || todo.detail?.remark || '—' }}
+            {{ acceptance?.remark || todo.detail?.remark || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="当前审批环节">{{ currentNodeLabel }}</el-descriptions-item>
           <el-descriptions-item label="提交人">
-            {{ acceptance?.submitter_name || todo.applicant || '—' }}
+            {{ acceptance?.submitter_name || todo.applicant || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="提交时间">
-            {{ acceptance?.submitted_at || todo.applyTime || '—' }}
+            {{ acceptance?.submitted_at || todo.applyTime || '--' }}
           </el-descriptions-item>
           <el-descriptions-item
             v-if="acceptance?.copy_from_biz_no || todo.detail?.copyFromBizNo"
@@ -111,10 +111,10 @@ function openSource(id) {
             <span v-else>{{ todo.detail?.copyFromBizNo }}</span>
           </el-descriptions-item>
           <el-descriptions-item label="创建时间">
-            {{ acceptance?.created_at || '—' }}
+            {{ acceptance?.created_at || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="更新时间">
-            {{ acceptance?.updated_at || '—' }}
+            {{ acceptance?.updated_at || '--' }}
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -135,7 +135,7 @@ function openSource(id) {
           <div v-for="(n, idx) in nodeRows" :key="n.id || idx" class="node-card">
             <span class="node-badge">{{ idx + 1 }}</span>
             <div class="node-content">
-              <div class="node-path">{{ n.wbs_node_path || '—' }}</div>
+              <div class="node-path">{{ n.wbs_node_path || '--' }}</div>
             </div>
           </div>
         </div>
@@ -166,7 +166,7 @@ function openSource(id) {
               <div class="file-meta">
                 <span>{{ fileSizeLabel(f.file_size) }}</span>
                 <span class="dot">·</span>
-                <span>{{ f.uploaded_at || '—' }}</span>
+                <span>{{ f.uploaded_at || '--' }}</span>
               </div>
             </div>
           </div>

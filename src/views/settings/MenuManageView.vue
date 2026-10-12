@@ -431,7 +431,7 @@ async function handleSubmit() {
       <el-table-column prop="name" label="菜单名称" min-width="180" />
       <el-table-column prop="menuLevel" label="菜单层级" width="110" align="center">
         <template #default="{ row }">
-          {{ row.menuLevel || '—' }}
+          {{ row.menuLevel || '--' }}
         </template>
       </el-table-column>
       <el-table-column label="图标" width="72" align="center">
@@ -439,7 +439,7 @@ async function handleSubmit() {
           <el-icon v-if="row.icon && iconMap[row.icon]" :size="18">
             <component :is="iconMap[row.icon]" />
           </el-icon>
-          <span v-else class="muted-text">—</span>
+          <span v-else class="muted-text">--</span>
         </template>
       </el-table-column>
       <el-table-column prop="sort" label="排序" width="72" align="center" />

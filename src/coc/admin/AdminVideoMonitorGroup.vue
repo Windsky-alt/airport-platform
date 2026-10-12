@@ -295,7 +295,7 @@ onUnmounted(() => {
           class="import-check-item"
         >
           <span class="import-cam-name">{{ cam.name }}</span>
-          <span class="muted">{{ cam.typeLabel }} · {{ cam.location || '—' }}</span>
+          <span class="muted">{{ cam.typeLabel }} · {{ cam.location || '--' }}</span>
         </el-checkbox>
       </el-checkbox-group>
       <template #footer>

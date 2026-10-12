@@ -8,7 +8,6 @@ import {
   filterMenuByLevel,
   resolveMenuTree,
   flattenMenuLeaves,
-  getMenuPathByKey,
   getMenuLabelByPath,
 } from '../config/menu'
 import {
@@ -100,27 +99,48 @@ const visibleSidebarMenu = computed(() => {
   return stripApprove(resolveMenuTree(scoped, currentLevel.value))
 })
 
-/** 高亮：把 route.meta.sidebarKey 解析成父菜单 path，兜底 route.path */
-const activePath = computed(
-  () => getMenuPathByKey(route.meta.sidebarKey, currentLevel.value) || route.path,
+/** 高亮菜单索引：route.query.entry 区分同一路径下的多个菜单入口 */
+const activeMenuIndex = computed(() => {
+  const leaves = flattenMenuLeaves(filterMenuByLevel(menuTree, currentLevel.value))
+  const entry = String(route.query.entry || '')
+  const menuItem = entry
+    ? leaves.find((leaf) => leaf.path === route.path && String(leaf.query?.entry || '') === entry)
+    : leaves.find((leaf) => leaf.key === route.meta.sidebarKey) ||
+      leaves.find((leaf) => leaf.path === route.path)
+  return menuItem ? menuIndex(menuItem) : route.path
+})
+
+function menuIndex(item) {
+  const query = new URLSearchParams(item.query || {}).toString()
+  return query ? `${item.path}?${query}` : item.path
+}
+
+/** 当前层级菜单索引，以唯一路径/查询组合识别入口 */
+const leafByMenuIndex = computed(() =>
+  new Map(
+    flattenMenuLeaves(filterMenuByLevel(menuTree, currentLevel.value)).map((leaf) => [menuIndex(leaf), leaf]),
+  ),
 )
 
-/** 菜单点击：外链 / 新标签 / 路由跳转 */
-const leafByPath = new Map(flattenMenuLeaves(menuTree).map((leaf) => [leaf.path, leaf]))
+function onMenuSelect(index) {
+  const item = leafByMenuIndex.value.get(index)
+  if (item) navigateByMenuItem(item)
+}
 
-function onMenuSelect(path) {
-  const item = leafByPath.get(path)
-  const menuKey = item?.key || ''
+function navigateByMenuItem(item) {
+  const menuKey = item.key || ''
   if (menuKey && TRACK_EXTERNAL_MENU_KEYS.has(menuKey)) {
     openTrackExternalByMenuKey(menuKey)
     return
   }
-  if (item?.openInNewTab) {
-    const href = router.resolve({ path }).href
+  // 菜单声明的 query 须随导航下传（同 path 不同入口靠 query 区分，如省统表 entry=provincial）
+  const menuQuery = item.query || {}
+  if (item.openInNewTab) {
+    const href = router.resolve({ path: item.path, query: menuQuery }).href
     window.open(href, '_blank', 'noopener,noreferrer')
     return
   }
-  if (path) router.push(path)
+  if (item.path) router.push({ path: item.path, query: menuQuery })
 }
 
 /* ---------- 标签页 ---------- */
@@ -292,12 +312,8 @@ function skipToMain(e) {
               <span class="project-option-label">{{ HQ_PROJECT_OPTION.label }}</span>
             </div>
           </el-option>
-          <el-option
-            disabled
-            value="__project_group_header__"
-            class="project-group-header-option"
-            :label="''"
-          >
+          <!-- 分类筛选标签改由 dropdown header 插槽承载，避免 disabled option 带来的 aria-disabled -->
+          <template #header>
             <div
               class="project-group-header"
               @mousedown.prevent
@@ -322,7 +338,7 @@ function skipToMain(e) {
                 </button>
               </div>
             </div>
-          </el-option>
+          </template>
           <el-option
             v-for="item in projectOptions"
             :key="item.id"
@@ -434,7 +450,7 @@ function skipToMain(e) {
       <aside class="sidebar" :class="{ collapsed }">
         <el-menu
           class="sidebar-menu"
-          :default-active="activePath"
+          :default-active="activeMenuIndex"
           :collapse="collapsed"
           :collapse-transition="false"
           @select="onMenuSelect"
@@ -946,14 +962,11 @@ function skipToMain(e) {
   line-height: 1.5;
 }
 
-.project-select-dropdown .project-group-header-option {
+/* 分类筛选标签容器：原为 disabled option，现改为 dropdown header 插槽 */
+.project-select-dropdown .el-select-dropdown__header {
   min-height: auto;
   height: auto;
   padding: 10px 20px 8px;
-  cursor: default;
-}
-
-.project-select-dropdown .project-group-header-option.is-disabled {
   cursor: default;
 }
 

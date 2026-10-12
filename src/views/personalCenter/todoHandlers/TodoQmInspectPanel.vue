@@ -46,13 +46,13 @@ const listPath = computed(() => {
 const task = computed(() => (taskId.value ? findTask(taskId.value) : null))
 
 const nodeName = computed(() => {
-  if (!task.value?.wbs_node_id) return props.todo?.detail?.nodeName || '—'
-  return wbsNodes.find((n) => n.id === task.value.wbs_node_id)?.node_name || '—'
+  if (!task.value?.wbs_node_id) return props.todo?.detail?.nodeName || '--'
+  return wbsNodes.find((n) => n.id === task.value.wbs_node_id)?.node_name || '--'
 })
 
 const projectName = computed(() => {
   if (task.value?.project_id) return resolveProjectName(task.value.project_id)
-  return props.todo?.detail?.project || '—'
+  return props.todo?.detail?.project || '--'
 })
 
 const statusLabel = computed(() => {
@@ -208,7 +208,7 @@ const panelApprovalFlow = computed(() => {
     steps.push({
       title: node.label,
       time: '',
-      user: node.user || '—',
+      user: node.user || '--',
       remark: status === 3 ? '' : '待流转',
       status: 'pending',
     })
@@ -234,7 +234,7 @@ const panelApprovalFlow = computed(() => {
     steps.push({
       title: '办结通过',
       time: '',
-      user: '—',
+      user: '--',
       remark: '',
       status: 'pending',
     })
@@ -280,24 +280,24 @@ function handleBack() {
         </div>
         <el-descriptions :column="2" border size="small" class="desc-panel">
           <el-descriptions-item label="验评单号">
-            {{ task.task_no || todo.detail?.taskNo || '—' }}
+            {{ task.task_no || todo.detail?.taskNo || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="验收类型">
-            {{ TASK_TYPE_LABEL[task.task_type] || todo.bizType || '—' }}
+            {{ TASK_TYPE_LABEL[task.task_type] || todo.bizType || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="项目名称">{{ projectName }}</el-descriptions-item>
           <el-descriptions-item label="验收任务名称">
-            {{ task.task_name || '—' }}
+            {{ task.task_name || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="验收节点">{{ nodeName }}</el-descriptions-item>
           <el-descriptions-item v-if="!isSpecialTask" :label="isCompleteTask ? '工程/部位' : '施工部位'">
-            {{ displayTaskLocationName(task) || '—' }}
+            {{ displayTaskLocationName(task) || '--' }}
           </el-descriptions-item>
           <el-descriptions-item v-if="!isCompleteTask && !isSpecialTask" label="是否隐蔽工程">
             {{ Number(task.is_hidden_work) === 1 ? '是' : '否' }}
           </el-descriptions-item>
-          <el-descriptions-item label="申请人">{{ todo.applicant || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="申请时间">{{ todo.applyTime || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="申请人">{{ todo.applicant || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="申请时间">{{ todo.applyTime || '--' }}</el-descriptions-item>
         </el-descriptions>
       </section>
 
@@ -383,7 +383,7 @@ function handleBack() {
           <el-table :data="materialLinks" border size="small" empty-text="暂无关联材料设备">
             <el-table-column prop="material_id" label="进场单号" width="110" show-overflow-tooltip />
             <el-table-column prop="source_label" label="类型" width="70">
-              <template #default="{ row }">{{ row.source_label || '—' }}</template>
+              <template #default="{ row }">{{ row.source_label || '--' }}</template>
             </el-table-column>
             <el-table-column
               prop="material_name"
@@ -392,20 +392,20 @@ function handleBack() {
               show-overflow-tooltip
             />
             <el-table-column label="规格型号" min-width="110" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.material_spec || '—' }}</template>
+              <template #default="{ row }">{{ row.material_spec || '--' }}</template>
             </el-table-column>
             <el-table-column prop="brand_name" label="品牌" width="90" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.brand_name || '—' }}</template>
+              <template #default="{ row }">{{ row.brand_name || '--' }}</template>
             </el-table-column>
             <el-table-column label="定样单号" width="100" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.sample_application_id || '—' }}</template>
+              <template #default="{ row }">{{ row.sample_application_id || '--' }}</template>
             </el-table-column>
             <el-table-column prop="quantity_text" label="进场数量" width="90" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.quantity_text || '—' }}</template>
+              <template #default="{ row }">{{ row.quantity_text || '--' }}</template>
             </el-table-column>
             <el-table-column prop="supplier" label="供应商" min-width="90" show-overflow-tooltip />
             <el-table-column label="进场时间" width="150" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.submit_time || '—' }}</template>
+              <template #default="{ row }">{{ row.submit_time || '--' }}</template>
             </el-table-column>
           </el-table>
         </section>
@@ -423,16 +423,16 @@ function handleBack() {
             <el-table-column prop="sample_category" label="类型" width="100" />
             <el-table-column prop="sample_name" label="名称" min-width="120" show-overflow-tooltip />
             <el-table-column prop="brand_name" label="品牌" width="100" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.brand_name || '—' }}</template>
+              <template #default="{ row }">{{ row.brand_name || '--' }}</template>
             </el-table-column>
             <el-table-column label="定样日期" width="110">
-              <template #default="{ row }">{{ row.sample_date || '—' }}</template>
+              <template #default="{ row }">{{ row.sample_date || '--' }}</template>
             </el-table-column>
             <el-table-column prop="unit_name" label="单位工程" min-width="100" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.unit_name || '—' }}</template>
+              <template #default="{ row }">{{ row.unit_name || '--' }}</template>
             </el-table-column>
             <el-table-column prop="use_part" label="使用部位" min-width="100" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.use_part || '—' }}</template>
+              <template #default="{ row }">{{ row.use_part || '--' }}</template>
             </el-table-column>
           </el-table>
         </section>
@@ -446,7 +446,7 @@ function handleBack() {
             <el-table-column prop="biz_no" label="验收单号" width="120" />
             <el-table-column prop="title" label="验收任务名称" min-width="110" show-overflow-tooltip />
             <el-table-column prop="node_paths" label="所选实体工程节点" min-width="120" show-overflow-tooltip>
-              <template #default="{ row }">{{ row.node_paths || '—' }}</template>
+              <template #default="{ row }">{{ row.node_paths || '--' }}</template>
             </el-table-column>
             <el-table-column
               prop="report_names"

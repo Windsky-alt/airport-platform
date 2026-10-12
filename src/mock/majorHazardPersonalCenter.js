@@ -33,7 +33,7 @@ function majorHazardWarningCenterItem(project, alert) {
     safetyResponsible: alert.part?.safetyResponsible || alert.handler || '项目安全负责人',
     warningNo: `MHYC${stableWarningHash(`${project.id}:${alert.id}`)}`,
     alertType: alert.type,
-    location: alert.part?.name || '—',
+    location: alert.part?.name || '--',
     sourceName: alert.ledgerName,
     description: `${alert.content}（${alert.ledgerName} / ${alert.part?.name || '未填写施工部位'}）`,
     handler: alert.handler || '项目安全负责人',
@@ -198,15 +198,15 @@ export function seedMajorHazardIdentificationPersonalCenter() {
 
 function buildMajorHazardIdentificationDetail(identification, projectName) {
   const identifiedItems = (identification.items || []).filter((item) => item.conclusion === '√')
-  const supervisorApprover = majorHazardApproverLabel(identification.supervisorApproverId) || '—'
-  const projectManagerApprover = majorHazardApproverLabel(identification.projectManagerApproverId) || '—'
+  const supervisorApprover = majorHazardApproverLabel(identification.supervisorApproverId) || '--'
+  const projectManagerApprover = majorHazardApproverLabel(identification.projectManagerApproverId) || '--'
   return {
     identificationNo: identification.identificationNo || `WD-BS-${String(identification.id || '').replace(/^mh-identify-/, '') || '新建'}`,
     project: projectName || '当前项目',
     wbsName: '待危大清单维护',
     workName: identifiedItems.map((item) => item.description).join('；') || '未辨识出危大工程',
     workPart: '待危大清单维护',
-    hazardCategory: identification.categoryName || '—',
+    hazardCategory: identification.categoryName || '--',
     identificationBasis: '依据危大工程字典完成辨识，审批通过后同步纳入危大工程清单。',
     superMajor: identifiedItems.some((item) => item.isSuperMajor === '是') ? '是' : '否',
     supervisorApprover,
@@ -237,14 +237,14 @@ export function createMajorHazardIdentificationTodo(
     {
       title: '监理单位审批',
       time: '',
-      user: detail.supervisorApprover === '—' ? '监理单位审批人' : detail.supervisorApprover,
+      user: detail.supervisorApprover === '--' ? '监理单位审批人' : detail.supervisorApprover,
       remark: '待审批',
       status: 'current',
     },
     {
       title: '项目经理审批',
       time: '',
-      user: detail.projectManagerApprover === '—' ? '项目经理' : detail.projectManagerApprover,
+      user: detail.projectManagerApprover === '--' ? '项目经理' : detail.projectManagerApprover,
       remark: '待审批',
       status: 'pending',
     },

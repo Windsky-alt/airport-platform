@@ -80,8 +80,8 @@ onUnmounted(() => {
     <el-dialog v-model="detailVisible" title="高风险作业详情" width="640px" destroy-on-close>
       <template v-if="current">
         <el-descriptions :column="1" border size="small">
-          <el-descriptions-item label="施工项目">{{ current.projectName || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="施工单位">{{ current.contractor || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="施工项目">{{ current.projectName || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="施工单位">{{ current.contractor || '--' }}</el-descriptions-item>
           <el-descriptions-item label="作业类型">{{ current.type }}</el-descriptions-item>
           <el-descriptions-item label="施工内容">{{ current.subType }}</el-descriptions-item>
           <el-descriptions-item label="施工区域">{{ current.location }}</el-descriptions-item>

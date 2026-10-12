@@ -12,7 +12,7 @@ export function getExecutorOptionValue(option) {
 
 /** 列表/详情展示：兼容仅存姓名的历史数据 */
 export function resolveExecutorDisplay(value, position = '') {
-  if (!value) return '—'
+  if (!value) return '--'
   if (position) return formatExecutorLabel({ name: value, position })
   if (/（.+）$/.test(value)) return value
   const byValue = TASK_EXECUTOR_OPTIONS.find((o) => getExecutorOptionValue(o) === value)

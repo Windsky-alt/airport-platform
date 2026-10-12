@@ -173,7 +173,7 @@ function hashStr(input) {
 
 function maskPhone(phone) {
   const p = String(phone || '')
-  if (p.length < 7) return p || '—'
+  if (p.length < 7) return p || '--'
   return `${p.slice(0, 3)}****${p.slice(-4)}`
 }
 

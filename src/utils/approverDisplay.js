@@ -10,14 +10,14 @@ export function formatApproverOptionLabel(name, orgName, postLabel) {
   const org = String(orgName || '').trim()
   const post = String(postLabel || '').trim()
   const orgPost = [org, post].filter(Boolean).join('-')
-  if (!n && !orgPost) return '—'
+  if (!n && !orgPost) return '--'
   if (!n) return orgPost
   if (!orgPost) return n
   return `${n}（${orgPost}）`
 }
 
 export function formatApproverCandidateLabel(candidate) {
-  if (!candidate) return '—'
+  if (!candidate) return '--'
   const org =
     candidate.orgName ||
     candidate.org ||
@@ -70,5 +70,5 @@ export function formatApproverByUserId(userId, findUser, fallbackName = '') {
       return enrichSysUserApproverCandidate(user)?.optionLabel || user.name
     }
   }
-  return fallbackName || '—'
+  return fallbackName || '--'
 }

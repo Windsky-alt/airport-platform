@@ -30,7 +30,7 @@ function load() {
   if (!(data.value.wbsNodes || []).some((item) => item.id === selectedId.value)) selectedId.value = data.value.wbsNodes?.find((item) => !item.parentId)?.id || ''
 }
 function typeLabel(row) { return row.parentId ? '单体' : '项目' }
-function pathOf(id) { return getMajorHazardWbsPath(data.value, id) || '—' }
+function pathOf(id) { return getMajorHazardWbsPath(data.value, id) || '--' }
 function nextCode(parentId) {
   const parent = (data.value.wbsNodes || []).find((item) => item.id === parentId)
   const siblings = (data.value.wbsNodes || []).filter((item) => item.parentId === parentId)

@@ -48,7 +48,7 @@ if (outputName !== baseOutputName) {
   console.log(`    （已存在 ${baseOutputName}，本次不覆盖，使用新文件名）`)
 }
 
-execSync('npm run build -- --config vite.standalone.config.js', {
+execSync('npm run build -- --config vite.standalone.config.js --configLoader native', {
   cwd: root,
   stdio: 'inherit',
   env: {

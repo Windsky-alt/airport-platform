@@ -18,7 +18,7 @@ const tabs = computed(() => {
   for (const t of tasks.value) {
     counts[t.status] = (counts[t.status] || 0) + 1
   }
-  return ['全部', '待执行', '已完成'].filter(t => (counts[t] || 0) > 0 || t === '全部').map(t => ({ label: t, count: counts[t] || 0 }))
+  return ['全部', '未完成', '已完成'].filter(t => (counts[t] || 0) > 0 || t === '全部').map(t => ({ label: t, count: counts[t] || 0 }))
 })
 
 const filteredTasks = computed(() => {
@@ -78,7 +78,7 @@ function goBack() { router.push('/') }
           <span class="m-section-label">{{ task.source }}</span>
           <span class="m-section-count">{{ filteredTasks.filter(t => t.source === task.source).length }}项</span>
         </div>
-        <div class="m-task-card" :class="task.source" @click="task.status === '待执行' ? goExecute(task.id) : goDetail(task.id)">
+        <div class="m-task-card" :class="task.source" @click="task.status === '未完成' ? goExecute(task.id) : goDetail(task.id)">
         <div class="m-task-top">
           <span class="m-task-icon">📋</span>
           <div class="m-task-info">
@@ -95,7 +95,7 @@ function goBack() { router.push('/') }
         </div>
         <div class="m-task-mid">
           <span v-for="category in normalizeInspectionCategories(task.inspectionCategories || task.inspectionCategory)" :key="category" class="m-type-tag" :style="{ background: category === '质量' ? '#fff3e0' : '#e8f5e9', color: category === '质量' ? '#e67e22' : '#34a853' }">{{ category }}</span>
-          <span class="m-task-status-label" :style="{ color: task.status === '待执行' ? '#f5a623' : '#34a853' }">{{ task.status === '待执行' ? '待执行' : '已完成' }}</span>
+          <span class="m-task-status-label" :style="{ color: task.status === '未完成' ? '#f5a623' : '#34a853' }">{{ task.status === '未完成' ? '未完成' : '已完成' }}</span>
         </div>
         <div class="m-task-bottom">
           <span>执行人：{{ task.executor }}</span>

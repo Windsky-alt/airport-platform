@@ -45,11 +45,11 @@ function lastRecord(node) {
 }
 
 function currentNodeText(app) {
-  if (!app) return '—'
+  if (!app) return '--'
   if (app.current_node === 'none' || !app.current_node) {
     if (app.status === 'approved') return '已办结'
     if (app.status === 'rejected' || app.status === 'withdrawn') return '已驳回'
-    return '—'
+    return '--'
   }
   return NODE_LABEL[app.current_node] || app.current_node
 }
@@ -86,8 +86,8 @@ const approvalTimeline = computed(() => {
       title: APPROVAL_NODE_LABEL.applicant,
       action: 'submit',
       actionLabel: '提交',
-      operator: submitRec.operator_name || d.app.applicant_name || '—',
-      time: submitRec.operate_time || d.app.submit_time || '—',
+      operator: submitRec.operator_name || d.app.applicant_name || '--',
+      time: submitRec.operate_time || d.app.submit_time || '--',
       remark:
         submitRec.opinion ||
         (d.app.copy_from_application_id
@@ -101,8 +101,8 @@ const approvalTimeline = computed(() => {
       title: '施工提交',
       action: 'submit',
       actionLabel: '提交',
-      operator: d.app.applicant_name || '—',
-      time: d.app.submit_time || '—',
+      operator: d.app.applicant_name || '--',
+      time: d.app.submit_time || '--',
       remark: d.app.copy_from_application_id
         ? `从 ${d.app.copy_from_application_id} 重新申报`
         : '提交报审',
@@ -116,8 +116,8 @@ const approvalTimeline = computed(() => {
       title: APPROVAL_NODE_LABEL[r.node_code] || r.node_code || '节点',
       action: r.action,
       actionLabel: ACTION_LABEL[r.action] || r.action,
-      operator: r.operator_name || '—',
-      time: r.operate_time || '—',
+      operator: r.operator_name || '--',
+      time: r.operate_time || '--',
       remark: r.opinion || '',
       status: r.action === 'reject' ? 'rejected' : 'done',
     })
@@ -184,13 +184,13 @@ function timelineType(status) {
             <el-descriptions-item label="类型">
               {{ MATERIAL_TYPE[detail.app.material_type] }}
             </el-descriptions-item>
-            <el-descriptions-item label="施工部位">{{ detail.app.use_part || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="施工部位">{{ detail.app.use_part || '--' }}</el-descriptions-item>
             <el-descriptions-item label="当前节点">
               {{ currentNodeText(detail.app) }}
             </el-descriptions-item>
             <el-descriptions-item label="申请人">{{ detail.app.applicant_name }}</el-descriptions-item>
             <el-descriptions-item label="提交时间">{{ detail.app.submit_time }}</el-descriptions-item>
-            <el-descriptions-item label="办结时间">{{ detail.app.finish_time || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="办结时间">{{ detail.app.finish_time || '--' }}</el-descriptions-item>
             <el-descriptions-item v-if="detail.app.copy_from_application_id" label="重新申报来源">
               <el-button
                 link
@@ -230,8 +230,8 @@ function timelineType(status) {
               </div>
             </div>
             <el-descriptions :column="2" border class="cand-desc">
-              <el-descriptions-item label="品牌名称">{{ row.brand_name || '—' }}</el-descriptions-item>
-              <el-descriptions-item label="生产厂家">{{ row.manufacturer || '—' }}</el-descriptions-item>
+              <el-descriptions-item label="品牌名称">{{ row.brand_name || '--' }}</el-descriptions-item>
+              <el-descriptions-item label="生产厂家">{{ row.manufacturer || '--' }}</el-descriptions-item>
             </el-descriptions>
             <BrandCandidateAttachBlock :candidate="row" :editable="false" />
           </div>

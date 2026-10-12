@@ -703,7 +703,7 @@ export function listAsbuiltForInspectLink(projectId, { wbsNodeId = '', includeSt
     acceptance_id: r.id,
     biz_no: r.biz_no,
     title: r.title,
-    report_names: (r.files || []).map((f) => f.file_name).join('；') || '—',
+    report_names: (r.files || []).map((f) => f.file_name).join('；') || '--',
     status: r.status,
     node_paths: (r.nodes || []).map((n) => n.wbs_node_path || n.wbs_node_id).join('；'),
   }))

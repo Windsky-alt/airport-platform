@@ -118,9 +118,9 @@ const docSubjectLabel = computed(() => {
 })
 
 function docSubjectText(row) {
-  if (row.docType === '任务单') return row.workRequirement || row.title || '—'
-  if (row.docType === '提示函') return row.matterDescription || row.title || '—'
-  return row.penaltyContent || row.title || '—'
+  if (row.docType === '任务单') return row.workRequirement || row.title || '--'
+  if (row.docType === '提示函') return row.matterDescription || row.title || '--'
+  return row.penaltyContent || row.title || '--'
 }
 
 const ticketStatusMap = {
@@ -166,7 +166,7 @@ function buildNoticeSavePayload(draft) {
     source: '远程调度',
     status: '待下发',
     issuer: DISPATCH_CURRENT_USER,
-    issueTime: '—',
+    issueTime: '--',
   }
 }
 
@@ -184,7 +184,7 @@ function buildReminderSavePayload(draft) {
     deadline: draft.deadline || defaultDeadline(),
     status: '待下发',
     issuer: DISPATCH_CURRENT_USER,
-    issueTime: '—',
+    issueTime: '--',
   }
 }
 
@@ -206,7 +206,7 @@ function buildPenaltySavePayload(draft) {
     handler: DISPATCH_CURRENT_USER,
     source: '远程调度',
     status: '待下发',
-    issueTime: '—',
+    issueTime: '--',
   }
 }
 
@@ -554,9 +554,9 @@ function handleSave() {
               <td>
                 <span class="ticket-status" :class="ticketStatusMap[row.status]">{{ row.status }}</span>
               </td>
-              <td>{{ row.handler || '—' }}</td>
-              <td>{{ row.issuer || '—' }}</td>
-              <td>{{ row.time || '—' }}</td>
+              <td>{{ row.handler || '--' }}</td>
+              <td>{{ row.issuer || '--' }}</td>
+              <td>{{ row.time || '--' }}</td>
             </tr>
             <tr v-if="!dialogList.length">
               <td colspan="6" class="empty-row">暂无单据</td>

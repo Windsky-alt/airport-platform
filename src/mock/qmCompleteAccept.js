@@ -50,7 +50,7 @@ export function buildCompleteGate(project_id) {
     return {
       id: n.id,
       name: n.node_name,
-      specialty: n.specialty || '—',
+      specialty: n.specialty || '--',
       task_no: task?.task_no || '',
       accept_status: passed ? 2 : n.accept_status,
       statusLabel: passed
@@ -79,7 +79,7 @@ export function buildCompleteGate(project_id) {
     return {
       id: n.id,
       name: n.node_name,
-      specialty: specialties.length ? specialties.join('、') : n.specialty || '—',
+      specialty: specialties.length ? specialties.join('、') : n.specialty || '--',
       task_no: task?.task_no || '',
       accept_status: passed ? 2 : n.accept_status,
       statusLabel: passed

@@ -277,7 +277,7 @@ function toggleEnabled(row) {
           <el-table-column prop="factoryNo" label="出厂编号" min-width="120" />
           <el-table-column prop="entryDate" label="进场日期" width="110" align="center" />
           <el-table-column prop="exitDate" label="退场日期" width="110" align="center">
-            <template #default="{ row }">{{ row.exitDate || '—' }}</template>
+            <template #default="{ row }">{{ row.exitDate || '--' }}</template>
           </el-table-column>
           <el-table-column label="设备状态" width="90" align="center" class-name="no-ellipsis-cell">
             <template #default="{ row }">

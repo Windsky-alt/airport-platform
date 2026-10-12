@@ -26,7 +26,7 @@ export const projectStatusOptions = [
 /** 状态存储码 → 中文展示（兼容历史 Mock 中文值） */
 export function displayProjectStatus(status) {
   const raw = String(status || '').trim()
-  if (!raw) return '—'
+  if (!raw) return '--'
   const hit = projectStatusOptions.find((opt) => opt.value === raw || opt.label === raw)
   return hit ? hit.label : raw
 }
@@ -419,9 +419,9 @@ export function formatConstructionPeriod(row) {
 
 /** 项目总投资(万元)：右对齐千分位；空显示「—」 */
 export function formatTotalInvestment(value) {
-  if (value === '' || value === null || value === undefined) return '—'
+  if (value === '' || value === null || value === undefined) return '--'
   const num = Number(value)
-  if (!Number.isFinite(num)) return '—'
+  if (!Number.isFinite(num)) return '--'
   return num.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 

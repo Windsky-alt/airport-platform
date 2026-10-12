@@ -25,7 +25,7 @@ const taskInfo = {
   executor: '当前用户',
   deadline: '2026-07-28',
   inspectionCategory: '安全',
-  status: '待执行',
+  status: '未完成',
   ...(getMobileInspectionTask(route.params.id) || {}),
 }
 
@@ -320,7 +320,7 @@ function goBack() { router.push('/mobile/tasks') }
               <option value="" disabled>请选择本次实际巡视项目</option>
               <option v-for="project in taskProjectOptions" :key="project.id" :value="project.id">{{ project.label }}</option>
             </select>
-            <span v-else class="tbf-static-value">{{ selectedPatrolProject?.label || taskInfo.project || '—' }}</span>
+            <span v-else class="tbf-static-value">{{ selectedPatrolProject?.label || taskInfo.project || '--' }}</span>
           </div>
           <div class="tbf-row">
             <span class="tbf-label">危大工程名称 <i class="req">*</i></span>

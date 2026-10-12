@@ -142,29 +142,29 @@ const lineItems = computed(() => {
           </el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="项目">
-          {{ entryDetail.project_label || todo.detail?.project || '—' }}
+          {{ entryDetail.project_label || todo.detail?.project || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="品牌">
-          {{ entryDetail.brand_name || todo.detail?.brandName || '—' }}
+          {{ entryDetail.brand_name || todo.detail?.brandName || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="生产厂家">
-          {{ entryDetail.manufacturer || '—' }}
+          {{ entryDetail.manufacturer || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="供应商">
-          {{ entryDetail.supplier || '—' }}
+          {{ entryDetail.supplier || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="关联定样">
           {{
             entryDetail.sample_application_id ||
             todo.detail?.sampleId ||
-            '—'
+            '--'
           }}
         </el-descriptions-item>
         <el-descriptions-item label="申请人">
-          {{ entryDetail.applicant_name || todo.applicant || '—' }}
+          {{ entryDetail.applicant_name || todo.applicant || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="提交时间">
-          {{ entryDetail.submit_time || todo.applyTime || '—' }}
+          {{ entryDetail.submit_time || todo.applyTime || '--' }}
         </el-descriptions-item>
         <el-descriptions-item
           v-if="entryDetail.copy_from_entry_no || todo.detail?.copyFromEntryNo"
@@ -186,30 +186,30 @@ const lineItems = computed(() => {
           <div class="line-card-title">材料 {{ idx + 1 }}</div>
           <el-descriptions :column="2" border class="info-desc">
             <el-descriptions-item label="材料名称">
-              {{ row.material_name || '—' }}
+              {{ row.material_name || '--' }}
             </el-descriptions-item>
             <el-descriptions-item label="规格型号">
-              {{ row.material_spec || '—' }}
+              {{ row.material_spec || '--' }}
             </el-descriptions-item>
             <el-descriptions-item label="数量">
               <template v-if="row.quantity != null && row.quantity !== ''">
                 {{ row.quantity }}{{ row.unit || '' }}
               </template>
-              <template v-else>—</template>
+              <template v-else>--</template>
             </el-descriptions-item>
-            <el-descriptions-item label="用途">{{ row.purpose || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="施工部位">{{ row.use_part || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="运单号">{{ row.waybill_no || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="用途">{{ row.purpose || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="施工部位">{{ row.use_part || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="运单号">{{ row.waybill_no || '--' }}</el-descriptions-item>
             <el-descriptions-item label="批次号">
               {{ formatBatchNo(row.batch_no) }}
             </el-descriptions-item>
             <el-descriptions-item label="外观质量">
-              {{ row.appearance_quality || '—' }}
+              {{ row.appearance_quality || '--' }}
             </el-descriptions-item>
             <el-descriptions-item label="验收结论">
-              {{ row.acceptance_result || '—' }}
+              {{ row.acceptance_result || '--' }}
             </el-descriptions-item>
-            <el-descriptions-item label="进场日期">{{ row.entry_date || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="进场日期">{{ row.entry_date || '--' }}</el-descriptions-item>
             <el-descriptions-item label="合格证" :span="2">
               <FileAttachmentPreview :name="row.cert_file" empty-text="未上传" />
             </el-descriptions-item>
@@ -229,7 +229,7 @@ const lineItems = computed(() => {
               <template v-if="row.inspect_result_checked">
                 <FileAttachmentPreview :name="row.inspect_result_file" empty-text="未上传" />
               </template>
-              <template v-else>—</template>
+              <template v-else>--</template>
             </el-descriptions-item>
           </el-descriptions>
         </div>
@@ -246,29 +246,29 @@ const lineItems = computed(() => {
           <div class="line-card-title">设备 {{ idx + 1 }}</div>
           <el-descriptions :column="2" border class="info-desc">
             <el-descriptions-item label="设备名称">
-              {{ row.equipment_name || '—' }}
+              {{ row.equipment_name || '--' }}
             </el-descriptions-item>
-            <el-descriptions-item label="规格型号">{{ row.model || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="规格型号">{{ row.model || '--' }}</el-descriptions-item>
             <el-descriptions-item label="数量">
               <template v-if="row.quantity != null && row.quantity !== ''">
                 {{ row.quantity }}{{ row.unit || '' }}
               </template>
-              <template v-else>—</template>
+              <template v-else>--</template>
             </el-descriptions-item>
-            <el-descriptions-item label="序列号">{{ row.serial_no || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="用途">{{ row.purpose || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="施工部位">{{ row.use_part || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="运单号">{{ row.waybill_no || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="序列号">{{ row.serial_no || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="用途">{{ row.purpose || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="施工部位">{{ row.use_part || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="运单号">{{ row.waybill_no || '--' }}</el-descriptions-item>
             <el-descriptions-item label="批次号">
               {{ formatBatchNo(row.batch_no) }}
             </el-descriptions-item>
             <el-descriptions-item label="外观质量">
-              {{ row.appearance_quality || '—' }}
+              {{ row.appearance_quality || '--' }}
             </el-descriptions-item>
             <el-descriptions-item label="验收结论">
-              {{ row.acceptance_result || '—' }}
+              {{ row.acceptance_result || '--' }}
             </el-descriptions-item>
-            <el-descriptions-item label="进场日期">{{ row.entry_date || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="进场日期">{{ row.entry_date || '--' }}</el-descriptions-item>
             <el-descriptions-item label="合格证" :span="2">
               <FileAttachmentPreview :name="row.cert_file" empty-text="未上传" />
             </el-descriptions-item>
@@ -288,7 +288,7 @@ const lineItems = computed(() => {
               <template v-if="row.inspect_result_checked">
                 <FileAttachmentPreview :name="row.inspect_result_file" empty-text="未上传" />
               </template>
-              <template v-else>—</template>
+              <template v-else>--</template>
             </el-descriptions-item>
           </el-descriptions>
           <div class="sub-label">开箱清单</div>

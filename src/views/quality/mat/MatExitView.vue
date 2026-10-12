@@ -135,7 +135,7 @@ function onSubmit() {
         <el-table-column prop="material_name" label="材料/设备" min-width="120" show-overflow-tooltip />
         <el-table-column prop="brand_name" label="品牌" width="100" show-overflow-tooltip />
         <el-table-column prop="supplier" label="供应商" min-width="120" show-overflow-tooltip>
-          <template #default="{ row }">{{ row.supplier || '—' }}</template>
+          <template #default="{ row }">{{ row.supplier || '--' }}</template>
         </el-table-column>
         <el-table-column label="退场数量" width="110">
           <template #default="{ row }">{{ row.exit_qty }}{{ row.unit || '' }}</template>
@@ -181,7 +181,7 @@ function onSubmit() {
           <span>{{ selected.brand_name }} / {{ selected.supplier }}</span>
         </el-form-item>
         <el-form-item v-if="selected" label="施工部位">
-          <span>{{ selected.use_part || '—' }}</span>
+          <span>{{ selected.use_part || '--' }}</span>
         </el-form-item>
         <el-form-item v-if="selected" label="退场进度">
           <span>
@@ -231,26 +231,26 @@ function onSubmit() {
         <el-descriptions :column="2" border>
           <el-descriptions-item label="退场单号">{{ detail.exit_no }}</el-descriptions-item>
           <el-descriptions-item label="进场单号">{{ detail.entry_no }}</el-descriptions-item>
-          <el-descriptions-item label="材料/设备">{{ detail.material_name || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="关联定样">{{ detail.sample_application_id || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="品牌">{{ detail.brand_name || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="供应商">{{ detail.supplier || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="生产厂家">{{ detail.manufacturer || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="施工部位">{{ detail.use_part || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="材料/设备">{{ detail.material_name || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="关联定样">{{ detail.sample_application_id || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="品牌">{{ detail.brand_name || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="供应商">{{ detail.supplier || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="生产厂家">{{ detail.manufacturer || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="施工部位">{{ detail.use_part || '--' }}</el-descriptions-item>
           <el-descriptions-item label="进场数量">
             <template v-if="detail.quantity != null">{{ detail.quantity }}{{ detail.unit }}</template>
-            <template v-else>—</template>
+            <template v-else>--</template>
           </el-descriptions-item>
           <el-descriptions-item label="本次退场数量">
             {{ detail.exit_qty }}{{ detail.unit || '' }}
           </el-descriptions-item>
           <el-descriptions-item label="累计已退">
-            {{ detail.exit_qty_total != null ? detail.exit_qty_total : '—' }}{{ detail.unit || '' }}
+            {{ detail.exit_qty_total != null ? detail.exit_qty_total : '--' }}{{ detail.unit || '' }}
           </el-descriptions-item>
           <el-descriptions-item label="剩余可退">
-            {{ detail.remaining_qty != null ? detail.remaining_qty : '—' }}{{ detail.unit || '' }}
+            {{ detail.remaining_qty != null ? detail.remaining_qty : '--' }}{{ detail.unit || '' }}
           </el-descriptions-item>
-          <el-descriptions-item label="登记人">{{ detail.operator_name || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="登记人">{{ detail.operator_name || '--' }}</el-descriptions-item>
           <el-descriptions-item label="登记时间">{{ detail.exit_time }}</el-descriptions-item>
           <el-descriptions-item label="退场原因" :span="2">{{ detail.reason }}</el-descriptions-item>
           <el-descriptions-item label="现场照片" :span="2">

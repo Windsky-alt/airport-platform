@@ -45,14 +45,14 @@ const showReadonlyHint = computed(
 )
 
 function supervisorApproverDisplay(row) {
-  if (!row) return '—'
+  if (!row) return '--'
   const user = findMatSupervisorApprover(row.supervisor_approver_user_id)
   if (user) return formatMatSupervisorApproverLabel(user)
   if (row.supervisor_approver_name) {
     const post = row.supervisor_approver_post_label
     return post ? `${row.supervisor_approver_name}（${post}）` : row.supervisor_approver_name
   }
-  return '—'
+  return '--'
 }
 
 const canExportArchive = computed(
@@ -194,8 +194,8 @@ const approvalTimeline = computed(() => {
       title: '施工提交',
       action: 'submit',
       actionLabel: ACTION_LABEL.submit,
-      operator: submitRec.operator_name || d.applicant_name || '—',
-      time: submitRec.time || d.submit_time || '—',
+      operator: submitRec.operator_name || d.applicant_name || '--',
+      time: submitRec.time || d.submit_time || '--',
       remark: submitRec.opinion || '提交进场报审',
       status: 'done',
     })
@@ -205,8 +205,8 @@ const approvalTimeline = computed(() => {
       title: '施工提交',
       action: 'submit',
       actionLabel: ACTION_LABEL.submit,
-      operator: d.applicant_name || '—',
-      time: d.submit_time || '—',
+      operator: d.applicant_name || '--',
+      time: d.submit_time || '--',
       remark: d.copy_from_entry_no
         ? `从 ${d.copy_from_entry_no} 复制新建提交`
         : '提交进场报审',
@@ -220,8 +220,8 @@ const approvalTimeline = computed(() => {
       title: '监理审批',
       action: r.action,
       actionLabel: ACTION_LABEL[r.action] || r.action,
-      operator: r.operator_name || '—',
-      time: r.time || '—',
+      operator: r.operator_name || '--',
+      time: r.time || '--',
       remark: r.opinion || '',
       status: r.action === 'reject' ? 'rejected' : 'done',
     })
@@ -307,10 +307,10 @@ function actionTagType(action) {
         </el-descriptions-item>
         <el-descriptions-item label="项目">{{ detail.project_label }}</el-descriptions-item>
         <el-descriptions-item label="品牌">{{ detail.brand_name }}</el-descriptions-item>
-        <el-descriptions-item label="生产厂家">{{ detail.manufacturer || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="供应商">{{ detail.supplier || '—' }}</el-descriptions-item>
+        <el-descriptions-item label="生产厂家">{{ detail.manufacturer || '--' }}</el-descriptions-item>
+        <el-descriptions-item label="供应商">{{ detail.supplier || '--' }}</el-descriptions-item>
         <el-descriptions-item label="关联定样">{{
-          detail.sample_application_id || '—'
+          detail.sample_application_id || '--'
         }}</el-descriptions-item>
         <el-descriptions-item label="申请人">{{ detail.applicant_name }}</el-descriptions-item>
         <el-descriptions-item label="监理审批人">
@@ -318,7 +318,7 @@ function actionTagType(action) {
         </el-descriptions-item>
         <el-descriptions-item label="提交时间">{{ detail.submit_time }}</el-descriptions-item>
         <el-descriptions-item label="办结时间">
-          {{ detail.finish_time || '—' }}
+          {{ detail.finish_time || '--' }}
         </el-descriptions-item>
       </el-descriptions>
 
@@ -329,21 +329,21 @@ function actionTagType(action) {
         <div v-for="(row, idx) in lineItems" :key="`${row.material_name}-${idx}`" class="line-card mb">
           <div v-if="!isLedgerMode" class="line-card-title">材料 {{ idx + 1 }}</div>
           <el-descriptions :column="2" border class="info-desc">
-            <el-descriptions-item label="材料名称">{{ row.material_name || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="规格型号">{{ row.material_spec || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="材料名称">{{ row.material_name || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="规格型号">{{ row.material_spec || '--' }}</el-descriptions-item>
             <el-descriptions-item label="数量">
               <template v-if="row.quantity != null && row.quantity !== ''">
                 {{ row.quantity }}{{ row.unit || '' }}
               </template>
-              <template v-else>—</template>
+              <template v-else>--</template>
             </el-descriptions-item>
-            <el-descriptions-item label="用途">{{ row.purpose || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="施工部位">{{ row.use_part || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="运单号">{{ row.waybill_no || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="用途">{{ row.purpose || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="施工部位">{{ row.use_part || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="运单号">{{ row.waybill_no || '--' }}</el-descriptions-item>
             <el-descriptions-item label="批次号">{{ formatBatchNo(row.batch_no) }}</el-descriptions-item>
-            <el-descriptions-item label="外观质量">{{ row.appearance_quality || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="验收结论">{{ row.acceptance_result || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="进场日期">{{ row.entry_date || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="外观质量">{{ row.appearance_quality || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="验收结论">{{ row.acceptance_result || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="进场日期">{{ row.entry_date || '--' }}</el-descriptions-item>
             <el-descriptions-item label="合格证" :span="2">
               <FileAttachmentPreview :name="row.cert_file" empty-text="--" />
             </el-descriptions-item>
@@ -377,22 +377,22 @@ function actionTagType(action) {
         >
           <div v-if="!isLedgerMode" class="line-card-title">设备 {{ idx + 1 }}</div>
           <el-descriptions :column="2" border class="info-desc">
-            <el-descriptions-item label="设备名称">{{ row.equipment_name || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="规格型号">{{ row.model || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="设备名称">{{ row.equipment_name || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="规格型号">{{ row.model || '--' }}</el-descriptions-item>
             <el-descriptions-item label="数量">
               <template v-if="row.quantity != null && row.quantity !== ''">
                 {{ row.quantity }}{{ row.unit || '' }}
               </template>
-              <template v-else>—</template>
+              <template v-else>--</template>
             </el-descriptions-item>
-            <el-descriptions-item label="序列号">{{ row.serial_no || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="用途">{{ row.purpose || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="施工部位">{{ row.use_part || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="运单号">{{ row.waybill_no || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="序列号">{{ row.serial_no || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="用途">{{ row.purpose || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="施工部位">{{ row.use_part || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="运单号">{{ row.waybill_no || '--' }}</el-descriptions-item>
             <el-descriptions-item label="批次号">{{ formatBatchNo(row.batch_no) }}</el-descriptions-item>
-            <el-descriptions-item label="外观质量">{{ row.appearance_quality || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="验收结论">{{ row.acceptance_result || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="进场日期">{{ row.entry_date || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="外观质量">{{ row.appearance_quality || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="验收结论">{{ row.acceptance_result || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="进场日期">{{ row.entry_date || '--' }}</el-descriptions-item>
             <el-descriptions-item label="合格证" :span="2">
               <FileAttachmentPreview :name="row.cert_file" empty-text="--" />
             </el-descriptions-item>

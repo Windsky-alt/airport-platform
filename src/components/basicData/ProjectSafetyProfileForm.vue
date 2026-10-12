@@ -79,7 +79,7 @@ const belongOrgDisplay = computed(() => {
   const name = String(props.model?.belongOrgName || '').trim()
   if (name) return name
   const id = String(props.model?.belongOrgId || '').trim()
-  if (!id) return '—'
+  if (!id) return '--'
   return getOrgDisplayName(id) || id
 })
 
@@ -181,8 +181,8 @@ function openSubcontractorDetail(block) {
       source: 'portrait',
       name: unitName,
       projectName: props.model.projectName,
-      unitType: '—',
-      submitter: '—',
+      unitType: '--',
+      submitter: '--',
       projectLeaderContact: block.projectLeaderContact || '',
       safetyManagerContact: block.safetyManagerContact || '',
       orgStructureDesc: '',
@@ -375,7 +375,7 @@ function openEquipmentRow(row) {
           </td>
           <td colspan="2" class="cell-value">
             <template v-if="!canEditOrgAndCode">
-              <span class="inline-readonly">{{ model.projectEncode || '—' }}</span>
+              <span class="inline-readonly">{{ model.projectEncode || '--' }}</span>
             </template>
             <el-input
               v-else
@@ -648,7 +648,7 @@ function openEquipmentRow(row) {
                   >
                     <td class="col-idx">{{ qIdx + 1 }}</td>
                     <td class="col-type">
-                      <span v-if="readonly" class="inline-readonly">{{ row.label || '—' }}</span>
+                      <span v-if="readonly" class="inline-readonly">{{ row.label || '--' }}</span>
                       <el-select
                         v-else
                         v-model="row.label"
@@ -665,7 +665,7 @@ function openEquipmentRow(row) {
                       </el-select>
                     </td>
                     <td class="col-no">
-                      <span v-if="readonly" class="inline-readonly">{{ row.certNo || '—' }}</span>
+                      <span v-if="readonly" class="inline-readonly">{{ row.certNo || '--' }}</span>
                       <el-input v-else v-model="row.certNo" placeholder="证书编号" aria-label="证书编号"/>
                     </td>
                     <td class="col-photo">
@@ -707,7 +707,7 @@ function openEquipmentRow(row) {
           <td colspan="4" class="cell-value gc-license-expiry">
             <template v-if="readonly">
               <span class="inline-readonly">{{
-                formatGeneralContractorLicenseExpiry(model.safetyProfile.generalContractor) || '—'
+                formatGeneralContractorLicenseExpiry(model.safetyProfile.generalContractor) || '--'
               }}</span>
             </template>
             <template v-else>
@@ -800,7 +800,7 @@ function openEquipmentRow(row) {
                   >
                     <td class="col-idx">{{ qIdx + 1 }}</td>
                     <td class="col-type">
-                      <span v-if="readonly" class="inline-readonly">{{ row.label || '—' }}</span>
+                      <span v-if="readonly" class="inline-readonly">{{ row.label || '--' }}</span>
                       <el-select
                         v-else
                         v-model="row.label"
@@ -817,7 +817,7 @@ function openEquipmentRow(row) {
                       </el-select>
                     </td>
                     <td class="col-no">
-                      <span v-if="readonly" class="inline-readonly">{{ row.certNo || '—' }}</span>
+                      <span v-if="readonly" class="inline-readonly">{{ row.certNo || '--' }}</span>
                       <el-input v-else v-model="row.certNo" placeholder="证书编号" aria-label="证书编号"/>
                     </td>
                     <td class="col-photo">
@@ -870,7 +870,7 @@ function openEquipmentRow(row) {
                       >
                         {{ row.unitName }}
                       </button>
-                      <span v-else class="inline-readonly">—</span>
+                      <span v-else class="inline-readonly">--</span>
                     </td>
                     <td class="col-sub-person">
                       <ProfilePersonContactInput v-model="row.projectLeaderContact" readonly />
@@ -880,7 +880,7 @@ function openEquipmentRow(row) {
                     </td>
                     <td class="col-sub-mark">
                       <span class="possess-mark" :class="{ ok: getSubQual(row, '资格证书').possessed }">
-                        {{ getSubQual(row, '资格证书').possessed ? '✓' : '—' }}
+                        {{ getSubQual(row, '资格证书').possessed ? '✓' : '--' }}
                       </span>
                     </td>
                     <td class="col-sub-license-valid">
@@ -890,12 +890,12 @@ function openEquipmentRow(row) {
                       >{{ row.hasSafetyLicense ? '有效' : '失效' }}</span>
                     </td>
                     <td class="col-sub-license">
-                      <el-tooltip :content="row.safetyLicenseNo || '—'" placement="top">
-                        <span class="inline-readonly text-ellipsis">{{ row.safetyLicenseNo || '—' }}</span>
+                      <el-tooltip :content="row.safetyLicenseNo || '--'" placement="top">
+                        <span class="inline-readonly text-ellipsis">{{ row.safetyLicenseNo || '--' }}</span>
                       </el-tooltip>
                     </td>
                     <td class="col-sub-expiry">
-                      <span class="inline-readonly">{{ row.safetyLicenseExpiry || '—' }}</span>
+                      <span class="inline-readonly">{{ row.safetyLicenseExpiry || '--' }}</span>
                     </td>
                   </tr>
                   <tr v-if="!model.safetyProfile.subcontractorBlocks?.length">
@@ -946,7 +946,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">是否涉及净空限高</td>
           <td colspan="2" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.siteClearance.clearanceHeightInvolved || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.siteClearance.clearanceHeightInvolved || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -962,7 +962,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">限高要求</td>
           <td colspan="6" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.siteClearance.clearanceHeightRequirement || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.siteClearance.clearanceHeightRequirement || '--' }}</span>
             </template>
             <el-input
               v-else
@@ -976,7 +976,7 @@ function openEquipmentRow(row) {
           <td colspan="3" class="cell-label">是否设置新能源汽车充电桩</td>
           <td colspan="1" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.siteNewEnergyCharging.enabled || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.siteNewEnergyCharging.enabled || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -996,7 +996,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">充电桩设置是否符合要求</td>
           <td colspan="1" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.siteNewEnergyCharging.installQualified || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.siteNewEnergyCharging.installQualified || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1024,7 +1024,7 @@ function openEquipmentRow(row) {
           <td colspan="3" class="cell-label">是否设置电动自行车充电区域</td>
           <td colspan="1" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.siteElectricBicycle.enabled || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.siteElectricBicycle.enabled || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1044,7 +1044,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">充电区域设置是否符合要求</td>
           <td colspan="1" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.siteElectricBicycle.installQualified || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.siteElectricBicycle.installQualified || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1076,7 +1076,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">是否有营地</td>
           <td colspan="2" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.camp.hasCamp || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.camp.hasCamp || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1120,7 +1120,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">营地建筑材质是否为聚苯乙烯或聚氨酯泡沫彩钢板</td>
           <td colspan="2" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.camp.campBuildingMaterialOk || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.camp.campBuildingMaterialOk || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1138,7 +1138,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">营地是否有食堂</td>
           <td colspan="2" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.camp.campHasCanteen || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.camp.campHasCanteen || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1154,7 +1154,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">营地食堂使用燃气/电气</td>
           <td colspan="6" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.camp.canteenFuelType || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.camp.canteenFuelType || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1172,7 +1172,7 @@ function openEquipmentRow(row) {
           <td colspan="3" class="cell-label">是否设置新能源汽车充电桩</td>
           <td colspan="1" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.campNewEnergyCharging.enabled || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.campNewEnergyCharging.enabled || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1192,7 +1192,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">充电桩设置是否符合要求</td>
           <td colspan="1" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.campNewEnergyCharging.installQualified || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.campNewEnergyCharging.installQualified || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1220,7 +1220,7 @@ function openEquipmentRow(row) {
           <td colspan="3" class="cell-label">是否设置电动自行车充电区域</td>
           <td colspan="1" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.campElectricBicycle.enabled || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.campElectricBicycle.enabled || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1240,7 +1240,7 @@ function openEquipmentRow(row) {
           <td colspan="2" class="cell-label">充电区域设置是否符合要求</td>
           <td colspan="1" class="cell-value">
             <template v-if="readonly">
-              <span class="inline-readonly">{{ model.safetyProfile.campElectricBicycle.installQualified || '—' }}</span>
+              <span class="inline-readonly">{{ model.safetyProfile.campElectricBicycle.installQualified || '--' }}</span>
             </template>
             <el-select
               v-else
@@ -1414,32 +1414,32 @@ function openEquipmentRow(row) {
         <el-descriptions :column="1" border size="small">
           <el-descriptions-item label="工程名称">{{ rowDetail.name }}</el-descriptions-item>
           <el-descriptions-item label="危大类别">{{ rowDetail.category }}</el-descriptions-item>
-          <el-descriptions-item label="施工项目">{{ rowDetail.projectName || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="状态">{{ rowDetail.status || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="专项方案">{{ rowDetail.scheme || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="施工内容">{{ rowDetail.detail?.workContent || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="施工项目">{{ rowDetail.projectName || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="状态">{{ rowDetail.status || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="专项方案">{{ rowDetail.scheme || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="施工内容">{{ rowDetail.detail?.workContent || '--' }}</el-descriptions-item>
         </el-descriptions>
       </template>
       <template v-else-if="rowDetail?.kind === 'danger'">
         <el-descriptions :column="1" border size="small">
-          <el-descriptions-item label="施工项目">{{ rowDetail.projectName || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="施工单位">{{ rowDetail.contractor || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="施工项目">{{ rowDetail.projectName || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="施工单位">{{ rowDetail.contractor || '--' }}</el-descriptions-item>
           <el-descriptions-item label="作业类型">{{ rowDetail.type }}</el-descriptions-item>
           <el-descriptions-item label="施工内容">{{ rowDetail.subType }}</el-descriptions-item>
           <el-descriptions-item label="施工区域">{{ rowDetail.location }}</el-descriptions-item>
-          <el-descriptions-item label="状态">{{ rowDetail.status || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="状态">{{ rowDetail.status || '--' }}</el-descriptions-item>
         </el-descriptions>
       </template>
       <template v-else-if="rowDetail?.kind === 'equipment'">
         <el-descriptions :column="1" border size="small">
           <el-descriptions-item label="设备名称">{{ rowDetail.name }}</el-descriptions-item>
           <el-descriptions-item label="设备类型">{{ rowDetail.type }}</el-descriptions-item>
-          <el-descriptions-item label="型号">{{ rowDetail.model || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="数量">{{ rowDetail.quantity ?? '—' }}</el-descriptions-item>
-          <el-descriptions-item label="状态">{{ rowDetail.status || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="进场日期">{{ rowDetail.entryDate || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="是否有台账">{{ rowDetail.hasLedger || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="维保情况">{{ rowDetail.maintenance || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="型号">{{ rowDetail.model || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="数量">{{ rowDetail.quantity ?? '--' }}</el-descriptions-item>
+          <el-descriptions-item label="状态">{{ rowDetail.status || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="进场日期">{{ rowDetail.entryDate || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="是否有台账">{{ rowDetail.hasLedger || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="维保情况">{{ rowDetail.maintenance || '--' }}</el-descriptions-item>
         </el-descriptions>
       </template>
       <template #footer>

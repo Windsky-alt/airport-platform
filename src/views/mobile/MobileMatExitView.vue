@@ -132,7 +132,7 @@ function goBack() {
           <div class="card-meta">
             进场单 {{ row.entry_no }} · 退场 {{ row.exit_qty }}{{ row.unit || '' }}
           </div>
-          <div class="card-meta">{{ row.reason || '—' }}</div>
+          <div class="card-meta">{{ row.reason || '--' }}</div>
         </button>
       </div>
 
@@ -157,7 +157,7 @@ function goBack() {
             </select>
           </div>
           <div v-if="selected" class="hint-box">
-            品牌 {{ selected.brand_name || '—' }} · 供应商 {{ selected.supplier || '—' }} · 已退
+            品牌 {{ selected.brand_name || '--' }} · 供应商 {{ selected.supplier || '--' }} · 已退
             {{ selected.exit_qty_total }}{{ selected.unit }} / 进场 {{ selected.quantity
             }}{{ selected.unit }}
           </div>
@@ -206,15 +206,15 @@ function goBack() {
           </div>
           <div class="form-row">
             <span class="form-label">材料/设备</span>
-            <span class="form-value">{{ detail.material_name || '—' }}</span>
+            <span class="form-value">{{ detail.material_name || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">品牌</span>
-            <span class="form-value">{{ detail.brand_name || '—' }}</span>
+            <span class="form-value">{{ detail.brand_name || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">供应商</span>
-            <span class="form-value">{{ detail.supplier || '—' }}</span>
+            <span class="form-value">{{ detail.supplier || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">本次退场数量</span>
@@ -223,19 +223,19 @@ function goBack() {
           <div class="form-row">
             <span class="form-label">累计已退</span>
             <span class="form-value">
-              {{ detail.exit_qty_total != null ? detail.exit_qty_total : '—'
+              {{ detail.exit_qty_total != null ? detail.exit_qty_total : '--'
               }}{{ detail.unit || '' }}
             </span>
           </div>
           <div class="form-row">
             <span class="form-label">剩余可退</span>
             <span class="form-value">
-              {{ detail.remaining_qty != null ? detail.remaining_qty : '—' }}{{ detail.unit || '' }}
+              {{ detail.remaining_qty != null ? detail.remaining_qty : '--' }}{{ detail.unit || '' }}
             </span>
           </div>
           <div class="form-row">
             <span class="form-label">退场原因</span>
-            <span class="form-value">{{ detail.reason || '—' }}</span>
+            <span class="form-value">{{ detail.reason || '--' }}</span>
           </div>
           <div class="attach-field">
             <span class="form-label">现场照片</span>
@@ -250,7 +250,7 @@ function goBack() {
           </div>
           <div class="form-row">
             <span class="form-label">登记时间</span>
-            <span class="form-value">{{ detail.exit_time || '—' }}</span>
+            <span class="form-value">{{ detail.exit_time || '--' }}</span>
           </div>
         </section>
       </div>

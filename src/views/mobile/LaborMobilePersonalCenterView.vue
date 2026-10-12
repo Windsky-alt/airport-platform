@@ -343,9 +343,9 @@ function goBack() {
             </span>
           </div>
           <div class="message-field"><span>当前节点：</span><b>{{ resolveCurrentNode(item) }}</b></div>
-          <div class="message-field"><span>处置方式：</span><b>{{ item.detail?.handleMode || '—' }}</b></div>
-          <div class="message-field"><span>关联人员：</span><b>{{ item.detail?.name || '—' }}</b></div>
-          <div class="message-field"><span>所属项目：</span><b>{{ item.detail?.project || '—' }}</b></div>
+          <div class="message-field"><span>处置方式：</span><b>{{ item.detail?.handleMode || '--' }}</b></div>
+          <div class="message-field"><span>关联人员：</span><b>{{ item.detail?.name || '--' }}</b></div>
+          <div class="message-field"><span>所属项目：</span><b>{{ item.detail?.project || '--' }}</b></div>
           <div class="message-field"><span>触发时间：</span><b>{{ applyDate(item) }}</b></div>
           <footer>
             <button type="button" @click="openFlowDetail(item)">详情</button>
@@ -441,7 +441,7 @@ function goBack() {
             <span :class="['status-tag', warnStatusTagClass(item.status)]">{{ item.status }}</span>
           </div>
           <div class="message-field"><span>所属模块：</span><b>{{ item.module }}</b></div>
-          <div class="message-field"><span>项目名称：</span><b>{{ item.projectName || '—' }}</b></div>
+          <div class="message-field"><span>项目名称：</span><b>{{ item.projectName || '--' }}</b></div>
           <div class="message-field"><span>处理人：</span><b>{{ item.handler }}</b></div>
           <div class="message-field"><span>类型：</span><b>{{ item.warnType }}</b></div>
           <div class="message-field"><span>消息时间：</span><b>{{ item.time }}</b></div>

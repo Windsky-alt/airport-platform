@@ -195,7 +195,7 @@ function onRemoveItem(id) {
         <h3>本模板检查项 · {{ currentTpl.template_name }}</h3>
         <el-button type="primary" size="small" :icon="Plus" @click="openItemCreate">新增检查项</el-button>
       </div>
-      <p class="hint">表头字段 Schema：{{ (currentTpl.form_schema?.fields || []).join('、') || '—' }}</p>
+      <p class="hint">表头字段 Schema：{{ (currentTpl.form_schema?.fields || []).join('、') || '--' }}</p>
       <el-table :data="itemDefs" border size="small">
         <el-table-column prop="seq_no" label="序号" width="60" />
         <el-table-column label="类别" width="80">

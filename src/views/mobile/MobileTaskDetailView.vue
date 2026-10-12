@@ -22,7 +22,7 @@ const taskMap = {
     companions: [],
     deadline: '2026-07-28',
     inspDate: '',
-    status: '待执行',
+    status: '未完成',
     submittedAt: '',
     result: '',
     normalPhotos: [],
@@ -129,18 +129,18 @@ const taskMap = {
 function normalizeTaskDetail(raw) {
   if (!raw) return null
   return {
-    taskNo: raw.taskNo || '—',
+    taskNo: raw.taskNo || '--',
     taskName: raw.taskName || '巡检任务',
     inspectionCategories: normalizeInspectionCategories(raw.inspectionCategories || raw.inspectionCategory),
     inspectionCategory: formatInspectionCategories(raw.inspectionCategories || raw.inspectionCategory),
-    project: raw.project || '—',
-    executor: raw.executor || '—',
+    project: raw.project || '--',
+    executor: raw.executor || '--',
     source: raw.source || '任务下发',
-    inspector: raw.inspector || raw.executor || '—',
+    inspector: raw.inspector || raw.executor || '--',
     companions: Array.isArray(raw.companions) ? raw.companions : [],
-    deadline: raw.deadline || '—',
+    deadline: raw.deadline || '--',
     inspDate: raw.inspectionDate || raw.inspDate || '',
-    status: raw.status || '待执行',
+    status: raw.status || '未完成',
     submittedAt: raw.submittedAt || '',
     result: raw.result || '',
     normalPhotos: Array.isArray(raw.normalPhotos) ? raw.normalPhotos : [],
@@ -217,7 +217,7 @@ function goBack() {
       <button class="mb" @click="goBack">‹</button>
       <h1 class="mt">巡检任务详情</h1>
       <span v-if="taskInfo.status === '已完成'" style="color: #34a853; font-size: 13px; font-weight: 600">✓ 已完成</span>
-      <span v-else style="color: #f5a623; font-size: 13px; font-weight: 600">待执行</span>
+      <span v-else style="color: #f5a623; font-size: 13px; font-weight: 600">未完成</span>
     </header>
 
     <div v-if="taskInfo.status !== '已完成'" class="task-bar">
@@ -238,7 +238,7 @@ function goBack() {
       <div class="sc-row"><span class="sc-lbl">执行人</span><span>{{ taskInfo.executor || '-' }}</span></div>
       <div class="sc-row"><span class="sc-lbl">巡检分类</span><span>{{ taskInfo.inspectionCategory }}</span></div>
       <div class="sc-row"><span class="sc-lbl">危大工程现场巡视</span><span>{{ majorHazardPatrolText }}</span></div>
-      <div v-if="taskInfo.isMajorHazardPatrol === '是'" class="sc-row"><span class="sc-lbl">危大工程名称</span><span>{{ taskInfo.majorHazardName || '—' }}</span></div>
+      <div v-if="taskInfo.isMajorHazardPatrol === '是'" class="sc-row"><span class="sc-lbl">危大工程名称</span><span>{{ taskInfo.majorHazardName || '--' }}</span></div>
       <div v-if="majorHazardSyncText" class="sc-row"><span class="sc-lbl">巡视台账同步</span><span :class="{ 'sync-completed': taskInfo.status === '已完成' }">{{ majorHazardSyncText }}</span></div>
       <div class="sc-row"><span class="sc-lbl">同行人</span><span>{{ taskInfo.companions.length ? taskInfo.companions.join('、') : '' }}</span></div>
       <div class="sc-row"><span class="sc-lbl">截止日期</span><span>{{ taskInfo.deadline }}</span></div>
@@ -288,7 +288,7 @@ function goBack() {
       <div class="sc-row">
         <span class="sc-lbl">结果</span>
         <span :style="{ color: taskInfo.result === 'hazard' ? '#e53935' : '#34a853', fontWeight: 600 }">
-          {{ taskInfo.result === 'hazard' ? `⚠ 有隐患（${hazardCount}项）` : taskInfo.result === 'normal' ? '✓ 全部正常' : '—' }}
+          {{ taskInfo.result === 'hazard' ? `⚠ 有隐患（${hazardCount}项）` : taskInfo.result === 'normal' ? '✓ 全部正常' : '--' }}
         </span>
       </div>
       <div v-if="taskInfo.result === 'normal' && taskInfo.normalPhotos.length" class="sc-row">
@@ -320,7 +320,7 @@ function goBack() {
         ⚠ 已发现 {{ hazardCount }} 项隐患，已下发 {{ rectifyCount }} 份整改单
       </div>
       <div v-else-if="taskInfo.status === '已完成'" class="bottom-info ok">✓ 全部正常，无需整改</div>
-      <div v-else class="bottom-info" style="color: #f5a623; font-weight: 500; text-align: center">待执行，请先完成巡检</div>
+      <div v-else class="bottom-info" style="color: #f5a623; font-weight: 500; text-align: center">未完成，请先完成巡检</div>
     </div>
   </div>
 </template>

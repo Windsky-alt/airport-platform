@@ -202,12 +202,12 @@ function defaultDeadline() {
 
 function buildNoticeContentText(fields) {
   const lines = [
-    fields.cameraName ? `监控点位：${fields.cameraName}（${fields.cameraLocation || '—'}）` : '',
-    `项目名称：${fields.project || '—'}`,
-    `工作类型：${fields.workType || '—'}`,
-    `工作要求：${fields.workRequirement || '—'}`,
+    fields.cameraName ? `监控点位：${fields.cameraName}（${fields.cameraLocation || '--'}）` : '',
+    `项目名称：${fields.project || '--'}`,
+    `工作类型：${fields.workType || '--'}`,
+    `工作要求：${fields.workRequirement || '--'}`,
     `执行人：${resolveExecutorDisplay(fields.executor || fields.executeDept)}`,
-    `完成时限：${fields.deadline || '—'}`,
+    `完成时限：${fields.deadline || '--'}`,
     fields.remark ? `备注：${fields.remark}` : '',
   ]
   return lines.filter(Boolean).join('\n\n')
@@ -215,23 +215,23 @@ function buildNoticeContentText(fields) {
 
 function buildReminderContentText(fields) {
   const lines = [
-    fields.cameraName ? `监控点位：${fields.cameraName}（${fields.cameraLocation || '—'}）` : '',
-    `项目名称：${fields.project || '—'}`,
-    `事项描述：${fields.matterDescription || '—'}`,
-    `指派人：${fields.assignee || fields.executor || '—'}`,
-    `完成时限：${fields.deadline || '—'}`,
+    fields.cameraName ? `监控点位：${fields.cameraName}（${fields.cameraLocation || '--'}）` : '',
+    `项目名称：${fields.project || '--'}`,
+    `事项描述：${fields.matterDescription || '--'}`,
+    `指派人：${fields.assignee || fields.executor || '--'}`,
+    `完成时限：${fields.deadline || '--'}`,
   ]
   return lines.filter(Boolean).join('\n\n')
 }
 
 function buildPenaltyContentText(fields) {
   const lines = [
-    fields.cameraName ? `监控点位：${fields.cameraName}（${fields.cameraLocation || '—'}）` : '',
-    `项目名称：${fields.project || '—'}`,
-    `类型：${fields.workType || '—'}`,
-    `处罚内容：${fields.penaltyContent || '—'}`,
-    `指派人：${fields.assignee || fields.executor || '—'}`,
-    `完成时限：${fields.deadline || '—'}`,
+    fields.cameraName ? `监控点位：${fields.cameraName}（${fields.cameraLocation || '--'}）` : '',
+    `项目名称：${fields.project || '--'}`,
+    `类型：${fields.workType || '--'}`,
+    `处罚内容：${fields.penaltyContent || '--'}`,
+    `指派人：${fields.assignee || fields.executor || '--'}`,
+    `完成时限：${fields.deadline || '--'}`,
   ]
   return lines.filter(Boolean).join('\n\n')
 }
@@ -279,7 +279,7 @@ export function normalizeNoticeRecord(record = {}) {
         ? record.content
         : buildNoticeContentText(contentFields),
     status: migrateNoticeStatus(record.status || NOTICE_STATUSES.PENDING),
-    issueTime: record.issueTime ?? '—',
+    issueTime: record.issueTime ?? '--',
     issuer: record.issuer || DISPATCH_CURRENT_USER,
     attachments: Array.isArray(record.attachments)
       ? record.attachments.filter((item) => item && (item.url || item.name)).map((item) => ({
@@ -319,7 +319,7 @@ export function normalizeReminderRecord(record = {}) {
     docType: 'reminder',
     source: record.source || '后台录入',
     status: migrateReminderStatus(record.status || NOTICE_STATUSES.PENDING),
-    issueTime: record.issueTime ?? '—',
+    issueTime: record.issueTime ?? '--',
     issuer: record.issuer || DISPATCH_CURRENT_USER,
     content:
       record.content?.includes('事项描述：') && record.content?.includes('项目名称：')
@@ -375,7 +375,7 @@ export function normalizePenaltyRecord(record = {}) {
     handler: record.handler || DISPATCH_CURRENT_USER,
     source: record.source || '后台录入',
     status: migratePenaltyStatus(record.status || PENALTY_STATUSES.PENDING),
-    issueTime: record.issueTime ?? '—',
+    issueTime: record.issueTime ?? '--',
     content:
       record.content?.includes('处罚内容：') &&
       (record.content?.includes('工作类型：') || record.content?.includes('类型：'))
@@ -424,7 +424,7 @@ export function emptyNoticeRecord() {
     deadline: defaultDeadline(),
     remark: '',
     status: NOTICE_STATUSES.PENDING,
-    issueTime: '—',
+    issueTime: '--',
     snapshot: '',
     attachments: [],
   })
@@ -437,7 +437,7 @@ export function emptyReminderRecord() {
     matterDescription: '',
     assignee: '',
     deadline: defaultDeadline(),
-    issueTime: '—',
+    issueTime: '--',
     status: NOTICE_STATUSES.PENDING,
     source: '后台录入',
     snapshot: '',
@@ -457,7 +457,7 @@ export function emptyPenaltyRecord() {
     amount: '',
     assignee: '',
     deadline: defaultDeadline(),
-    issueTime: '—',
+    issueTime: '--',
     status: PENALTY_STATUSES.PENDING,
     source: '后台录入',
     snapshot: '',
@@ -500,7 +500,7 @@ function buildNoticeSeed() {
       executor: '王强（项目经理）',
       executeDept: '王强（项目经理）',
       deadline: '2026-06-18',
-      issueTime: '—',
+      issueTime: '--',
       issuer: '质量部',
       status: NOTICE_STATUSES.PENDING,
     }),
@@ -552,7 +552,7 @@ function buildPenaltyStatusDemoRecords() {
       assignee: '王强（项目经理）',
       deadline: '2026-06-18',
       handler: DISPATCH_CURRENT_USER,
-      issueTime: '—',
+      issueTime: '--',
       status: PENALTY_STATUSES.PENDING,
       source: '监理隐患清单',
       attachments: [
@@ -769,7 +769,7 @@ function buildPenaltyStatusDemoRecords() {
       assignee: '张安全（安监专员）',
       deadline: '2026-06-20',
       handler: DISPATCH_CURRENT_USER,
-      issueTime: '—',
+      issueTime: '--',
       status: PENALTY_STATUSES.CLOSED,
       source: '监理隐患清单',
       attachments: [
@@ -819,9 +819,9 @@ function buildMeetingTranscript(index = 0) {
 }
 
 export function buildSummaryMinutes(item, transcript = []) {
-  const attendeeText = (item.attendees || DEFAULT_ATTENDEES.slice(0, item.joinedCount)).join('、') || '—'
+  const attendeeText = (item.attendees || DEFAULT_ATTENDEES.slice(0, item.joinedCount)).join('、') || '--'
   const paragraphs = [
-    `本次「${item.title}」于 ${item.startTime || '—'} 召开，时长 ${item.duration || '—'}，由 ${item.host || '—'} 主持，共 ${item.joinedCount ?? 0} 人入会、${item.pendingCount ?? 0} 人未入会。`,
+    `本次「${item.title}」于 ${item.startTime || '--'} 召开，时长 ${item.duration || '--'}，由 ${item.host || '--'} 主持，共 ${item.joinedCount ?? 0} 人入会、${item.pendingCount ?? 0} 人未入会。`,
     item.summary
       ? `会议重点：${item.summary}`
       : '会议围绕在建项目安全质量管控开展视频调度与现场核查。',
@@ -907,7 +907,7 @@ function ensurePenaltyPendingPatch() {
   const pendingRecords = buildPenaltyPendingRecords()
   pendingRecords.forEach((record) => {
     const index = list.findIndex((item) => item.id === record.id)
-    if (index >= 0) list[index] = { ...list[index], ...record, status: '待下发', issueTime: '—' }
+    if (index >= 0) list[index] = { ...list[index], ...record, status: '待下发', issueTime: '--' }
     else list.unshift(record)
   })
   writeList(PENALTY_KEY, list)
@@ -1083,7 +1083,7 @@ function buildReminderSeed() {
       matterDescription: '2 名特种作业人员证件即将过期，请 7 日内完成换证并上传闭环材料。',
       assignee: '王强（项目经理）',
       deadline: '2026-06-21',
-      issueTime: '—',
+      issueTime: '--',
       issuer: '质量部',
       status: NOTICE_STATUSES.PENDING,
       source: '后台录入',
@@ -1135,8 +1135,8 @@ function ensureReminderStatusPatch() {
           ...normalized,
           status,
           issueTime:
-            status === NOTICE_STATUSES.PENDING && (!item.issueTime || item.issueTime === '—')
-              ? '—'
+            status === NOTICE_STATUSES.PENDING && (!item.issueTime || item.issueTime === '--')
+              ? '--'
               : normalized.issueTime,
         }
       }),
@@ -1158,8 +1158,8 @@ function ensureNoticeStatusPatch() {
           ...normalized,
           status,
           issueTime:
-            status === NOTICE_STATUSES.PENDING && (!item.issueTime || item.issueTime === '—')
-              ? '—'
+            status === NOTICE_STATUSES.PENDING && (!item.issueTime || item.issueTime === '--')
+              ? '--'
               : normalized.issueTime,
         }
       }),
@@ -1235,7 +1235,7 @@ export function saveDispatchMeetingRecord(payload) {
     id: payload.id || createDocId('HY'),
     title: payload.title || '调度指挥会议',
     startTime: payload.startTime || new Date().toLocaleString('zh-CN', { hour12: false }),
-    duration: payload.duration || '—',
+    duration: payload.duration || '--',
     host: payload.host || '指挥部调度席',
     attendees: payload.attendees || [],
     joinedCount: payload.joinedCount ?? 0,
@@ -1277,7 +1277,7 @@ function buildScreenshotNoticeRecord(payload) {
     executor: payload.executor || payload.executeDept || payload.rectifier || '',
     deadline: payload.deadline || defaultDeadline(),
     remark: payload.remark || '',
-    issueTime: '—',
+    issueTime: '--',
     issuer: payload.issuer || DISPATCH_CURRENT_USER,
     status: NOTICE_STATUSES.PENDING,
     snapshot: payload.snapshot || '',
@@ -1293,7 +1293,7 @@ function buildScreenshotReminderRecord(payload) {
     matterDescription: payload.matterDescription || payload.description || '',
     assignee: payload.assignee || payload.executor || payload.rectifier || '',
     deadline: payload.deadline || defaultDeadline(),
-    issueTime: '—',
+    issueTime: '--',
     issuer: payload.issuer || DISPATCH_CURRENT_USER,
     status: NOTICE_STATUSES.PENDING,
     snapshot: payload.snapshot || '',
@@ -1313,7 +1313,7 @@ function buildScreenshotPenaltyRecord(payload) {
     assignee: payload.assignee || payload.executor || payload.rectifier || '',
     deadline: payload.deadline || defaultDeadline(),
     handler: DISPATCH_CURRENT_USER,
-    issueTime: '—',
+    issueTime: '--',
     status: PENALTY_STATUSES.PENDING,
     source: '视频截屏',
     snapshot: payload.snapshot || '',

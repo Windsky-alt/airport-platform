@@ -241,7 +241,7 @@ async function onRemove(row) {
 }
 
 function itemName(row) {
-  return wbsNodes.find((n) => n.id === row.wbs_node_id)?.node_name || '—'
+  return wbsNodes.find((n) => n.id === row.wbs_node_id)?.node_name || '--'
 }
 
 function summaryText() {

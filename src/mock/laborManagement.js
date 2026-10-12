@@ -441,7 +441,7 @@ export function buildHqLaborWarningStatsByProject() {
         total,
         disposed,
         pending,
-        disposalRate: rate == null ? '—' : `${rate}%`,
+        disposalRate: rate == null ? '--' : `${rate}%`,
         disposalRateValue: rate,
       }
     })

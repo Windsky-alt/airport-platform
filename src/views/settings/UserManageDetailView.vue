@@ -54,15 +54,15 @@ function goEdit() {
       <el-descriptions :column="3" border>
         <el-descriptions-item label="姓名">{{ detail.name }}</el-descriptions-item>
         <el-descriptions-item label="登录账号">{{ detail.loginAccount }}</el-descriptions-item>
-        <el-descriptions-item label="备注">{{ detail.remark || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="性别">{{ detail.gender || '—' }}</el-descriptions-item>
+        <el-descriptions-item label="备注">{{ detail.remark || '--' }}</el-descriptions-item>
+        <el-descriptions-item label="性别">{{ detail.gender || '--' }}</el-descriptions-item>
         <el-descriptions-item label="手机号">{{ detail.phone }}</el-descriptions-item>
         <el-descriptions-item label="邮箱">{{ detail.email }}</el-descriptions-item>
         <el-descriptions-item label="所属组织">
-          {{ orgLabelMap[detail.orgId] || detail.orgId || '—' }}
+          {{ orgLabelMap[detail.orgId] || detail.orgId || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="岗位" :span="2">
-          {{ positionLabels.length ? positionLabels.join('、') : '—' }}
+          {{ positionLabels.length ? positionLabels.join('、') : '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="状态">
           <el-tag :type="detail.status ? 'success' : 'info'">{{ detail.status ? '启用' : '停用' }}</el-tag>

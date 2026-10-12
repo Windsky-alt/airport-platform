@@ -153,12 +153,12 @@ function goBackToHQ() {
           <template #default="{ row }">{{ displayName(row) }}</template>
         </el-table-column>
         <el-table-column label="规格型号" min-width="140" show-overflow-tooltip>
-          <template #default="{ row }">{{ row.material_spec || row.model || '—' }}</template>
+          <template #default="{ row }">{{ row.material_spec || row.model || '--' }}</template>
         </el-table-column>
         <el-table-column prop="brand_name" label="品牌" width="100" />
         <el-table-column label="定样单号" width="100">
           <template #default="{ row }">{{
-            row.sample_application_id || '—'
+            row.sample_application_id || '--'
           }}</template>
         </el-table-column>
         <el-table-column label="进场数量" width="100">
@@ -166,7 +166,7 @@ function goBackToHQ() {
         </el-table-column>
         <el-table-column prop="supplier" label="供应商" min-width="110" show-overflow-tooltip />
         <el-table-column prop="submit_time" label="进场时间" width="160" sortable>
-          <template #default="{ row }">{{ row.submit_time || '—' }}</template>
+          <template #default="{ row }">{{ row.submit_time || '--' }}</template>
         </el-table-column>
         <el-table-column label="退场状态" width="100">
           <template #default="{ row }">
@@ -188,7 +188,7 @@ function goBackToHQ() {
         <el-table-column label="累计退场数量" width="120">
           <template #default="{ row }">
             <span v-if="row.exit_qty_total > 0">{{ row.exit_qty_total }}{{ row.unit }}</span>
-            <span v-else class="muted">—</span>
+            <span v-else class="muted">--</span>
           </template>
         </el-table-column>
         <el-table-column label="剩余可退" width="100">
@@ -196,14 +196,14 @@ function goBackToHQ() {
             <span v-if="row.exit_qty_total > 0 || row.exited">
               {{ row.remaining_qty }}{{ row.unit }}
             </span>
-            <span v-else class="muted">—</span>
+            <span v-else class="muted">--</span>
           </template>
         </el-table-column>
         <el-table-column prop="exit_time" label="最近退场时间" width="160">
-          <template #default="{ row }">{{ row.exit_time || '—' }}</template>
+          <template #default="{ row }">{{ row.exit_time || '--' }}</template>
         </el-table-column>
         <el-table-column prop="reason" label="最近退场原因" min-width="140" show-overflow-tooltip>
-          <template #default="{ row }">{{ row.reason || '—' }}</template>
+          <template #default="{ row }">{{ row.reason || '--' }}</template>
         </el-table-column>
         <el-table-column label="操作" width="90" fixed="right">
           <template #default="{ row }">

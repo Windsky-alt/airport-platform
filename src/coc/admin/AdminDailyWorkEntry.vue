@@ -251,7 +251,7 @@ function onImportFileChange(uploadFile) {
 function riskLevelLabel(level) {
   if (level === 'red') return '红色'
   if (level === 'yellow') return '黄色'
-  return level || '—'
+  return level || '--'
 }
 
 function riskLevelTag(level) {

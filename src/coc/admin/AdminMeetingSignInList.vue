@@ -70,12 +70,12 @@ function openDetail(row) {
 
 function meetingPeriodText(row) {
   if (row?.ongoing) return `${row.date || date} · 会议进行中`
-  return row?.meetingPeriod || row?.meetingTime || '—'
+  return row?.meetingPeriod || row?.meetingTime || '--'
 }
 
 function projectsText(row) {
   const names = row.dispatchProjects || []
-  return names.length ? names.join('、') : '—'
+  return names.length ? names.join('、') : '--'
 }
 
 onMounted(() => {
@@ -181,7 +181,7 @@ onUnmounted(() => {
           class="project-block"
         >
           <div class="block-label">
-            {{ group.projectName || '—' }} · 参会人员清单
+            {{ group.projectName || '--' }} · 参会人员清单
             <span class="block-count">
               已参会 {{ group.attendeeCount ?? (group.attendees || []).length }} ·
               未参会 {{ group.absenteeCount ?? (group.absentees || []).length }}

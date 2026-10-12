@@ -36,8 +36,8 @@ const listAll = computed(() => {
     const alternates = cands.filter((c) => !c.is_primary)
     return {
       ...a,
-      primary_brand: primary?.brand_name || '—',
-      alternate_preview: alternates.map((c) => c.brand_name).join(' / ') || '—',
+      primary_brand: primary?.brand_name || '--',
+      alternate_preview: alternates.map((c) => c.brand_name).join(' / ') || '--',
     }
   })
 })
@@ -113,7 +113,7 @@ function copyFromRejected(row) {
           </template>
         </el-table-column>
         <el-table-column label="当前节点" width="120">
-          <template #default="{ row }">{{ NODE_LABEL[row.current_node] || '—' }}</template>
+          <template #default="{ row }">{{ NODE_LABEL[row.current_node] || '--' }}</template>
         </el-table-column>
         <el-table-column prop="submit_time" label="提交时间" width="170" />
         <el-table-column label="操作" width="160" fixed="right">

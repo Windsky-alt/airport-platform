@@ -21,6 +21,12 @@ const filters = reactive({
   risk_point: '',
 })
 
+/** 点「搜索」后才生效的查询条件（工具栏内为待提交的条件） */
+const query = reactive({
+  risk_type: '',
+  risk_point: '',
+})
+
 const dialogVisible = ref(false)
 const editingId = ref('')
 const form = reactive({
@@ -34,22 +40,27 @@ const form = reactive({
 const tableData = computed(() => {
   if (!laborProjectId.value) return []
   return listRiskPointConfigs(laborProjectId.value, {
-    risk_type: filters.risk_type,
-    risk_point: filters.risk_point,
+    risk_type: query.risk_type,
+    risk_point: query.risk_point,
   })
 })
 
 const filterTypeOptions = computed(() => listConfigRiskTypes(laborProjectId.value))
 const typeInputOptions = computed(() => listConfigRiskTypes(laborProjectId.value))
 
+function doSearch() {
+  query.risk_type = filters.risk_type
+  query.risk_point = filters.risk_point
+}
+
 watch(laborProjectId, () => {
-  filters.risk_type = ''
-  filters.risk_point = ''
+  resetFilters()
 })
 
 function resetFilters() {
   filters.risk_type = ''
   filters.risk_point = ''
+  doSearch()
 }
 
 function resetForm() {
@@ -177,7 +188,7 @@ function handleDelete(row) {
           style="width: 220px"
           aria-label="风险点"
         />
-        <el-button type="primary" @click="() => {}">搜索</el-button>
+        <el-button type="primary" @click="doSearch">搜索</el-button>
         <el-button @click="resetFilters">重置</el-button>
         <div class="toolbar-spacer" />
         <el-button type="primary" @click="openAdd">+ 新增</el-button>

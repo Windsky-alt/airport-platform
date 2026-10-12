@@ -96,14 +96,14 @@ function openKpi(item) {
 }
 
 function formatRate(value) {
-  if (value == null || value === '') return '—'
+  if (value == null || value === '') return '--'
   const num = Number(value)
   if (Number.isNaN(num)) return String(value)
   return `${num}%`
 }
 
 function display(value) {
-  if (value == null || value === '') return '—'
+  if (value == null || value === '') return '--'
   return value
 }
 </script>

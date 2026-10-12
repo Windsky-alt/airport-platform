@@ -48,7 +48,7 @@ export function useCommandMeetingControl() {
     const base = {
       title: '调度指挥会议',
       startTime: startedAt || formatNow(),
-      duration: recording?.durationText || session.meetingDurationText.value || '—',
+      duration: recording?.durationText || session.meetingDurationText.value || '--',
       host: '指挥部调度席',
       joinedCount: dutyRecord?.attendeeTotal ?? 0,
       pendingCount: dutyRecord?.absenteeTotal ?? 0,

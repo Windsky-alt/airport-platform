@@ -135,7 +135,7 @@ function onSubmit() {
         <span class="inspection-stage-label">当前业务</span>
         <strong>{{ todo.inspectionBizType }}</strong>
       </div>
-      <el-tag type="warning" effect="light">{{ todo.detail?.currentNode || '—' }}</el-tag>
+      <el-tag type="warning" effect="light">{{ todo.detail?.currentNode || '--' }}</el-tag>
     </div>
     <el-descriptions
       v-if="todo.inspectionBizType === '巡检'"
@@ -144,12 +144,12 @@ function onSubmit() {
       size="small"
       class="desc-panel"
     >
-      <el-descriptions-item label="巡检任务单编号">{{ todo.detail?.taskNo || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="计划名称">{{ todo.detail?.planName || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="计划编号">{{ todo.detail?.planNo || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="任务来源">{{ todo.detail?.source || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="项目名称">{{ todo.detail?.project || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="执行人">{{ todo.detail?.executor || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="巡检任务单编号">{{ todo.detail?.taskNo || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="计划名称">{{ todo.detail?.planName || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="计划编号">{{ todo.detail?.planNo || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="任务来源">{{ todo.detail?.source || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="项目名称">{{ todo.detail?.project || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="执行人">{{ todo.detail?.executor || '--' }}</el-descriptions-item>
       <el-descriptions-item label="巡检分类">
         <el-tag
           v-for="category in normalizeInspectionCategories(todo.detail?.inspectionCategories || todo.detail?.inspectionCategory)"
@@ -161,28 +161,28 @@ function onSubmit() {
         >{{ category }}</el-tag>
       </el-descriptions-item>
       <el-descriptions-item label="危大工程现场巡视">{{ todo.detail?.status === '已完成' || todo.detail?.majorHazardLedgerId ? (todo.detail?.isMajorHazardPatrol || '否') : '移动端执行时选择' }}</el-descriptions-item>
-      <el-descriptions-item v-if="todo.detail?.isMajorHazardPatrol === '是'" label="危大工程名称">{{ todo.detail?.majorHazardName || '—' }}</el-descriptions-item>
+      <el-descriptions-item v-if="todo.detail?.isMajorHazardPatrol === '是'" label="危大工程名称">{{ todo.detail?.majorHazardName || '--' }}</el-descriptions-item>
       <el-descriptions-item v-if="todo.detail?.isMajorHazardPatrol === '是'" label="巡视台账同步" :span="todo.detail?.majorHazardName ? 1 : 2">
         {{ todo.detail?.status === '已完成' ? '已自动同步至危大工程现场巡视台账' : '完成巡检后自动同步至危大工程现场巡视台账' }}
       </el-descriptions-item>
-      <el-descriptions-item label="同行人">{{ todo.detail?.companions?.join('、') || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="巡检类型">{{ todo.detail?.planType || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="同行人">{{ todo.detail?.companions?.join('、') || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="巡检类型">{{ todo.detail?.planType || '--' }}</el-descriptions-item>
       <el-descriptions-item :label="todo.detail?.status === '已完成' ? '巡检日期' : '截止日期'">
         {{
           todo.detail?.status === '已完成'
-            ? todo.detail?.inspectionDate || '—'
-            : todo.detail?.deadline || '—'
+            ? todo.detail?.inspectionDate || '--'
+            : todo.detail?.deadline || '--'
         }}
       </el-descriptions-item>
-      <el-descriptions-item label="状态">{{ todo.detail?.status || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="状态">{{ todo.detail?.status || '--' }}</el-descriptions-item>
       <el-descriptions-item v-if="todo.detail?.summary" label="任务说明" :span="2">
         {{ todo.detail.summary }}
       </el-descriptions-item>
     </el-descriptions>
     <el-descriptions v-else :column="2" border size="small" class="desc-panel">
-      <el-descriptions-item label="整改单编号">{{ todo.detail?.rectifyNo || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="巡检任务单编号">{{ todo.detail?.taskNo || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="项目名称">{{ todo.detail?.project || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="整改单编号">{{ todo.detail?.rectifyNo || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="巡检任务单编号">{{ todo.detail?.taskNo || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="项目名称">{{ todo.detail?.project || '--' }}</el-descriptions-item>
       <el-descriptions-item label="巡检分类">
         <el-tag
           v-for="category in normalizeInspectionCategories(todo.detail?.inspectionCategories || todo.detail?.inspectionCategory)"
@@ -193,10 +193,10 @@ function onSubmit() {
           style="margin-right:4px"
         >{{ category }}</el-tag>
       </el-descriptions-item>
-      <el-descriptions-item label="整改人">{{ todo.detail?.rectifier || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="复查人">{{ todo.detail?.reviewer || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="截止日期">{{ todo.detail?.deadline || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="状态">{{ todo.detail?.status || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="整改人">{{ todo.detail?.rectifier || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="复查人">{{ todo.detail?.reviewer || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="截止日期">{{ todo.detail?.deadline || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="状态">{{ todo.detail?.status || '--' }}</el-descriptions-item>
       <el-descriptions-item v-if="todo.detail?.closeDate" label="关闭日期">
         {{ todo.detail.closeDate }}
       </el-descriptions-item>

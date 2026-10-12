@@ -40,7 +40,7 @@ function demoHtmlPreviewDataUrl({ title, projectName, meetingDate, bodyLines = [
           ${tableRows
             .map(
               (r) =>
-                `<tr><td>${escapeHtml(r.type)}</td><td>${escapeHtml(r.desc)}</td><td>${escapeHtml(r.level)}</td><td>${escapeHtml(r.remark || '—')}</td></tr>`,
+                `<tr><td>${escapeHtml(r.type)}</td><td>${escapeHtml(r.desc)}</td><td>${escapeHtml(r.level)}</td><td>${escapeHtml(r.remark || '--')}</td></tr>`,
             )
             .join('')}
         </tbody>

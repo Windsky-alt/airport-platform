@@ -52,7 +52,7 @@ function buildPunchRecord(project_id, project_name, index, tpl, date) {
 
   const on_site_status =
     roster_entry_status === REALNAME_ENTRY_STATUS.EXITED
-      ? '—'
+      ? '--'
       : getOnSiteStatus(clock_in ? clock_in.split(' ')[1] : '', clock_out ? clock_out.split(' ')[1] : '')
 
   // 进出场列：在岗人员按打卡派生；离场人员展示「离场」
@@ -82,7 +82,7 @@ function buildPunchRecord(project_id, project_name, index, tpl, date) {
     on_site_status,
     work_hours: clock_in && clock_out
       ? ((new Date(clock_out.replace(' ', 'T')) - new Date(clock_in.replace(' ', 'T'))) / 3600000).toFixed(1)
-      : clock_in ? '—' : '0',
+      : clock_in ? '--' : '0',
   }
 }
 
@@ -142,7 +142,7 @@ function isValidPunchTime(value) {
 /** 从列表日汇总行展开进出场流水（首尾与列表 clock_in/out、闸机一致） */
 function expandRowToAccessEvents(row) {
   const events = []
-  const photo = (row.name || '').slice(0, 1) || '—'
+  const photo = (row.name || '').slice(0, 1) || '--'
   const gateIn = isValidPunchTime(row.gate_in) ? row.gate_in : GATES[0]
   const gateOut = isValidPunchTime(row.gate_out) ? row.gate_out : gateIn
 
@@ -193,7 +193,7 @@ function findOrBuildDayRow({ project_id, name, id_card_raw, date }) {
   const tpl =
     tplIndex >= 0
       ? detailTemplates[tplIndex]
-      : { name, work_type: '普工', team: '综合班组', unit_name: '—' }
+      : { name, work_type: '普工', team: '综合班组', unit_name: '--' }
   const index = tplIndex >= 0 ? tplIndex : 0
   return buildPunchRecord(project_id, project_name, index, tpl, date)
 }
@@ -218,7 +218,7 @@ export function logAttendanceIdCardView({ id, name, id_card_raw }) {
   appendOperationLog({
     module: '人员实名制管理',
     type: '查询',
-    content: `查看考勤明细证件号码：${name || '—'}（${id_card_raw || id || '—'}）`,
+    content: `查看考勤明细证件号码：${name || '--'}（${id_card_raw || id || '--'}）`,
     requestUrl: `/api/labor/attendance/${id}/id-card/view`,
   })
 }

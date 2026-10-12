@@ -6,7 +6,7 @@ export function maskIdCard(id) {
 }
 
 export function maskPhone(phone) {
-  if (!phone || phone.length < 7) return phone || '—'
+  if (!phone || phone.length < 7) return phone || '--'
   if (phone.length === 11) return `${phone.slice(0, 3)}****${phone.slice(-4)}`
   return `${phone.slice(0, 3)}****${phone.slice(-2)}`
 }

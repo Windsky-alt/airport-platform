@@ -140,9 +140,9 @@ watch(() => props.selectionId, () => closeDetail())
               <div class="detail-item"><span class="dl">设备名称</span><span>{{ detailItem.name }}</span></div>
               <div class="detail-item"><span class="dl">设备类型</span><span>{{ detailItem.type }}</span></div>
               <div class="detail-item"><span class="dl">监测接入</span><span>{{ detailItem.monitorConnected ? '已接入' : '未接入' }}</span></div>
-              <div class="detail-item"><span class="dl">抽检结果</span><span>{{ detailItem.inspectResult || '—' }}</span></div>
+              <div class="detail-item"><span class="dl">抽检结果</span><span>{{ detailItem.inspectResult || '--' }}</span></div>
               <div class="detail-item"><span class="dl">记录日期</span><span>{{ detailItem.date }}</span></div>
-              <div class="detail-item"><span class="dl">处理状态</span><span>{{ detailItem.status || '—' }}</span></div>
+              <div class="detail-item"><span class="dl">处理状态</span><span>{{ detailItem.status || '--' }}</span></div>
             </div>
           </div>
         </div>

@@ -232,7 +232,7 @@ defineExpose({ reload: load })
       <el-table-column prop="description" label="隐患描述" min-width="200" show-overflow-tooltip />
       <el-table-column prop="hazardLevel" label="隐患等级" width="88" align="center" />
       <el-table-column label="备注" min-width="120" show-overflow-tooltip>
-        <template #default="{ row }">{{ row.remark || '—' }}</template>
+        <template #default="{ row }">{{ row.remark || '--' }}</template>
       </el-table-column>
       <el-table-column label="整改状态" width="96" align="center">
         <template #default="{ row }">
@@ -294,14 +294,14 @@ defineExpose({ reload: load })
     <el-dialog v-model="detailVisible" title="监理隐患详情" width="640px">
       <template v-if="current">
         <el-descriptions :column="1" border>
-          <el-descriptions-item label="项目名称">{{ current.projectName || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="项目名称">{{ current.projectName || '--' }}</el-descriptions-item>
           <el-descriptions-item label="隐患类型">{{ hazardTypeLabel(current.hazardType) }}</el-descriptions-item>
-          <el-descriptions-item label="隐患描述">{{ current.description || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="隐患等级">{{ current.hazardLevel || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="备注">{{ current.remark || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="隐患描述">{{ current.description || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="隐患等级">{{ current.hazardLevel || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="备注">{{ current.remark || '--' }}</el-descriptions-item>
           <el-descriptions-item label="整改状态">{{ current.rectifyStatus || '待整改' }}</el-descriptions-item>
-          <el-descriptions-item label="来源">{{ current.source || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="关联会议">{{ current.meetingId || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="来源">{{ current.source || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="关联会议">{{ current.meetingId || '--' }}</el-descriptions-item>
           <el-descriptions-item label="登记时间">{{ current.uploadTime }}</el-descriptions-item>
         </el-descriptions>
 
@@ -315,7 +315,7 @@ defineExpose({ reload: load })
               placement="top"
             >
               <div class="log-title">
-                {{ log.action }}：{{ log.fromStatus || '—' }} → {{ log.toStatus }}
+                {{ log.action }}：{{ log.fromStatus || '--' }} → {{ log.toStatus }}
               </div>
               <div class="log-meta">{{ log.operator }}（{{ log.operatorRole }}）</div>
               <div v-if="log.remark" class="log-remark">备注：{{ log.remark }}</div>

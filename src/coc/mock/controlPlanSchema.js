@@ -72,7 +72,7 @@ export const CONTROL_PLAN_ROW_TYPES = [
 export function parseControlNodeStatus(raw) {
   const text = String(raw ?? '').trim()
   if (!text || text === '/' || text === '-') {
-    return { kind: 'empty', label: text || '—', progress: null }
+    return { kind: 'empty', label: text || '--', progress: null }
   }
   if (text === '不涉及') {
     return { kind: 'na', label: '不涉及', progress: null }
@@ -117,7 +117,7 @@ export function getControlNodeKindLabel(kind) {
     done: '已完成',
     lag: '滞后',
     na: '不涉及',
-    empty: '—',
+    empty: '--',
   }
   return map[kind] || kind
 }

@@ -207,7 +207,7 @@ function goBackToHQ() {
           <el-table-column prop="unit.work_type" label="工种/职务" width="100" />
           <el-table-column prop="unit.unit_name" label="参建单位名称" min-width="180" show-overflow-tooltip />
           <el-table-column prop="unit.cert_valid_to" label="特种资质有效期" width="130" align="center">
-            <template #default="{ row }">{{ row.unit.cert_valid_to || '—' }}</template>
+            <template #default="{ row }">{{ row.unit.cert_valid_to || '--' }}</template>
           </el-table-column>
           <el-table-column :label="REALNAME_ENTRY_LABEL" width="90" align="center">
             <template #default="{ row }">

@@ -51,7 +51,7 @@ const numericValue = computed({
 })
 
 const displayText = computed(() => {
-  if (props.modelValue === '' || props.modelValue === null || props.modelValue === undefined) return '—'
+  if (props.modelValue === '' || props.modelValue === null || props.modelValue === undefined) return '--'
   return props.unit ? `${props.modelValue}${props.unit}` : String(props.modelValue)
 })
 </script>

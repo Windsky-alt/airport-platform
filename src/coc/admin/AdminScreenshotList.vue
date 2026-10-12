@@ -89,7 +89,7 @@ function docTypeLabel(type) {
     penalty: '处罚单',
     safety: '安全隐患',
     quality: '质量隐患',
-  }[type] || type || '—'
+  }[type] || type || '--'
 }
 
 function docTypeTagType(type) {
@@ -140,10 +140,10 @@ onMounted(load)
         <el-table-column prop="cameraName" label="摄像头" min-width="110" show-overflow-tooltip />
         <el-table-column prop="cameraLocation" label="位置" min-width="100" show-overflow-tooltip />
         <el-table-column label="工作/问题" min-width="180" show-overflow-tooltip>
-          <template #default="{ row }">{{ rowSummary(row) || '—' }}</template>
+          <template #default="{ row }">{{ rowSummary(row) || '--' }}</template>
         </el-table-column>
         <el-table-column label="执行/整改" width="112" show-overflow-tooltip>
-          <template #default="{ row }">{{ rowHandler(row) || '—' }}</template>
+          <template #default="{ row }">{{ rowHandler(row) || '--' }}</template>
         </el-table-column>
         <el-table-column label="来源" width="72">
           <template #default="{ row }">{{ sourceLabel(row.sourceType) }}</template>
@@ -170,34 +170,34 @@ onMounted(load)
           <el-descriptions-item label="摄像头名称">{{ current.cameraName }}</el-descriptions-item>
           <el-descriptions-item label="摄像头位置">{{ current.cameraLocation }}</el-descriptions-item>
           <template v-if="isNoticeRow(current)">
-            <el-descriptions-item label="工作类型">{{ current.workType || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="工作要求">{{ current.workRequirement || current.description || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="工作类型">{{ current.workType || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="工作要求">{{ current.workRequirement || current.description || '--' }}</el-descriptions-item>
             <el-descriptions-item label="执行人">
               {{ resolveExecutorDisplay(current.executor || current.executeDept || current.rectifier) }}
             </el-descriptions-item>
-            <el-descriptions-item label="完成时限">{{ current.deadline || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="备注">{{ current.remark || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="完成时限">{{ current.deadline || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="备注">{{ current.remark || '--' }}</el-descriptions-item>
           </template>
           <template v-else-if="isReminderRow(current)">
-            <el-descriptions-item label="事项描述">{{ current.matterDescription || current.description || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="事项描述">{{ current.matterDescription || current.description || '--' }}</el-descriptions-item>
             <el-descriptions-item label="指派人">
               {{ resolveExecutorDisplay(current.assignee || current.executor || current.rectifier) }}
             </el-descriptions-item>
-            <el-descriptions-item label="完成时限">{{ current.deadline || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="完成时限">{{ current.deadline || '--' }}</el-descriptions-item>
           </template>
           <template v-else-if="isPenaltyRow(current)">
-            <el-descriptions-item label="类型">{{ current.workType || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="处罚内容">{{ current.penaltyContent || current.description || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="类型">{{ current.workType || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="处罚内容">{{ current.penaltyContent || current.description || '--' }}</el-descriptions-item>
             <el-descriptions-item label="指派人">
               {{ resolveExecutorDisplay(current.assignee || current.executor || current.rectifier) }}
             </el-descriptions-item>
-            <el-descriptions-item label="完成时限">{{ current.deadline || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="完成时限">{{ current.deadline || '--' }}</el-descriptions-item>
           </template>
           <template v-else-if="isHazardRow(current)">
-            <el-descriptions-item label="隐患描述">{{ current.description || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="等级">{{ current.hazardLevel || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="整改人">{{ current.rectifier || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="整改期限">{{ current.hazardDeadline || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="隐患描述">{{ current.description || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="等级">{{ current.hazardLevel || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="整改人">{{ current.rectifier || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="整改期限">{{ current.hazardDeadline || '--' }}</el-descriptions-item>
           </template>
           <el-descriptions-item label="来源">{{ sourceLabel(current.sourceType) }}</el-descriptions-item>
           <el-descriptions-item label="登记时间">{{ current.createdAt }}</el-descriptions-item>

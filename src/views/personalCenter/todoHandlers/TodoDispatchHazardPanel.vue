@@ -53,7 +53,7 @@ function hazardTypeLabel(type) {
 }
 
 function sourceTypeLabel(type) {
-  return { live: '实时', playback: '回放', meeting: '会议' }[type] || type || '—'
+  return { live: '实时', playback: '回放', meeting: '会议' }[type] || type || '--'
 }
 
 function resetForm() {
@@ -77,18 +77,18 @@ watch(() => props.todo, resetForm, { immediate: true })
       </el-tag>
     </div>
     <el-descriptions v-if="mergedHazard" :column="2" border size="small" class="desc-panel">
-      <el-descriptions-item label="项目名称">{{ mergedHazard.projectName || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="项目名称">{{ mergedHazard.projectName || '--' }}</el-descriptions-item>
       <el-descriptions-item label="隐患类型">{{ hazardTypeLabel(mergedHazard.hazardType) }}</el-descriptions-item>
-      <el-descriptions-item label="隐患描述" :span="2">{{ mergedHazard.description || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="隐患等级">{{ mergedHazard.hazardLevel || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="隐患描述" :span="2">{{ mergedHazard.description || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="隐患等级">{{ mergedHazard.hazardLevel || '--' }}</el-descriptions-item>
       <el-descriptions-item label="整改状态">{{ mergedHazard.rectifyStatus || '待整改' }}</el-descriptions-item>
-      <el-descriptions-item label="整改人">{{ mergedHazard.rectifier || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="整改期限">{{ mergedHazard.hazardDeadline || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="摄像头">{{ mergedHazard.cameraName || '—' }}</el-descriptions-item>
-      <el-descriptions-item label="监控点位">{{ mergedHazard.cameraLocation || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="整改人">{{ mergedHazard.rectifier || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="整改期限">{{ mergedHazard.hazardDeadline || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="摄像头">{{ mergedHazard.cameraName || '--' }}</el-descriptions-item>
+      <el-descriptions-item label="监控点位">{{ mergedHazard.cameraLocation || '--' }}</el-descriptions-item>
       <el-descriptions-item label="截图方式">{{ sourceTypeLabel(mergedHazard.sourceType) }}</el-descriptions-item>
       <el-descriptions-item label="登记来源">{{ mergedHazard.source || '问题截图' }}</el-descriptions-item>
-      <el-descriptions-item label="登记时间" :span="2">{{ mergedHazard.uploadTime || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="登记时间" :span="2">{{ mergedHazard.uploadTime || '--' }}</el-descriptions-item>
       <el-descriptions-item :label="`${hazardTypeLabel(mergedHazard.hazardType)}隐患截图`" :span="2">
         <div class="detail-snapshot-thumb">
           <el-image
@@ -103,7 +103,7 @@ watch(() => props.todo, resetForm, { immediate: true })
         </div>
       </el-descriptions-item>
       <el-descriptions-item v-if="mergedHazard.rectifyStatus !== '待整改'" label="整改说明" :span="2">
-        {{ mergedHazard.rectifyRemark || '—' }}
+        {{ mergedHazard.rectifyRemark || '--' }}
       </el-descriptions-item>
       <el-descriptions-item v-if="mergedHazard.rectifyStatus !== '待整改'" label="整改照片" :span="2">
         <div v-if="mergedHazard.rectifyPhotos?.length" class="detail-photo-thumbs">
@@ -118,7 +118,7 @@ watch(() => props.todo, resetForm, { immediate: true })
             :alt="resolveDispatchHazardPhotoName(photo, index)"
           />
         </div>
-        <span v-else>—</span>
+        <span v-else>--</span>
       </el-descriptions-item>
     </el-descriptions>
   </section>

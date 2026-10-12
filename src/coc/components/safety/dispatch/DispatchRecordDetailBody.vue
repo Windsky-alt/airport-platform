@@ -90,7 +90,7 @@ const fields = computed(() => props.kind === 'hazard' ? hazardFields.value : dan
         :class="{ full: field.full }"
       >
         <span class="form-label">{{ field.label }}</span>
-        <span class="form-value">{{ field.value || '—' }}</span>
+        <span class="form-value">{{ field.value || '--' }}</span>
       </div>
     </div>
 

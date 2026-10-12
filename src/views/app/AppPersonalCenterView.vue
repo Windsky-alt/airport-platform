@@ -303,10 +303,10 @@ function handleMessage(item) {
             <strong>{{ item.processName }}</strong>
             <span :class="['status-tag', statusTagClass(item)]">{{ resolveStatus(item) }}</span>
           </div>
-          <div class="message-field"><span>所属模块：</span><b>{{ item.category || item.sourceLabel || '—' }}</b></div>
+          <div class="message-field"><span>所属模块：</span><b>{{ item.category || item.sourceLabel || '--' }}</b></div>
           <div class="message-field"><span>当前节点：</span><b>{{ resolveCurrentNode(item) }}</b></div>
-          <div class="message-field"><span>申请人：</span><b>{{ item.applicant || '—' }}</b></div>
-          <div class="message-field"><span>所属项目：</span><b>{{ item.detail?.project || '—' }}</b></div>
+          <div class="message-field"><span>申请人：</span><b>{{ item.applicant || '--' }}</b></div>
+          <div class="message-field"><span>所属项目：</span><b>{{ item.detail?.project || '--' }}</b></div>
           <div class="message-field"><span>申请日期：</span><b>{{ applyDate(item) }}</b></div>
           <footer>
             <button type="button" @click="handleMessage(item)">
@@ -340,8 +340,8 @@ function handleMessage(item) {
               {{ item.readStatus }}
             </span>
           </div>
-          <div class="message-field"><span>模块：</span><b>{{ item.module || '—' }}</b></div>
-          <div class="message-field"><span>时间：</span><b>{{ item.time || '—' }}</b></div>
+          <div class="message-field"><span>模块：</span><b>{{ item.module || '--' }}</b></div>
+          <div class="message-field"><span>时间：</span><b>{{ item.time || '--' }}</b></div>
           <p class="notice-body">{{ item.content }}</p>
         </article>
         <div v-if="!noticeMessages.length" class="empty-center">
@@ -398,7 +398,7 @@ function handleMessage(item) {
             <span :class="['status-tag', warnStatusTagClass(item.status)]">{{ item.status }}</span>
           </div>
           <div class="message-field"><span>模块：</span><b>{{ item.module }}</b></div>
-          <div class="message-field"><span>项目：</span><b>{{ item.projectName || '—' }}</b></div>
+          <div class="message-field"><span>项目：</span><b>{{ item.projectName || '--' }}</b></div>
           <footer>
             <button type="button" @click="openWarningDetail(item)">详情</button>
           </footer>

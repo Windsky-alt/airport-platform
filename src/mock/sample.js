@@ -37,11 +37,11 @@ export function statusLabel(status) {
   // 废止码仅只读兼容展示；新材料定样不再产出 pending/withdrawn
   if (status === 'pending') return '审批中'
   if (status === 'withdrawn') return '已撤回'
-  return STATUS_LABEL[status] || status || '—'
+  return STATUS_LABEL[status] || status || '--'
 }
 
 export const NODE_LABEL = {
-  none: '—',
+  none: '--',
   supervisor: '待监理审',
   pm: '待项目经理审',
 }

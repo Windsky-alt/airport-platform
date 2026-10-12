@@ -22,19 +22,19 @@ const isEquipment = computed(() => entry.value?.entry_type === 'equipment')
 
 const statusLabel = computed(() => {
   const s = entry.value?.status
-  if (!s) return '—'
+  if (!s) return '--'
   return STATUS_LABEL[s] || s
 })
 
 function supervisorDisplay(row) {
-  if (!row) return '—'
+  if (!row) return '--'
   const user = findMatSupervisorApprover(row.supervisor_approver_user_id)
   if (user) return formatMatSupervisorApproverLabel(user)
   if (row.supervisor_approver_name) {
     const post = row.supervisor_approver_post_label
     return post ? `${row.supervisor_approver_name}（${post}）` : row.supervisor_approver_name
   }
-  return '—'
+  return '--'
 }
 
 const lineItems = computed(() => {
@@ -138,7 +138,7 @@ function goBack() {
         <div class="fs-title">进场类型</div>
         <div class="form-row">
           <span class="form-label">类型</span>
-          <span class="form-value">{{ ENTRY_TYPE_LABEL[entry.entry_type] || '—' }}</span>
+          <span class="form-value">{{ ENTRY_TYPE_LABEL[entry.entry_type] || '--' }}</span>
         </div>
         <div class="form-row">
           <span class="form-label">状态</span>
@@ -154,27 +154,27 @@ function goBack() {
         </div>
         <div class="form-row">
           <span class="form-label">项目</span>
-          <span class="form-value">{{ entry.project_label || '—' }}</span>
+          <span class="form-value">{{ entry.project_label || '--' }}</span>
         </div>
         <div class="form-row">
           <span class="form-label">品牌</span>
-          <span class="form-value">{{ entry.brand_name || '—' }}</span>
+          <span class="form-value">{{ entry.brand_name || '--' }}</span>
         </div>
         <div class="form-row">
           <span class="form-label">生产厂家</span>
-          <span class="form-value">{{ entry.manufacturer || '—' }}</span>
+          <span class="form-value">{{ entry.manufacturer || '--' }}</span>
         </div>
         <div class="form-row">
           <span class="form-label">供应商</span>
-          <span class="form-value">{{ entry.supplier || '—' }}</span>
+          <span class="form-value">{{ entry.supplier || '--' }}</span>
         </div>
         <div class="form-row">
           <span class="form-label">关联定样</span>
-          <span class="form-value">{{ entry.sample_application_id || '—' }}</span>
+          <span class="form-value">{{ entry.sample_application_id || '--' }}</span>
         </div>
         <div class="form-row">
           <span class="form-label">申请人</span>
-          <span class="form-value">{{ entry.applicant_name || '—' }}</span>
+          <span class="form-value">{{ entry.applicant_name || '--' }}</span>
         </div>
         <div class="form-row">
           <span class="form-label">监理审批人</span>
@@ -182,7 +182,7 @@ function goBack() {
         </div>
         <div class="form-row">
           <span class="form-label">提交时间</span>
-          <span class="form-value">{{ entry.submit_time || '—' }}</span>
+          <span class="form-value">{{ entry.submit_time || '--' }}</span>
         </div>
       </section>
 
@@ -191,11 +191,11 @@ function goBack() {
           <div class="fs-title">材料进场明细 {{ idx + 1 }}</div>
           <div class="form-row">
             <span class="form-label">材料名称</span>
-            <span class="form-value">{{ row.material_name || '—' }}</span>
+            <span class="form-value">{{ row.material_name || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">规格型号</span>
-            <span class="form-value">{{ row.material_spec || '—' }}</span>
+            <span class="form-value">{{ row.material_spec || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">数量</span>
@@ -203,20 +203,20 @@ function goBack() {
               <template v-if="row.quantity != null && row.quantity !== ''">
                 {{ row.quantity }}{{ row.unit || '' }}
               </template>
-              <template v-else>—</template>
+              <template v-else>--</template>
             </span>
           </div>
           <div class="form-row">
             <span class="form-label">用途</span>
-            <span class="form-value">{{ row.purpose || '—' }}</span>
+            <span class="form-value">{{ row.purpose || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">施工部位</span>
-            <span class="form-value">{{ row.use_part || '—' }}</span>
+            <span class="form-value">{{ row.use_part || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">运单号</span>
-            <span class="form-value">{{ row.waybill_no || '—' }}</span>
+            <span class="form-value">{{ row.waybill_no || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">批次号</span>
@@ -224,15 +224,15 @@ function goBack() {
           </div>
           <div class="form-row">
             <span class="form-label">外观质量</span>
-            <span class="form-value">{{ row.appearance_quality || '—' }}</span>
+            <span class="form-value">{{ row.appearance_quality || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">验收结论</span>
-            <span class="form-value">{{ row.acceptance_result || '—' }}</span>
+            <span class="form-value">{{ row.acceptance_result || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">进场日期</span>
-            <span class="form-value">{{ row.entry_date || '—' }}</span>
+            <span class="form-value">{{ row.entry_date || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">合格证</span>
@@ -266,11 +266,11 @@ function goBack() {
           <div class="fs-title">设备信息 {{ idx + 1 }}</div>
           <div class="form-row">
             <span class="form-label">设备名称</span>
-            <span class="form-value">{{ row.equipment_name || '—' }}</span>
+            <span class="form-value">{{ row.equipment_name || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">规格型号</span>
-            <span class="form-value">{{ row.model || '—' }}</span>
+            <span class="form-value">{{ row.model || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">数量</span>
@@ -278,24 +278,24 @@ function goBack() {
               <template v-if="row.quantity != null && row.quantity !== ''">
                 {{ row.quantity }}{{ row.unit || '' }}
               </template>
-              <template v-else>—</template>
+              <template v-else>--</template>
             </span>
           </div>
           <div class="form-row">
             <span class="form-label">序列号</span>
-            <span class="form-value">{{ row.serial_no || '—' }}</span>
+            <span class="form-value">{{ row.serial_no || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">用途</span>
-            <span class="form-value">{{ row.purpose || '—' }}</span>
+            <span class="form-value">{{ row.purpose || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">施工部位</span>
-            <span class="form-value">{{ row.use_part || '—' }}</span>
+            <span class="form-value">{{ row.use_part || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">运单号</span>
-            <span class="form-value">{{ row.waybill_no || '—' }}</span>
+            <span class="form-value">{{ row.waybill_no || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">批次号</span>
@@ -303,15 +303,15 @@ function goBack() {
           </div>
           <div class="form-row">
             <span class="form-label">外观质量</span>
-            <span class="form-value">{{ row.appearance_quality || '—' }}</span>
+            <span class="form-value">{{ row.appearance_quality || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">验收结论</span>
-            <span class="form-value">{{ row.acceptance_result || '—' }}</span>
+            <span class="form-value">{{ row.acceptance_result || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">进场日期</span>
-            <span class="form-value">{{ row.entry_date || '—' }}</span>
+            <span class="form-value">{{ row.entry_date || '--' }}</span>
           </div>
           <div class="form-row">
             <span class="form-label">合格证</span>
@@ -378,7 +378,7 @@ function goBack() {
           >
             <div class="form-row">
               <span class="form-label">退场单号</span>
-              <span class="form-value">{{ x.exit_no || '—' }}</span>
+              <span class="form-value">{{ x.exit_no || '--' }}</span>
             </div>
             <div class="form-row">
               <span class="form-label">退场数量</span>
@@ -386,15 +386,15 @@ function goBack() {
             </div>
             <div class="form-row">
               <span class="form-label">登记人</span>
-              <span class="form-value">{{ x.operator_name || '—' }}</span>
+              <span class="form-value">{{ x.operator_name || '--' }}</span>
             </div>
             <div class="form-row">
               <span class="form-label">登记时间</span>
-              <span class="form-value">{{ x.exit_time || '—' }}</span>
+              <span class="form-value">{{ x.exit_time || '--' }}</span>
             </div>
             <div class="form-row">
               <span class="form-label">退场原因</span>
-              <span class="form-value">{{ x.reason || '—' }}</span>
+              <span class="form-value">{{ x.reason || '--' }}</span>
             </div>
             <div class="form-row">
               <span class="form-label">退场照片</span>

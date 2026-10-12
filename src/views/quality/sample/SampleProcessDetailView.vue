@@ -123,8 +123,8 @@ const approvalTimeline = computed(() => {
       title: APPROVAL_NODE_LABEL.applicant || '施工提交',
       action: 'submit',
       actionLabel: ACTION_LABEL.submit || '提交',
-      operator: submitRec.operator_name || d.applicant_name || '—',
-      time: submitRec.operate_time || d.submit_time || '—',
+      operator: submitRec.operator_name || d.applicant_name || '--',
+      time: submitRec.operate_time || d.submit_time || '--',
       remark:
         submitRec.opinion ||
         (d.copy_from_application_id ? `从 ${d.copy_from_application_id} 重新申报` : '提交报审'),
@@ -136,8 +136,8 @@ const approvalTimeline = computed(() => {
       title: '施工提交',
       action: 'submit',
       actionLabel: '提交',
-      operator: d.applicant_name || '—',
-      time: d.submit_time || '—',
+      operator: d.applicant_name || '--',
+      time: d.submit_time || '--',
       remark: d.copy_from_application_id
         ? `从 ${d.copy_from_application_id} 重新申报`
         : '提交报审',
@@ -150,9 +150,9 @@ const approvalTimeline = computed(() => {
       key: r.record_id || `${r.node_code}-${r.operate_time}`,
       title: APPROVAL_NODE_LABEL[r.node_code] || r.node_code || '节点',
       action: r.action,
-      actionLabel: ACTION_LABEL[r.action] || r.action || '—',
-      operator: r.operator_name || '—',
-      time: r.operate_time || '—',
+      actionLabel: ACTION_LABEL[r.action] || r.action || '--',
+      operator: r.operator_name || '--',
+      time: r.operate_time || '--',
       remark: r.opinion || '',
       status: r.action === 'reject' ? 'rejected' : 'done',
     })
@@ -183,12 +183,12 @@ function timelineType(status) {
 }
 
 function currentNodeText(app) {
-  if (!app) return '—'
+  if (!app) return '--'
   if (app.current_node === 'none' || !app.current_node) {
     if (app.status === 'approved') return '已办结'
     if (app.status === 'rejected') return '已驳回'
     if (app.status === 'withdrawn') return '已撤回'
-    return '—'
+    return '--'
   }
   return NODE_LABEL[app.current_node] || app.current_node
 }
@@ -226,10 +226,10 @@ function currentNodeText(app) {
             </el-descriptions-item>
             <el-descriptions-item label="工序名称">{{ detail.process_name }}</el-descriptions-item>
             <el-descriptions-item label="当前节点">{{ currentNodeText(detail) }}</el-descriptions-item>
-            <el-descriptions-item label="使用部位">{{ detail.use_part || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="使用部位">{{ detail.use_part || '--' }}</el-descriptions-item>
             <el-descriptions-item label="项目">{{ detail.project_label }}</el-descriptions-item>
             <el-descriptions-item label="申请人">{{ detail.applicant_name }}</el-descriptions-item>
-            <el-descriptions-item label="提交时间">{{ detail.submit_time || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="提交时间">{{ detail.submit_time || '--' }}</el-descriptions-item>
             <el-descriptions-item
               v-if="detail.copy_from_application_id"
               label="重新申报来源"
@@ -238,7 +238,7 @@ function currentNodeText(app) {
               {{ detail.copy_from_application_id }}
             </el-descriptions-item>
             <el-descriptions-item label="关键工序样板说明" :span="2">{{
-              detail.briefing_content || '—'
+              detail.briefing_content || '--'
             }}</el-descriptions-item>
             <el-descriptions-item v-if="detail.remark" label="备注" :span="2">
               {{ detail.remark }}

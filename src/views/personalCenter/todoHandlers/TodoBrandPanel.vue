@@ -32,7 +32,7 @@ const brandCandidates = computed(() => {
 
 const materialTypeText = computed(() => {
   if (app.value?.material_type) return MATERIAL_TYPE[app.value.material_type] || app.value.material_type
-  return props.todo?.detail?.materialType || '—'
+  return props.todo?.detail?.materialType || '--'
 })
 </script>
 
@@ -44,31 +44,31 @@ const materialTypeText = computed(() => {
     </div>
     <el-descriptions :column="2" border class="info-desc">
       <el-descriptions-item label="报审编号">
-        {{ app?.application_id || todo.detail?.applicationId || '—' }}
+        {{ app?.application_id || todo.detail?.applicationId || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="状态">
         <el-tag v-if="app?.status" size="small" :type="statusTagType(app.status)">
           {{ statusLabel(app.status) }}
         </el-tag>
-        <span v-else>—</span>
+        <span v-else>--</span>
       </el-descriptions-item>
       <el-descriptions-item label="材料/设备名称">
-        {{ app?.material_name || todo.detail?.materialName || '—' }}
+        {{ app?.material_name || todo.detail?.materialName || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="类型">{{ materialTypeText }}</el-descriptions-item>
       <el-descriptions-item label="施工部位">
-        {{ app?.use_part || todo.detail?.usePart || '—' }}
+        {{ app?.use_part || todo.detail?.usePart || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="所属项目">
-        {{ todo.detail?.project || todo.projectName || '—' }}
+        {{ todo.detail?.project || todo.projectName || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="申请人">
-        {{ app?.applicant_name || todo.applicant || '—' }}
+        {{ app?.applicant_name || todo.applicant || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="提交时间">
-        {{ app?.submit_time || todo.applyTime || '—' }}
+        {{ app?.submit_time || todo.applyTime || '--' }}
       </el-descriptions-item>
-      <el-descriptions-item label="办结时间" :span="2">{{ app?.finish_time || '—' }}</el-descriptions-item>
+      <el-descriptions-item label="办结时间" :span="2">{{ app?.finish_time || '--' }}</el-descriptions-item>
       <el-descriptions-item
         v-if="app?.copy_from_application_id || todo.detail?.copyFromApplicationId"
         label="重新申报来源"
@@ -102,8 +102,8 @@ const materialTypeText = computed(() => {
           </div>
         </div>
         <el-descriptions :column="2" border class="cand-desc info-desc">
-          <el-descriptions-item label="品牌名称">{{ c.brand_name || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="生产厂家">{{ c.manufacturer || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="品牌名称">{{ c.brand_name || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="生产厂家">{{ c.manufacturer || '--' }}</el-descriptions-item>
         </el-descriptions>
         <BrandCandidateAttachBlock :candidate="c" :editable="false" />
       </div>

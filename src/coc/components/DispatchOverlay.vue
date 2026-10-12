@@ -152,7 +152,7 @@ onUnmounted(stopTranscription)
               <div class="minutes-preview">
                 <p><b>{{ minutesContent.title }}</b></p>
                 <p>日期：{{ minutesContent.date }}</p>
-                <p>参会人：{{ minutesContent.attendees.join('、') || '—' }}</p>
+                <p>参会人：{{ minutesContent.attendees.join('、') || '--' }}</p>
                 <p class="fade-in">讨论要点：3号塔吊作业区警戒标识整改；今日危险作业旁站监督。</p>
               </div>
             </div>

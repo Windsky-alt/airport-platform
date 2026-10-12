@@ -362,7 +362,7 @@ function importStatusLabel(status) {
     skipped: '未召开',
     failed: '解析失败',
   }
-  return map[status] || status || '—'
+  return map[status] || status || '--'
 }
 
 function importStatusTag(status) {
@@ -627,10 +627,10 @@ onMounted(load)
     <el-dialog v-model="detailVisible" title="监理会议详情" width="640px" destroy-on-close>
       <template v-if="current">
         <el-descriptions :column="1" border>
-          <el-descriptions-item label="项目名称">{{ current.projectName || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="召开日期">{{ current.meetingDate || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="项目经理/负责人参会">{{ current.pmAttendees || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="项目部长/副部长参会">{{ current.directorAttendees || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="项目名称">{{ current.projectName || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="召开日期">{{ current.meetingDate || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="项目经理/负责人参会">{{ current.pmAttendees || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="项目部长/副部长参会">{{ current.directorAttendees || '--' }}</el-descriptions-item>
           <el-descriptions-item label="监理例会纪要">
             <AttachmentUpload
               v-if="current.minutesFiles?.length || current.minutesFile"
@@ -638,7 +638,7 @@ onMounted(load)
               preset="file"
               readonly
             />
-            <span v-else>—</span>
+            <span v-else>--</span>
           </el-descriptions-item>
           <el-descriptions-item label="本周隐患清单">
             <button
@@ -649,7 +649,7 @@ onMounted(load)
             >
               {{ current.weeklyHazardList }}
             </button>
-            <span v-else>—</span>
+            <span v-else>--</span>
           </el-descriptions-item>
           <el-descriptions-item label="签到表照片">
             <AttachmentUpload
@@ -658,7 +658,7 @@ onMounted(load)
               preset="image"
               readonly
             />
-            <span v-else>—</span>
+            <span v-else>--</span>
           </el-descriptions-item>
           <el-descriptions-item label="会议照片">
             <AttachmentUpload
@@ -667,9 +667,9 @@ onMounted(load)
               preset="image"
               readonly
             />
-            <span v-else>—</span>
+            <span v-else>--</span>
           </el-descriptions-item>
-          <el-descriptions-item label="备注">{{ current.remark || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="备注">{{ current.remark || '--' }}</el-descriptions-item>
         </el-descriptions>
       </template>
     </el-dialog>

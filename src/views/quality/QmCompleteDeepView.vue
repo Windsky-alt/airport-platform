@@ -163,19 +163,19 @@ function openRejectDetail(row) {
       <el-table :data="rejectRecords" border size="small" empty-text="暂无驳回记录">
         <el-table-column prop="task_no" label="验收单号" width="130" />
         <el-table-column label="工程/部位" min-width="140" show-overflow-tooltip>
-          <template #default="{ row }">{{ displayTaskLocationName(row) || '—' }}</template>
+          <template #default="{ row }">{{ displayTaskLocationName(row) || '--' }}</template>
         </el-table-column>
         <el-table-column label="申请时间" width="160">
-          <template #default="{ row }">{{ row.submit_time || '—' }}</template>
+          <template #default="{ row }">{{ row.submit_time || '--' }}</template>
         </el-table-column>
         <el-table-column label="驳回时间" width="160">
           <template #default="{ row }">
-            {{ getCompleteRejectOpinion(row.id)?.action_time || row.finish_time || row.updated_at || '—' }}
+            {{ getCompleteRejectOpinion(row.id)?.action_time || row.finish_time || row.updated_at || '--' }}
           </template>
         </el-table-column>
         <el-table-column label="驳回意见" min-width="160" show-overflow-tooltip>
           <template #default="{ row }">
-            {{ getCompleteRejectOpinion(row.id)?.opinion || row.remark || '—' }}
+            {{ getCompleteRejectOpinion(row.id)?.opinion || row.remark || '--' }}
           </template>
         </el-table-column>
         <el-table-column label="操作" width="88" fixed="right">

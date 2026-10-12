@@ -72,7 +72,7 @@ export function useMeetingSignInSession() {
           .map((e) => ({
             id: e.id,
             name: e.name,
-            role: e.role || e.position || '—',
+            role: e.role || e.position || '--',
           })),
       }))
       .filter((g) => g.projectName)

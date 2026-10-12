@@ -184,6 +184,11 @@ function iconComponent(name) {
   return icons[resolveMenuIconName(name)] || icons[name] || null
 }
 
+function menuIndex(item) {
+  const query = new URLSearchParams(item.query || {}).toString()
+  return query ? `${item.path}?${query}` : item.path
+}
+
 function onSelect(path) {
   emit('select', path)
 }
@@ -203,7 +208,7 @@ function onSelect(path) {
       @select="onSelect"
     />
   </el-sub-menu>
-  <el-menu-item v-else :index="item.path">
+  <el-menu-item v-else :index="menuIndex(item)">
     <el-icon v-if="item.icon"><component :is="iconComponent(item.icon)" /></el-icon>
     <template #title>{{ item.label }}</template>
   </el-menu-item>

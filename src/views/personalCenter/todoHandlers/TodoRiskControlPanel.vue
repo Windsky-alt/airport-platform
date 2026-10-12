@@ -57,6 +57,7 @@ const supervisorLabel = computed(() => {
       <el-descriptions-item label="实施责任人">{{ riskPersonLabel(row.implement_person_id) }}</el-descriptions-item>
       <el-descriptions-item label="监理审批人">{{ supervisorLabel }}</el-descriptions-item>
       <el-descriptions-item label="审批状态">{{ approvalStatusLabel(row.approval_status) }}</el-descriptions-item>
+      <el-descriptions-item label="最近审批意见" :span="2">{{ formatRiskCell(row.last_opinion) }}</el-descriptions-item>
       <el-descriptions-item label="风险状态">{{ riskRunStatusLabel(row) }}</el-descriptions-item>
     </el-descriptions>
   </div>

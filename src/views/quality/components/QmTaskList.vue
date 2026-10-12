@@ -226,7 +226,7 @@ const wbsNameById = computed(() => {
 })
 
 function nodeName(id) {
-  if (!id) return '—'
+  if (!id) return '--'
   return wbsNameById.value.get(id) || id
 }
 
@@ -490,7 +490,7 @@ onMounted(() => {
         <template #default="{ row }">{{ nodeName(row.wbs_node_id) }}</template>
       </el-table-column>
       <el-table-column v-if="!specialMode" label="施工部位" min-width="180">
-        <template #default="{ row }">{{ displayTaskLocationName(row) || '—' }}</template>
+        <template #default="{ row }">{{ displayTaskLocationName(row) || '--' }}</template>
       </el-table-column>
       <el-table-column v-if="!specialMode" label="是否隐蔽工程" width="120" align="center">
         <template #default="{ row }">
@@ -512,7 +512,7 @@ onMounted(() => {
       <el-table-column label="电子档案状态" width="120">
         <template #default="{ row }">
           <el-tag :type="elecArchiveStatusTagType(row.elec_archive_status)" size="small" effect="plain">
-            {{ ELEC_ARCHIVE_STATUS[row.elec_archive_status] || '—' }}
+            {{ ELEC_ARCHIVE_STATUS[row.elec_archive_status] || '--' }}
           </el-tag>
         </template>
       </el-table-column>

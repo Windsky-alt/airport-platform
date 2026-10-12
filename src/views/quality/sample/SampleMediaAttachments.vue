@@ -157,7 +157,7 @@ function imagePreviewIndex(file) {
     <p v-if="!readonly" class="hint">
       支持图片与视频（mp4 / mov / m4v / avi），单个不超过 {{ maxSizeMb }}MB，最多 {{ max }} 个
     </p>
-    <p v-else-if="!files.length" class="empty">—</p>
+    <p v-else-if="!files.length" class="empty">--</p>
   </div>
 </template>
 

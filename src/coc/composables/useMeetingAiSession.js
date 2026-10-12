@@ -29,7 +29,7 @@ function formatDateTimeNow() {
 }
 
 function computeDuration(startStr) {
-  if (!startStr) return '—'
+  if (!startStr) return '--'
   const start = new Date(startStr.replace(/-/g, '/'))
   const ms = Math.max(0, Date.now() - start.getTime())
   const min = Math.floor(ms / 60000)

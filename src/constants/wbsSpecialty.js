@@ -108,7 +108,7 @@ export function getEffectiveSpecialties(node) {
   return normalizeSpecialties(node.specialties ?? node.specialty)
 }
 
-export function formatSpecialtiesDisplay(input, fallback = '—') {
+export function formatSpecialtiesDisplay(input, fallback = '--') {
   const arr = normalizeSpecialties(input)
   if (!arr.length) return fallback
   return arr.map((v) => wbsSpecialtyLabel(v)).join('、')
@@ -136,7 +136,7 @@ export function isValidWbsSpecialties(values) {
 export function wbsSpecialtyLabel(value) {
   const mapped = mapLegacySpecialty(value)
   const hit = WBS_SPECIALTY_OPTIONS.find((o) => o.value === mapped)
-  return hit?.label || mapped || '—'
+  return hit?.label || mapped || '--'
 }
 
 /** 新建子节点时继承父节点专业；父节点无配置时回退默认 */

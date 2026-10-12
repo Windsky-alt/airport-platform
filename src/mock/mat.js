@@ -134,7 +134,7 @@ export const STATUS_LABEL = {
 }
 
 export function statusLabel(status) {
-  return STATUS_LABEL[status] || status || '—'
+  return STATUS_LABEL[status] || status || '--'
 }
 
 export const NODE_LABEL = {
@@ -1223,7 +1223,7 @@ export function parseBatchSeq(value, fallback = 1) {
 }
 
 export function formatBatchNo(value) {
-  if (value == null || value === '') return '—'
+  if (value == null || value === '') return '--'
   const raw = String(value).trim()
   const n = Number(raw)
   if (Number.isFinite(n) && n > 0 && raw === String(n)) return `第${n}批`

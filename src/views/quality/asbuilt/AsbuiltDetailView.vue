@@ -37,7 +37,7 @@ const approvals = computed(() => {
 const currentNodeLabel = computed(() => {
   const row = detail.value
   if (!row || row.status !== 'pending_approval') return NODE_LABEL.none
-  return NODE_LABEL[row.current_node] || '—'
+  return NODE_LABEL[row.current_node] || '--'
 })
 
 function fileSizeLabel(size) {
@@ -90,7 +90,7 @@ function actionTagType(action) {
               </el-tag>
             </el-descriptions-item>
             <el-descriptions-item label="验收任务名称" :span="2">{{ detail.title }}</el-descriptions-item>
-            <el-descriptions-item label="备注" :span="2">{{ detail.remark || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="备注" :span="2">{{ detail.remark || '--' }}</el-descriptions-item>
             <el-descriptions-item label="监理单位审批">
               {{ formatBrandApproverSnapshot(detail, 'supervisor') }}
             </el-descriptions-item>
@@ -98,8 +98,8 @@ function actionTagType(action) {
               {{ formatBrandApproverSnapshot(detail, 'pm') }}
             </el-descriptions-item>
             <el-descriptions-item label="当前审批环节">{{ currentNodeLabel }}</el-descriptions-item>
-            <el-descriptions-item label="提交人">{{ detail.submitter_name || '—' }}</el-descriptions-item>
-            <el-descriptions-item label="提交时间">{{ detail.submitted_at || '—' }}</el-descriptions-item>
+            <el-descriptions-item label="提交人">{{ detail.submitter_name || '--' }}</el-descriptions-item>
+            <el-descriptions-item label="提交时间">{{ detail.submitted_at || '--' }}</el-descriptions-item>
             <el-descriptions-item v-if="detail.copy_from_biz_no" label="源验收单号">
               <el-button
                 link
@@ -132,7 +132,7 @@ function actionTagType(action) {
             <div v-for="(n, idx) in detail.nodes" :key="n.id || idx" class="node-card">
               <span class="node-badge">{{ idx + 1 }}</span>
               <div class="node-content">
-                <div class="node-path">{{ n.wbs_node_path || '—' }}</div>
+                <div class="node-path">{{ n.wbs_node_path || '--' }}</div>
               </div>
             </div>
           </div>
@@ -163,7 +163,7 @@ function actionTagType(action) {
                 <div class="file-meta">
                   <span>{{ fileSizeLabel(f.file_size) }}</span>
                   <span class="dot">·</span>
-                  <span>{{ f.uploaded_at || '—' }}</span>
+                  <span>{{ f.uploaded_at || '--' }}</span>
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@ function actionTagType(action) {
             >
               <div class="tl-card">
                 <div class="tl-head">
-                  <span class="tl-actor">{{ r.actor_name || '—' }}</span>
+                  <span class="tl-actor">{{ r.actor_name || '--' }}</span>
                   <el-tag size="small" effect="plain" :type="actionTagType(r.action)">
                     {{ ACTION_LABEL[r.action] || r.action }}
                   </el-tag>

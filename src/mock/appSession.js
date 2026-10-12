@@ -106,7 +106,7 @@ export function listAppUserOrgs() {
     const key = String(id || orgName)
     if (!key || seen.has(key)) return
     seen.add(key)
-    list.push({ id: key, orgName: orgName || '—', position: pos })
+    list.push({ id: key, orgName: orgName || '--', position: pos })
   }
 
   const orgInfo = orgId ? getOrgInfo(orgId) : null
@@ -141,7 +141,7 @@ export function getAppSelectedOrg() {
     if (!appSelectedOrgId.value) setAppSelectedOrgId(list[0].id)
     return list[0]
   }
-  return { id: '', orgName: '—', position: '—' }
+  return { id: '', orgName: '--', position: '--' }
 }
 
 /** 我的：头像/姓名/手机/组织岗位列表 */

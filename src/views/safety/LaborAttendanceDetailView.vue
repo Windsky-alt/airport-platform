@@ -252,7 +252,7 @@ function handleReset() {
                 class="ap-status-tag"
                 :class="onSiteStatusTagClass(row.on_site_status)"
               >{{ row.on_site_status }}</span>
-              <span v-else class="text-muted">—</span>
+              <span v-else class="text-muted">--</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="140" fixed="right" align="center">
@@ -304,7 +304,7 @@ function handleReset() {
         <el-table-column prop="gate_name" label="闸机" min-width="120" />
         <el-table-column label="考勤照片" width="100" align="center">
           <template #default="{ row }">
-            <el-avatar :size="36" class="access-photo">{{ row.photo || row.name?.slice(0, 1) || '—' }}</el-avatar>
+            <el-avatar :size="36" class="access-photo">{{ row.photo || row.name?.slice(0, 1) || '--' }}</el-avatar>
           </template>
         </el-table-column>
         <template #empty>暂无进出场记录</template>

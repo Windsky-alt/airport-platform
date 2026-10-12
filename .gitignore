@@ -25,3 +25,7 @@ release
 *.sw?
 
 .vercel
+
+# 本地过程文件/临时产物（不进 Git，双机同步排除）
+asbuilt-verify.png
+scripts/capture-quality-manual-shots.mjs

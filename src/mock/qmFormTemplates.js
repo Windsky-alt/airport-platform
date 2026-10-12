@@ -320,7 +320,7 @@ export const APPLY_LEVEL = {
 }
 
 export function resolveTemplateName(id) {
-  if (!id) return '—'
+  if (!id) return '--'
   return formTemplates.find((t) => t.id === id)?.template_name || id
 }
 

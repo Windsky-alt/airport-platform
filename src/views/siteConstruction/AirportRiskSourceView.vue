@@ -17,21 +17,28 @@ import {
 const { laborProjectId, isHqSelected } = useCurrentProject()
 
 const keyword = ref('')
+/** 点「搜索」后才生效的查询关键字（输入框内为待提交的关键字） */
+const appliedKeyword = ref('')
 const dialogVisible = ref(false)
 const editingId = ref('')
 const form = reactive({ source_name: '' })
 
 const tableData = computed(() => {
   if (!laborProjectId.value) return []
-  return listAirportRiskSources(laborProjectId.value, keyword.value)
+  return listAirportRiskSources(laborProjectId.value, appliedKeyword.value)
 })
 
+function doSearch() {
+  appliedKeyword.value = keyword.value
+}
+
 watch(laborProjectId, () => {
-  keyword.value = ''
+  resetFilters()
 })
 
 function resetFilters() {
   keyword.value = ''
+  doSearch()
 }
 
 function openAdd() {
@@ -104,7 +111,7 @@ function handleDelete(row) {
           style="width: 240px"
           aria-label="风险类型名称"
         />
-        <el-button type="primary" @click="() => {}">搜索</el-button>
+        <el-button type="primary" @click="doSearch">搜索</el-button>
         <el-button @click="resetFilters">重置</el-button>
         <div class="toolbar-spacer" />
         <el-button type="primary" @click="openAdd">+ 新增</el-button>

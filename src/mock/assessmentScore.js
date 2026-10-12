@@ -599,7 +599,7 @@ export function listAssessmentProjects() {
     project_id: item.id,
     project_name: item.label,
     project_full_name: item.fullName || item.label,
-    project_status: !item.status || item.status === '—' ? '--' : item.status,
+    project_status: !item.status || item.status === '--' ? '--' : item.status,
     switches: { ...(projectMatrix[item.id] || {}) },
   }))
 }

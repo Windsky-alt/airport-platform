@@ -154,7 +154,7 @@ function evaluateRule02(records) {
             createAlert(
               'rule-02',
               'red',
-              `区域「${a.workArea || '—'}」同时存在动火与动土交叉作业（「${a.dangerWorkCategory || '—'}」与「${b.dangerWorkCategory || '—'}」），触发红色预警。`,
+              `区域「${a.workArea || '--'}」同时存在动火与动土交叉作业（「${a.dangerWorkCategory || '--'}」与「${b.dangerWorkCategory || '--'}」），触发红色预警。`,
               a.id,
               [a.id, b.id],
             ),
@@ -167,7 +167,7 @@ function evaluateRule02(records) {
             createAlert(
               'rule-02',
               'yellow',
-              `区域「${a.workArea || '—'}」同一时段存在 ${categories.size} 类危险作业交叉（「${a.dangerWorkCategory || '—'}」与「${b.dangerWorkCategory || '—'}」），触发黄色预警。`,
+              `区域「${a.workArea || '--'}」同一时段存在 ${categories.size} 类危险作业交叉（「${a.dangerWorkCategory || '--'}」与「${b.dangerWorkCategory || '--'}」），触发黄色预警。`,
               a.id,
               [a.id, b.id],
             ),
@@ -290,23 +290,23 @@ export function buildDailyWorkRiskAlertDetails(records = [], enabledRuleIds = []
     const relatedRecords = relatedIds.map((id) => byId.get(id)).filter(Boolean)
     const primary = relatedRecords[0] || byId.get(alert.recordId) || null
     const rowNo = primary?._rowNo
-    const projectName = primary?.projectName || '—'
-    const workArea = primary?.workArea || '—'
-    const dangerWorkCategory = primary?.dangerWorkCategory || '—'
-    const startTime = primary?.startTime || '—'
-    const endTime = primary?.endTime || '—'
-    const reportDate = primary?.reportDate || '—'
+    const projectName = primary?.projectName || '--'
+    const workArea = primary?.workArea || '--'
+    const dangerWorkCategory = primary?.dangerWorkCategory || '--'
+    const startTime = primary?.startTime || '--'
+    const endTime = primary?.endTime || '--'
+    const reportDate = primary?.reportDate || '--'
     const dataSummary = relatedRecords.length
       ? relatedRecords
           .map(
             (record) =>
-              `第 ${record._rowNo} 行｜项目：${record.projectName || '—'}｜区域：${record.workArea || '—'}｜类别：${record.dangerWorkCategory || '—'}｜${record.startTime || '—'} ~ ${record.endTime || '—'}`,
+              `第 ${record._rowNo} 行｜项目：${record.projectName || '--'}｜区域：${record.workArea || '--'}｜类别：${record.dangerWorkCategory || '--'}｜${record.startTime || '--'} ~ ${record.endTime || '--'}`,
           )
           .join('\n')
       : '（跨多条记录的批量规则）'
     return {
       ...alert,
-      rowNo: rowNo ?? '—',
+      rowNo: rowNo ?? '--',
       projectName,
       workArea,
       dangerWorkCategory,
@@ -316,12 +316,12 @@ export function buildDailyWorkRiskAlertDetails(records = [], enabledRuleIds = []
       dataSummary,
       relatedRows: relatedRecords.map((record) => ({
         rowNo: record._rowNo,
-        projectName: record.projectName || '—',
-        workArea: record.workArea || '—',
-        dangerWorkCategory: record.dangerWorkCategory || '—',
-        startTime: record.startTime || '—',
-        endTime: record.endTime || '—',
-        reportDate: record.reportDate || '—',
+        projectName: record.projectName || '--',
+        workArea: record.workArea || '--',
+        dangerWorkCategory: record.dangerWorkCategory || '--',
+        startTime: record.startTime || '--',
+        endTime: record.endTime || '--',
+        reportDate: record.reportDate || '--',
       })),
     }
   })

@@ -24,7 +24,7 @@ const physical = computed(() => panels.value.physical)
 const special = computed(() => panels.value.special)
 
 function passRateText(rate, taskTotal) {
-  if (!taskTotal) return '—'
+  if (!taskTotal) return '--'
   return `${rate ?? 0}%`
 }
 

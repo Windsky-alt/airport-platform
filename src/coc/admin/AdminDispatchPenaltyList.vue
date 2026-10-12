@@ -75,7 +75,7 @@ const filtered = computed(() => {
 })
 
 function displayValue(value) {
-  return value?.trim?.() ? value : '—'
+  return value?.trim?.() ? value : '--'
 }
 
 function penaltyLabel(row) {
@@ -153,7 +153,7 @@ function submitForm() {
   }
   if (formMode.value === 'create') {
     payload.status = PENALTY_STATUSES.PENDING
-    payload.issueTime = '—'
+    payload.issueTime = '--'
   }
   saveDispatchPenaltyRecord(payload)
   load()
@@ -289,7 +289,7 @@ onMounted(load)
             <el-tag v-if="row.blackBoardSynced" type="info" size="small">
               {{ formatRedBlackPeriod(row.blackBoardMonth) }}
             </el-tag>
-            <span v-else class="muted">—</span>
+            <span v-else class="muted">--</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="340" fixed="right">
@@ -410,9 +410,9 @@ onMounted(load)
         </el-form-item>
         <el-form-item label="同步说明">
           <div class="sync-preview">
-            <div>项目：{{ blackBoardTarget?.project || '—' }}</div>
-            <div>类型：{{ blackBoardTarget?.workType || '—' }}</div>
-            <div>处罚内容：{{ blackBoardTarget?.penaltyContent || '—' }}</div>
+            <div>项目：{{ blackBoardTarget?.project || '--' }}</div>
+            <div>类型：{{ blackBoardTarget?.workType || '--' }}</div>
+            <div>处罚内容：{{ blackBoardTarget?.penaltyContent || '--' }}</div>
             <div>金额：{{ displayValue(blackBoardTarget?.amount) }}</div>
             <div v-if="blackBoardTarget?.snapshot">将携带关联图片作为黑榜图片</div>
           </div>

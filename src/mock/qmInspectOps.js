@@ -207,7 +207,7 @@ export function getManualLevelProgress(task, node) {
 }
 
 export function resolveApproverName(userId) {
-  return QM_APPROVER_CANDIDATES.find((u) => u.id === userId)?.name || userId || '—'
+  return QM_APPROVER_CANDIDATES.find((u) => u.id === userId)?.name || userId || '--'
 }
 
 export function getPassedApprovalRoles(task_id) {
@@ -1708,8 +1708,8 @@ function buildDivisionPlanStats(project_id) {
     return {
       id: div.id,
       name: div.node_name,
-      specialty: div.specialty || '—',
-      location_code: div.location_code || '—',
+      specialty: div.specialty || '--',
+      location_code: div.location_code || '--',
       project_id: div.project_id,
       project_name: resolveProjectName(div.project_id),
       completed,

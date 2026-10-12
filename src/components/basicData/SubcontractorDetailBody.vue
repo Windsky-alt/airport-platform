@@ -25,7 +25,7 @@ defineProps({
 
 function formatLaborContractAmount(contract) {
   const amount = contract?.amount
-  if (!amount) return '—'
+  if (!amount) return '--'
   return /万元/.test(String(amount)) ? amount : `${amount}万元`
 }
 </script>
@@ -35,7 +35,7 @@ function formatLaborContractAmount(contract) {
     <section class="info-section">
       <div class="section-title">报审信息</div>
       <el-descriptions :column="2" border>
-        <el-descriptions-item label="报审编号">{{ detail.id || '—' }}</el-descriptions-item>
+        <el-descriptions-item label="报审编号">{{ detail.id || '--' }}</el-descriptions-item>
         <el-descriptions-item label="状态">
           <span
             v-if="detail.status"
@@ -44,21 +44,21 @@ function formatLaborContractAmount(contract) {
           >
             {{ detail.status }}
           </span>
-          <span v-else>—</span>
+          <span v-else>--</span>
         </el-descriptions-item>
-        <el-descriptions-item label="分包单位名称">{{ detail.name || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="类型">{{ detail.unitType || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="所属项目" :span="2">{{ detail.projectName || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="提交人">{{ detail.submitter || '—' }}</el-descriptions-item>
-        <el-descriptions-item label="提交时间">{{ detail.submitTime || '—' }}</el-descriptions-item>
+        <el-descriptions-item label="分包单位名称">{{ detail.name || '--' }}</el-descriptions-item>
+        <el-descriptions-item label="类型">{{ detail.unitType || '--' }}</el-descriptions-item>
+        <el-descriptions-item label="所属项目" :span="2">{{ detail.projectName || '--' }}</el-descriptions-item>
+        <el-descriptions-item label="提交人">{{ detail.submitter || '--' }}</el-descriptions-item>
+        <el-descriptions-item label="提交时间">{{ detail.submitTime || '--' }}</el-descriptions-item>
         <el-descriptions-item label="项目负责人姓名及电话">
-          {{ detail.projectLeaderContact || '—' }}
+          {{ detail.projectLeaderContact || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="安全管理人员姓名及电话">
-          {{ detail.safetyManagerContact || '—' }}
+          {{ detail.safetyManagerContact || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="分包组织架构说明" :span="2">
-          <div class="multiline">{{ detail.orgStructureDesc || '—' }}</div>
+          <div class="multiline">{{ detail.orgStructureDesc || '--' }}</div>
         </el-descriptions-item>
         <el-descriptions-item label="组织架构图" :span="2">
           <FileAttachmentPreview
@@ -68,7 +68,7 @@ function formatLaborContractAmount(contract) {
           />
         </el-descriptions-item>
         <el-descriptions-item label="备注" :span="2">
-          <div class="multiline">{{ detail.remark || '—' }}</div>
+          <div class="multiline">{{ detail.remark || '--' }}</div>
         </el-descriptions-item>
       </el-descriptions>
     </section>
@@ -101,10 +101,10 @@ function formatLaborContractAmount(contract) {
       <div class="section-title">安全许可证</div>
       <el-descriptions :column="2" border>
         <el-descriptions-item label="许可证编号">
-          {{ detail.safetyLicense?.licenseNo || '—' }}
+          {{ detail.safetyLicense?.licenseNo || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="有效期">
-          {{ formatSafetyLicenseExpiry(detail.safetyLicense) || '—' }}
+          {{ formatSafetyLicenseExpiry(detail.safetyLicense) || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="许可证附件" :span="2">
           <FileAttachmentPreview
@@ -121,7 +121,7 @@ function formatLaborContractAmount(contract) {
       <div class="section-title">劳务合同</div>
       <el-descriptions :column="2" border>
         <el-descriptions-item label="合同编号">
-          {{ detail.laborContract?.contractNo || '—' }}
+          {{ detail.laborContract?.contractNo || '--' }}
         </el-descriptions-item>
         <el-descriptions-item label="金额">
           {{ formatLaborContractAmount(detail.laborContract) }}

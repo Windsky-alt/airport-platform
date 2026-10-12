@@ -125,7 +125,7 @@ function typeLabel(row) {
 
 function rawStatus(row) {
   if (props.channel === 'inspection') return row.status
-  return row.raw?.rectifyStatus || row.status || '—'
+  return row.raw?.rectifyStatus || row.status || '--'
 }
 </script>
 
@@ -191,10 +191,10 @@ function rawStatus(row) {
             @click="openDetail(row)"
           >
             <td>{{ typeLabel(row) }}</td>
-            <td>{{ row.date || '—' }}</td>
-            <td class="desc" :title="row.desc">{{ row.desc || '—' }}</td>
-            <td>{{ row.level || '—' }}</td>
-            <td>{{ row.status || '—' }}</td>
+            <td>{{ row.date || '--' }}</td>
+            <td class="desc" :title="row.desc">{{ row.desc || '--' }}</td>
+            <td>{{ row.level || '--' }}</td>
+            <td>{{ row.status || '--' }}</td>
           </tr>
           <tr v-if="!filtered.length">
             <td colspan="5" class="empty">暂无巡检隐患记录</td>
@@ -223,12 +223,12 @@ function rawStatus(row) {
             @click="openDetail(row)"
           >
             <td>{{ typeLabel(row) }}</td>
-            <td class="desc" :title="row.desc">{{ row.desc || '—' }}</td>
-            <td>{{ row.level || '—' }}</td>
-            <td class="desc">{{ row.raw?.remark || '—' }}</td>
+            <td class="desc" :title="row.desc">{{ row.desc || '--' }}</td>
+            <td>{{ row.level || '--' }}</td>
+            <td class="desc">{{ row.raw?.remark || '--' }}</td>
             <td>{{ rawStatus(row) }}</td>
             <td>{{ row.raw?.source || '清单导入' }}</td>
-            <td>{{ row.raw?.uploadTime || row.date || '—' }}</td>
+            <td>{{ row.raw?.uploadTime || row.date || '--' }}</td>
           </tr>
           <tr v-if="!filtered.length">
             <td colspan="7" class="empty">暂无监理例会登记隐患</td>
@@ -259,14 +259,14 @@ function rawStatus(row) {
             @click="openDetail(row)"
           >
             <td>{{ typeLabel(row) }}</td>
-            <td class="desc" :title="row.desc">{{ row.desc || '—' }}</td>
-            <td>{{ row.level || '—' }}</td>
+            <td class="desc" :title="row.desc">{{ row.desc || '--' }}</td>
+            <td>{{ row.level || '--' }}</td>
             <td>{{ rawStatus(row) }}</td>
-            <td>{{ row.raw?.rectifier || '—' }}</td>
-            <td>{{ row.raw?.hazardDeadline || '—' }}</td>
-            <td>{{ row.raw?.cameraName || '—' }}</td>
+            <td>{{ row.raw?.rectifier || '--' }}</td>
+            <td>{{ row.raw?.hazardDeadline || '--' }}</td>
+            <td>{{ row.raw?.cameraName || '--' }}</td>
             <td>{{ row.raw?.source || '问题截图' }}</td>
-            <td>{{ row.raw?.uploadTime || row.date || '—' }}</td>
+            <td>{{ row.raw?.uploadTime || row.date || '--' }}</td>
           </tr>
           <tr v-if="!filtered.length">
             <td colspan="9" class="empty">暂无调度隐患记录</td>

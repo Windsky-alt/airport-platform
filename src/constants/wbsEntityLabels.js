@@ -38,7 +38,7 @@ export const WBS_ENTITY_TYPE_LABEL = {
 }
 
 export function entityBreakdownTypeLabel(nodeType) {
-  return WBS_ENTITY_TYPE_LABEL[nodeType] || String(nodeType ?? '—')
+  return WBS_ENTITY_TYPE_LABEL[nodeType] || String(nodeType ?? '--')
 }
 
 /** 实体工程分解页节点展示名（分类节点固定为「实体工程」） */

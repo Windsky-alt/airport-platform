@@ -210,11 +210,11 @@ onUnmounted(() => {
               </div>
               <div class="detail-item">
                 <span class="dl">项目简称</span>
-                <span>{{ detailDisplayName || '—' }}</span>
+                <span>{{ detailDisplayName || '--' }}</span>
               </div>
               <div class="detail-item full">
                 <span class="dl">项目全称</span>
-                <span>{{ detailItem.fullName || '—' }}</span>
+                <span>{{ detailItem.fullName || '--' }}</span>
               </div>
               <div v-if="detailItem.updatedAt" class="detail-item">
                 <span class="dl">更新时间</span>
@@ -222,7 +222,7 @@ onUnmounted(() => {
               </div>
             </div>
             <div class="block-label">上榜说明</div>
-            <div class="block-content">{{ detailItem.description || '—' }}</div>
+            <div class="block-content">{{ detailItem.description || '--' }}</div>
             <div class="block-label">现场图片</div>
             <div class="detail-image-wrap">
               <img v-if="detailItem.image" :src="detailItem.image" alt="现场图" class="detail-image" />

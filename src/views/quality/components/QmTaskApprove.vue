@@ -196,7 +196,7 @@ const signs = computed(() =>
   task.value ? signatureRecords.filter((s) => s.task_id === task.value.id) : [],
 )
 const nodeName = computed(
-  () => wbsNodes.find((n) => n.id === task.value?.wbs_node_id)?.node_name || '—',
+  () => wbsNodes.find((n) => n.id === task.value?.wbs_node_id)?.node_name || '--',
 )
 
 const archiveSync = computed(() => (task.value ? getArchiveSync(task.value.id) : null))

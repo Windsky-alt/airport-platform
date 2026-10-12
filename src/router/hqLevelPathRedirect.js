@@ -11,6 +11,7 @@ export const HQ_LEVEL_PATH_PAIRS = [
   },
   { hq: '/hq/machine-supervise/alert-record', project: '/machine-supervise/alert-record' },
   { hq: '/hq/major-hazard/alert-record', project: '/major-hazard/alert-record' },
+  { hq: '/hq/video-monitor/offline-notify', project: '/video-monitor/offline-notify' },
   {
     hq: '/hq/qm/sample/ledger',
     project: '/qm/sample/ledger',

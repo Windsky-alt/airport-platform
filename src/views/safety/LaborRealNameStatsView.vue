@@ -34,7 +34,7 @@ function handleSearch() {
 }
 
 function formatRate(n) {
-  if (n === null || n === undefined || Number.isNaN(Number(n))) return '—'
+  if (n === null || n === undefined || Number.isNaN(Number(n))) return '--'
   return `${Number(n).toFixed(1)}%`
 }
 

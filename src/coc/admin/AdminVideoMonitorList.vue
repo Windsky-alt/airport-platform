@@ -163,7 +163,7 @@ onUnmounted(() => {
           <el-table-column label="重点" width="80" align="center">
             <template #default="{ row }">
               <span v-if="row.key" class="ap-status-tag ap-tag-high">重点</span>
-              <span v-else class="muted">—</span>
+              <span v-else class="muted">--</span>
             </template>
           </el-table-column>
           <el-table-column prop="id" label="设备ID" width="120" show-overflow-tooltip />

@@ -73,7 +73,7 @@ function goBack() {
           </div>
           <div class="card-title">{{ displayName(row) }}</div>
           <div class="card-meta">
-            {{ ENTRY_TYPE_LABEL[row.entry_type] || '材料' }} · {{ row.brand_name || '—' }}
+            {{ ENTRY_TYPE_LABEL[row.entry_type] || '材料' }} · {{ row.brand_name || '--' }}
           </div>
           <div class="card-meta">{{ row.submit_time }}</div>
         </button>

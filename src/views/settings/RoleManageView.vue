@@ -131,7 +131,7 @@ function handleToggleStatus(row) {
       <el-table-column prop="status" label="角色状态" width="100" align="center" />
       <el-table-column prop="source" label="角色来源" width="120" align="center" />
       <el-table-column label="备注" min-width="140" show-overflow-tooltip>
-        <template #default="{ row }">{{ row.remark || '—' }}</template>
+        <template #default="{ row }">{{ row.remark || '--' }}</template>
       </el-table-column>
       <el-table-column prop="updatedBy" label="更新人" width="120" align="center" />
       <el-table-column prop="updatedAt" label="更新时间" width="170" align="center" />

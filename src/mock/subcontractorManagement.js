@@ -110,7 +110,7 @@ export function safetyLicenseValidityTagClass(row) {
 
 export function formatLaborContractAmount(row) {
   const raw = String(row?.laborContract?.amount ?? '').trim().replace(/万元/g, '')
-  if (!raw) return '—'
+  if (!raw) return '--'
   return `${raw}万元`
 }
 
@@ -182,7 +182,7 @@ export function findSubcontractorApproverUser(userId) {
 
 export function formatSubcontractorApproverDisplay(userId, fallbackName = '') {
   const user = findSubcontractorApproverUser(userId)
-  return user?.optionLabel || fallbackName || '—'
+  return user?.optionLabel || fallbackName || '--'
 }
 
 export function getSubcontractorApproverMemory(projectId) {
@@ -266,16 +266,16 @@ function resolveNodeUserName(approvers, nodeKey) {
     design_dept_head: approvers?.designDeptHeadName,
   }
   const label = formatSubcontractorApproverDisplay(idMap[nodeKey], nameMap[nodeKey])
-  if (label && label !== '—') return label
+  if (label && label !== '--') return label
   const node = SUBCONTRACTOR_APPROVAL_NODES.find((item) => item.key === nodeKey)
-  return node?.roleLabel || '—'
+  return node?.roleLabel || '--'
 }
 
 function resolveCcUserLabel(approvers) {
   const label = formatSubcontractorApproverDisplay(approvers?.ccUserId, approvers?.ccUserName)
-  if (label && label !== '—') return label
+  if (label && label !== '--') return label
   const fallback = findSubcontractorApproverUser('u-008')
-  return fallback?.optionLabel || fallback?.name || '—'
+  return fallback?.optionLabel || fallback?.name || '--'
 }
 
 function buildCcFlowStep(approvers, { status = 'pending', time = '', remark = '审批通过后抄送' } = {}) {

@@ -35,7 +35,7 @@ function getExecutionStatus(row) {
   return getExecutionTask(row)?.status === '已完成' ? '已完成' : '未完成'
 }
 function getTaskReceiver(row) {
-  return getProjectInspectorLabel(row.projectIds?.[0]) || '—'
+  return getProjectInspectorLabel(row.projectIds?.[0]) || '--'
 }
 function goTaskDetail(row) {
   const task = getExecutionTask(row)
@@ -89,13 +89,13 @@ function goTaskDetail(row) {
           <template #default="{ row }">{{ getTaskReceiver(row) }}</template>
         </el-table-column>
         <el-table-column label="截止日期" min-width="110" align="center">
-          <template #default="{ row }">{{ row.deadlineDate || row.endDate || '—' }}</template>
+          <template #default="{ row }">{{ row.deadlineDate || row.endDate || '--' }}</template>
         </el-table-column>
         <el-table-column label="更新人"  align="center">
           <template #default="{ row }">{{ getUpdatedByName(row) }}</template>
         </el-table-column>
         <el-table-column label="更新时间"  align="center">
-          <template #default="{ row }">{{ row.updatedAt || row.updated_at || '—' }}</template>
+          <template #default="{ row }">{{ row.updatedAt || row.updated_at || '--' }}</template>
         </el-table-column>
         <el-table-column label="任务执行状态" width="110" align="center">
           <template #default="{ row }">

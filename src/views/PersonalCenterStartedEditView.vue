@@ -118,12 +118,12 @@ function handleSubmit() {
             <span class="inspection-stage-label">当前业务</span>
             <strong>{{ record.inspectionBizType }}</strong>
           </div>
-          <el-tag type="warning" effect="light">{{ record.detail?.currentNode || '—' }}</el-tag>
+          <el-tag type="warning" effect="light">{{ record.detail?.currentNode || '--' }}</el-tag>
         </div>
         <el-descriptions :column="2" border size="small" class="desc-panel">
-          <el-descriptions-item label="整改单编号">{{ record.detail?.rectifyNo || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="巡检任务单编号">{{ record.detail?.taskNo || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="项目名称">{{ record.detail?.project || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="整改单编号">{{ record.detail?.rectifyNo || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="巡检任务单编号">{{ record.detail?.taskNo || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="项目名称">{{ record.detail?.project || '--' }}</el-descriptions-item>
           <el-descriptions-item label="巡检分类">
             <el-tag
               v-for="category in normalizeInspectionCategories(record.detail?.inspectionCategories || record.detail?.inspectionCategory)"
@@ -134,10 +134,10 @@ function handleSubmit() {
               style="margin-right:4px"
             >{{ category }}</el-tag>
           </el-descriptions-item>
-          <el-descriptions-item label="整改人">{{ record.detail?.rectifier || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="复查人">{{ record.detail?.reviewer || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="截止日期">{{ record.detail?.deadline || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="状态">{{ record.detail?.status || record.status || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="整改人">{{ record.detail?.rectifier || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="复查人">{{ record.detail?.reviewer || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="截止日期">{{ record.detail?.deadline || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="状态">{{ record.detail?.status || record.status || '--' }}</el-descriptions-item>
         </el-descriptions>
       </section>
 
@@ -238,7 +238,7 @@ function handleSubmit() {
                 {{ step.title }}
                 <el-tag v-if="step.status === 'current'" size="small" type="warning">当前</el-tag>
               </div>
-              <div class="flow-meta">处理人：{{ step.user || '—' }}</div>
+              <div class="flow-meta">处理人：{{ step.user || '--' }}</div>
               <div v-if="step.remark" class="flow-remark">{{ step.remark }}</div>
             </div>
           </el-timeline-item>

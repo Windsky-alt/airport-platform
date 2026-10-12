@@ -109,7 +109,7 @@ onMounted(load)
             已入会 {{ current.joinedCount }} · 未入会 {{ current.pendingCount }}
           </el-descriptions-item>
           <el-descriptions-item label="参会人员" :span="2">
-            {{ (current.attendees || []).join('、') || '—' }}
+            {{ (current.attendees || []).join('、') || '--' }}
           </el-descriptions-item>
         </el-descriptions>
 
@@ -140,7 +140,7 @@ onMounted(load)
       <template v-if="current">
         <el-descriptions :column="1" border size="small">
           <el-descriptions-item label="文件名称">
-            {{ current.recordingFilename || '—' }}
+            {{ current.recordingFilename || '--' }}
           </el-descriptions-item>
           <el-descriptions-item label="会议时长">{{ current.duration }}</el-descriptions-item>
           <el-descriptions-item label="录制时间">{{ current.startTime }}</el-descriptions-item>

@@ -64,7 +64,7 @@ export function buildHqMeetingPersonnel(projects, statusFilters = ['在建']) {
     const projectLabel = project.shortName || project.name
     return {
       id: `hq-pm-${project.id}`,
-      name: pm?.name || '—',
+      name: pm?.name || '--',
       role: '项目经理',
       position: '项目经理',
       projectName: projectLabel,
@@ -500,7 +500,7 @@ export function buildProjects() {
     const isFocus = id === FOCUS_PROJECT_ID
     const basic = findProjectById(id)
     const mapped = displayProjectStatus(basic?.status)
-    const status = mapped !== '—'
+    const status = mapped !== '--'
       ? mapped
       : (i < 6 ? '前期' : i < 34 ? '在建' : '历史')
     const planRate = Math.round(55 + rand() * 40)
@@ -1200,7 +1200,7 @@ export const DAILY_PENDING_QUALITY = [
 ]
 
 export function calcRectRate(fixed, found) {
-  return found ? `${((fixed / found) * 100).toFixed(1)}%` : '—'
+  return found ? `${((fixed / found) * 100).toFixed(1)}%` : '--'
 }
 
 /** 图表展示用简称 → 项目 ID（与 PROJECT_SHORT_NAMES 不完全一致） */
@@ -1798,12 +1798,12 @@ function buildMajorProjectList(count = 36) {
       category,
       status,
       monitorStatus,
-      monitorData: monitorStatus === '待布点' ? '—' : `位移 ${(1.5 + (i % 5) * 0.6).toFixed(1)}mm`,
+      monitorData: monitorStatus === '待布点' ? '--' : `位移 ${(1.5 + (i % 5) * 0.6).toFixed(1)}mm`,
       confirmStatus: confirmed ? '已确认' : '待确认',
       permitStatus: confirmed ? '已许可' : '待确认',
       scheme: `${category}专项施工方案 V${1 + (i % 3)}.${i % 5}`,
       specialScheme: `${category}监测专项方案`,
-      lastCheck: status === '筹备中' ? '—' : `2026-06-${String(12 - (i % 5)).padStart(2, '0')} 08:00`,
+      lastCheck: status === '筹备中' ? '--' : `2026-06-${String(12 - (i % 5)).padStart(2, '0')} 08:00`,
     })
   })
 }
@@ -2737,7 +2737,7 @@ export function buildDrillDraft(device, drill) {
     content: `根据 ${devName} 远程指挥 ${drillName} 过程记录：
 
 一、演练概况
-参与 ${drill?.participants || 32} 人，指挥长 ${drill?.commander || '—'}，演练地点 ${drill?.location || '—'}。
+参与 ${drill?.participants || 32} 人，指挥长 ${drill?.commander || '--'}，演练地点 ${drill?.location || '--'}。
 
 二、步骤执行
 各步骤按预案推进，人员疏散与现场处置响应及时。

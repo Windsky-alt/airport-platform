@@ -191,9 +191,9 @@ export function buildArchiveLineItems(detail) {
 function buildReportBody(detail, lines) {
   const dateSrc = detail.submit_time || lines[0]?.entry_date
   const { y, m, d } = parseDateParts(dateSrc)
-  const nameSummary = lines.map((l) => l.name).filter(Boolean).join('、') || '—'
+  const nameSummary = lines.map((l) => l.name).filter(Boolean).join('、') || '--'
   const usePart =
-    detail.use_part || lines.map((l) => l.use_part).filter(Boolean)[0] || '—'
+    detail.use_part || lines.map((l) => l.use_part).filter(Boolean)[0] || '--'
   const applicant = detail.applicant_name || ''
   return (
     `致 (项目监理机构)：\n` +
@@ -222,7 +222,7 @@ function buildSupervisorBlock(detail) {
 }
 
 function summarizeUnpackItems(items) {
-  if (!items?.length) return '—'
+  if (!items?.length) return '--'
   return items
     .map((i) => `${i.label}：${i.ok ? '合格' : '不合格'}${i.remark ? `（${i.remark}）` : ''}`)
     .join('；')
@@ -371,9 +371,9 @@ function fillArchiveDocument(doc, detail) {
       3,
       9,
       2,
-      [first.cert_file, first.inspect_file].filter(Boolean).join('、') || '—',
+      [first.cert_file, first.inspect_file].filter(Boolean).join('、') || '--',
     )
-    setTableCell(tables, 3, 10, 2, first.appearance_quality || '—')
+    setTableCell(tables, 3, 10, 2, first.appearance_quality || '--')
     setTableCell(tables, 3, 11, 2, summarizeUnpackItems(first.unpack_items))
     setTableCell(tables, 3, 12, 2, collectUnpackDefects(first.unpack_items))
     const eqSupervisor =

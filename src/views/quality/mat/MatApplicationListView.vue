@@ -49,12 +49,12 @@ function lineSpecQtyLines(row) {
     const qty = `${row.quantity ?? ''}${row.unit || ''}`
     const spec = (row.model || '').trim()
     if (spec && qty) return [`${spec} × ${qty}`]
-    return [qty || spec || '—']
+    return [qty || spec || '--']
   }
   const lines = Array.isArray(row.line_items) ? row.line_items : []
   if (lines.length) {
     return lines.map((l) => {
-      const spec = (l.material_spec || '').trim() || '—'
+      const spec = (l.material_spec || '').trim() || '--'
       const qty = `${l.quantity ?? ''}${l.unit || ''}`
       return qty ? `${spec} × ${qty}` : spec
     })
@@ -62,7 +62,7 @@ function lineSpecQtyLines(row) {
   const spec = (row.material_spec || '').trim()
   const qty = `${row.quantity ?? ''}${row.unit || ''}`
   if (spec && qty) return [`${spec} × ${qty}`]
-  return [spec || qty || '—']
+  return [spec || qty || '--']
 }
 
 function lineSpecQtyText(row) {
@@ -151,18 +151,18 @@ async function onConfirmExportArchive(selectedKeys) {
         </el-table-column>
         <el-table-column label="关联定样" width="100">
           <template #default="{ row }">{{
-            row.sample_application_id || '—'
+            row.sample_application_id || '--'
           }}</template>
         </el-table-column>
         <el-table-column label="名称" min-width="120" show-overflow-tooltip>
           <template #default="{ row }">{{ displayName(row) }}</template>
         </el-table-column>
         <el-table-column prop="use_part" label="施工部位" min-width="120" show-overflow-tooltip>
-          <template #default="{ row }">{{ row.use_part || '—' }}</template>
+          <template #default="{ row }">{{ row.use_part || '--' }}</template>
         </el-table-column>
         <el-table-column prop="brand_name" label="品牌" width="100" show-overflow-tooltip />
         <el-table-column prop="supplier" label="供应商" min-width="120" show-overflow-tooltip>
-          <template #default="{ row }">{{ row.supplier || '—' }}</template>
+          <template #default="{ row }">{{ row.supplier || '--' }}</template>
         </el-table-column>
         <el-table-column label="规格及数量" min-width="180" show-overflow-tooltip>
           <template #default="{ row }">

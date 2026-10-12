@@ -50,7 +50,7 @@ const LEGACY_TIER_KEY_TO_POSITION = {
 export const TIER_LEVEL_MAX = 8
 
 export function getTierPositionName(position_id) {
-  return tierPositionCatalog.find((p) => p.id === position_id)?.name || '—'
+  return tierPositionCatalog.find((p) => p.id === position_id)?.name || '--'
 }
 
 export function getTierPerson(personId) {
@@ -59,7 +59,7 @@ export function getTierPerson(personId) {
 
 export function getTierPersonLabel(personId) {
   const person = getTierPerson(personId)
-  if (!person) return '—'
+  if (!person) return '--'
   return `${person.name} · ${person.dept}`
 }
 

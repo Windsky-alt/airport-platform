@@ -82,14 +82,14 @@ export function getAutoCloseActionPrompt(warning) {
   if (!warning) return ''
   const tpl = autoCloseActionPromptTemplates[warning.rule_key]
   if (!tpl) return ''
-  const name = warning.name || '—'
-  let idMasked = '—'
+  const name = warning.name || '--'
+  let idMasked = '--'
   if (warning.rule_key === 'blacklistEntry') {
     const person = getPersonnelDetail(warning.personnel_id)
     idMasked =
       person?.basic?.id_number ||
       maskIdCard(person?.basic?.id_number_raw || '') ||
-      '—'
+      '--'
   }
   return tpl.replace(/#姓名#/g, name).replace(/#身份证号（脱敏）#/g, idMasked)
 }

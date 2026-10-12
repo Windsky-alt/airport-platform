@@ -175,8 +175,8 @@ function saveEducation() {
         <div class="section-title">② 特种作业证书（只读）</div>
         <el-descriptions :column="2" border>
           <el-descriptions-item label="是否特种作业人员">{{ detail.is_special ? '是' : '否' }}</el-descriptions-item>
-          <el-descriptions-item label="证书编号">{{ detail.cert_no || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="证书有效期">{{ detail.unit.cert_valid_to || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="证书编号">{{ detail.cert_no || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="证书有效期">{{ detail.unit.cert_valid_to || '--' }}</el-descriptions-item>
           <el-descriptions-item label="证书附件">
             <FileAttachmentPreview
               :name="detail.unit.special_cert_attachment"

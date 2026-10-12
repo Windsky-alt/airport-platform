@@ -89,7 +89,7 @@ function handleJump(row) {
       <el-table-column prop="project_name" label="项目名称" min-width="200" show-overflow-tooltip />
       <el-table-column prop="system_name" label="系统名称" min-width="180" show-overflow-tooltip>
         <template #default="{ row }">
-          {{ row.system_name || '—' }}
+          {{ row.system_name || '--' }}
         </template>
       </el-table-column>
       <el-table-column prop="url" label="系统地址" min-width="280" show-overflow-tooltip />
@@ -102,7 +102,7 @@ function handleJump(row) {
       </el-table-column>
       <el-table-column prop="updated_at" label="更新时间" width="180" align="center">
         <template #default="{ row }">
-          {{ row.updated_at || '—' }}
+          {{ row.updated_at || '--' }}
         </template>
       </el-table-column>
       <el-table-column label="操作" width="100" align="center" fixed="right">

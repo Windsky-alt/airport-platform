@@ -45,7 +45,7 @@ export const menuTree = [
       { key: 'safety-dashboard', label: '巡检看板', icon: 'DataAnalysis', path: '/safety-inspection/dashboard', name: 'SafetyDashboard', component: 'SafetyDashboardView', levels: 'hq' },
       { key: 'major-hazard-dashboard', label: '危大工程看板', icon: 'DataAnalysis', path: '/major-hazard/dashboard', name: 'MajorHazardDashboard', component: 'HazardDashboardView', levels: 'hq', description: '指挥部汇总各项目危大辨识、在施管控、异常跟踪与过程完成情况。' },
       { key: 'video-monitor-stats', label: '视频监控统计', icon: 'DataAnalysis', path: '/video-monitor/stats', name: 'VideoMonitorStats', component: 'VideoMonitorStatsView', routeComponent: 'VideoMonitorPageView', levels: 'hq', description: '指挥部级视频监控统计。' },
-      { key: 'video-monitor-offline-notify-hq', label: '监控离线通知', icon: 'Bell', path: '/video-monitor/offline-notify', name: 'VideoMonitorOfflineNotifyHq', component: 'OfflineNotifyConfigView', routeComponent: 'VideoMonitorPageView', levels: 'hq', description: '指挥部层级配置视频离线分级通知规则与指挥部层级通知人员。' },
+      { key: 'video-monitor-offline-notify-hq', label: '监控离线通知', icon: 'Bell', path: '/hq/video-monitor/offline-notify', name: 'VideoMonitorOfflineNotifyHq', component: 'OfflineNotifyConfigView', routeComponent: 'VideoMonitorPageView', levels: 'hq', description: '指挥部层级配置视频离线分级通知规则与指挥部层级通知人员。' },
       { key: 'machine-entry-manage', label: '机械设备台账', icon: 'SuitcaseLine', path: '/hq/machine-supervise/ledger', name: 'MachineEntryManageHq', component: 'MachineryLedgerView', levels: 'hq' },
       { key: 'alert-record', label: '机械设备预警', icon: 'Bell', path: '/hq/machine-supervise/alert-record', name: 'AlertRecordHq', component: 'AlertRecordView', levels: 'hq' },
       { key: 'alert-record-major', label: '危大监测预警', icon: 'Warning', path: '/hq/major-hazard/alert-record', name: 'AlertRecordMajorHq', component: 'AlertRecordMajorView', levels: 'hq' },
@@ -147,7 +147,7 @@ export const menuTree = [
         key: 'risk-manage-group', label: '风险管理', icon: 'Compass', levels: 'project',
         children: [
           { key: 'risk-point-control', label: '风险点管控', icon: 'Compass', path: '/site-construction/risk-point-control', name: 'RiskPointControl', component: 'RiskPointControlView', levels: 'project' },
-          { key: 'risk-point-config', label: '风险点管控配置库', icon: 'CollectionTag', path: '/site-construction/risk-point-config', name: 'RiskPointConfig', component: 'RiskPointConfigView', levels: 'project' },
+          { key: 'risk-point-config', label: '风险配置库', icon: 'CollectionTag', path: '/site-construction/risk-point-config', name: 'RiskPointConfig', component: 'RiskPointConfigView', levels: 'project' },
           { key: 'airport-risk-source', label: '风险类型配置', icon: 'Memo', path: '/site-construction/airport-risk-source', name: 'AirportRiskSource', component: 'AirportRiskSourceView', levels: 'project' },
         ],
       },
@@ -360,8 +360,7 @@ export const hiddenRoutes = [
   { key: 'personal-center-todo-handle', path: '/personal-center/todo/handle', name: 'PersonalCenterTodoHandle', component: 'PersonalCenterTodoHandleView', label: '流程详情', sidebarKey: 'workbench' },
   { key: 'personal-center-started-edit', path: '/personal-center/started/:id/edit', name: 'PersonalCenterStartedEdit', component: 'PersonalCenterStartedEditView', label: '编辑发起记录', sidebarKey: 'workbench' },
 
-  // 人员实名制子页
-  { key: 'labor-realname-form', path: '/labor/realname/form', name: 'RealNamePersonnelForm', component: 'RealNamePersonnelDetailView', label: '人员详情', sidebarKey: 'labor-realname', redirect: '/labor/realname' },
+  // 人员实名制子页（/labor/realname/form 的跳转由 §3 redirects 统一处理，此处不再重复登记同名路由）
   { key: 'labor-realname-detail', path: '/labor/realname/:id', name: 'RealNamePersonnelDetail', component: 'RealNamePersonnelDetailView', label: '人员详情', sidebarKey: 'labor-realname' },
   { key: 'labor-warning-detail', path: '/labor/warning-list/:id', name: 'LaborWarningDetail', component: 'LaborWarningDetailView', label: '预警详情', sidebarKey: 'labor-warning-list' },
   { key: 'labor-device-manage', path: '/labor/device-manage', name: 'LaborDeviceManage', component: 'LaborDeviceManageView', label: '设备管理', sidebarKey: 'labor' },

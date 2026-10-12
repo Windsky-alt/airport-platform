@@ -18,7 +18,7 @@ import { createRiskControlSupervisorTodo, pushRiskControlMeasureNotices } from '
 
 export { listMatSupervisorApprovers, formatMatSupervisorApproverLabel }
 
-export const RISK_LEVELS = ['重大', '较大', '一般', '低']
+/** 风险等级已于 PRD V1.2 取消，改为「发生频率 + 严重程度」两个维度，不再保留等级枚举。 */
 export const SEVERITY_LEVELS = ['低', '中', '高', '超高']
 /** 发生频率周期（每 x / n 次 中的 x） */
 export const FREQUENCY_PERIOD_OPTIONS = ['小时', '日', '周', '月', '季', '年']
@@ -42,10 +42,9 @@ export const AIRPORT_RISK_SOURCE_DEFAULTS = [
   '空防安全',
 ]
 
-/** 施工阶段下拉。施工位置沿用实体工程分解，不另做地图坐标。 */
-export const CONSTRUCTION_STAGE_OPTIONS = ['设计阶段', '开工报建阶段', '施工阶段', '竣工阶段']
-
-export const PROGRESS_STATUS_OPTIONS = ['未开始', '进行中', '已完成']
+/** 施工阶段下拉。取值与 PRD 6.2.8 construction_stage 枚举一致，带「阶段」后缀的旧值已废弃。
+ * 施工位置沿用实体工程分解，不另做地图坐标。 */
+export const CONSTRUCTION_STAGE_OPTIONS = ['设计', '开工报建', '施工', '竣工']
 
 export const RISK_RUN_STATUS_LABEL = {
   inactive: '未激活',
@@ -81,14 +80,6 @@ export function constructionProgressStatus(id) {
   return constructionProgressOptions.find((item) => item.id === id)?.progress_status || ''
 }
 
-export function updateConstructionProgressStatus(id, progressStatus) {
-  const row = constructionProgressOptions.find((item) => item.id === id)
-  if (!row) return { ok: false, msg: '施工进度不存在' }
-  if (!PROGRESS_STATUS_OPTIONS.includes(progressStatus)) return { ok: false, msg: '施工进度状态无效' }
-  row.progress_status = progressStatus
-  return { ok: true, data: row }
-}
-
 /** 已关闭优先；已关联且进度为进行中则为已激活；其余未激活 */
 export function riskRunStatus(row) {
   if (!row) return 'inactive'
@@ -101,15 +92,10 @@ export function riskRunStatusLabel(row) {
   return RISK_RUN_STATUS_LABEL[riskRunStatus(row)] || '--'
 }
 
-/** @deprecated 风险等级已取消自动合成，保留函数避免外部残留引用报错 */
-export function frequencyBand() {
-  return ''
-}
-
-/** @deprecated 风险等级已取消自动合成 */
-export function calcRiskLevel() {
-  return ''
-}
+/**
+ * 风险等级已按 PRD V1.2 取消（改为「发生频率 + 严重程度」），
+ * 历史上用于由频率区间推导等级的 frequencyBand() / calcRiskLevel() 已随之删除，勿再引入。
+ */
 
 export function formatRiskFrequency(row) {
   if (!row) return '--'
@@ -158,6 +144,16 @@ export function closeStatusLabel(status) {
 export function airportRiskSourceName(id) {
   if (!id) return '--'
   return airportRiskSourceList.find((row) => row.id === id)?.source_name || '--'
+}
+
+/** 按类型名称回查类型标识（Q12 B：标识关联 + 名称快照）
+ * 返回 null 表示该名称在当前项目类型配置中已不存在（历史快照名）。
+ */
+export function riskTypeIdByName(projectId, nameToFind) {
+  const row = airportRiskSourceList.find(
+    (r) => r.project_id === projectId && r.source_name === String(nameToFind || '').trim(),
+  )
+  return row ? row.id : null
 }
 
 /** 当前项目已配置的风险类型名称（登记、配置库唯一来源） */
@@ -417,15 +413,19 @@ function buildDemoConfigs(projectId, skipTypes) {
   }))
 }
 
-function buildDemoControls(projectId, skipTypes, progressId, locationId) {
+/**
+ * 演示种子：编号与填报日期成对传入，保持三段式 `FX-YYYYMMDD-序号` 自洽，
+ * 且不同项目使用不同日期段，避免编号与「同日序号」冲突。
+ */
+function buildDemoControls(projectId, skipTypes, progressId, locationId, reportDate) {
   return demoSeedsFor(skipTypes).map((item, index) => ({
     id: `rpk-${projectId}-d${index + 1}`,
     project_id: projectId,
-    risk_source_no: `FX-20260919-${projectId.slice(-3)}-${String(index + 1).padStart(3, '0')}`,
-    report_date: '2026-09-19',
+    risk_source_no: `FX-${reportDate.replace(/-/g, '')}-${String(index + 1).padStart(3, '0')}`,
+    report_date: reportDate,
     risk_factor: item.risk_factor,
     hazard_consequence: item.hazard_consequence,
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: progressId,
     risk_type: item.risk_type,
     risk_point: item.risk_point,
@@ -451,7 +451,7 @@ function buildDemoControls(projectId, skipTypes, progressId, locationId) {
   }))
 }
 
-/** 风险点管控配置库 */
+/** 风险配置库 */
 export const riskPointConfigList = reactive([
   {
     id: 'rpc-001',
@@ -543,7 +543,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-08-28',
     risk_factor: '临边栏杆未封闭，作业面临空。',
     hazard_consequence: '人员高处坠落，造成伤亡。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-000-1',
     risk_type: '高处坠落',
     risk_point: '临边防护缺失或不到位',
@@ -577,7 +577,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-08-29',
     risk_factor: '多台起重设备在同一覆盖区交叉作业。',
     hazard_consequence: '吊物坠落或设备碰撞，造成人员伤害和设备损坏。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-000-2',
     risk_type: '起重伤害',
     risk_point: '塔吊吊装交叉作业',
@@ -611,7 +611,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-09-16',
     risk_factor: '基坑临边防护不连续。',
     hazard_consequence: '人员或物料坠入基坑。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-000-1',
     risk_type: '高处坠落',
     risk_point: '临边防护缺失或不到位',
@@ -645,7 +645,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-09-01',
     risk_factor: '航站区动火点周边仍堆放包装材料和油污抹布。',
     hazard_consequence: '动火引燃可燃物，造成火灾和人员灼伤。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-000-1',
     risk_type: '火灾爆炸',
     risk_point: '动火作业防护不到位',
@@ -680,7 +680,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-08-20',
     risk_factor: '管线迁改段临时电缆曾沿地敷设，绝缘局部老化。',
     hazard_consequence: '潮湿环境触电，造成人员伤亡或停电。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-000-3',
     risk_type: '触电',
     risk_point: '临时用电线路破损',
@@ -714,7 +714,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-09-05',
     risk_factor: '楼层上下同时作业，防护棚未按方案搭设。',
     hazard_consequence: '上方物料坠落，打击下方作业人员。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-000-2',
     risk_type: '物体打击',
     risk_point: '交叉作业防护缺失',
@@ -749,7 +749,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-09-18',
     risk_factor: '不停航通道上施工车辆与场内运行车辆混行。',
     hazard_consequence: '车辆碰撞或碾压，造成人员伤亡和运行中断。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-000-2',
     risk_type: '车辆伤害',
     risk_point: '场内车辆混行',
@@ -783,7 +783,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-09-10',
     risk_factor: '基坑段配电箱门锁损坏，电缆接头外露。',
     hazard_consequence: '非电工误触带电部位，造成触电伤害。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-000-1',
     risk_type: '触电',
     risk_point: '临时用电线路破损',
@@ -817,7 +817,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-09-02',
     risk_factor: '主体施工段深基坑监测位移接近预警。',
     hazard_consequence: '支护失效导致基坑坍塌，掩埋人员和设备。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-001-1',
     risk_type: '坍塌',
     risk_point: '深基坑支护变形',
@@ -851,7 +851,7 @@ export const riskPointControlList = reactive([
     report_date: '2026-09-08',
     risk_factor: '局部超挖已回填并复测合格。',
     hazard_consequence: '若再次超挖，可能引起边坡失稳。',
-    construction_stage: '施工阶段',
+    construction_stage: '施工',
     construction_progress_id: 'prog-p-001-1',
     risk_type: '坍塌',
     risk_point: '深基坑支护变形',
@@ -879,8 +879,8 @@ export const riskPointControlList = reactive([
     creator: '刘安全',
     created_at: '2026-09-08 10:30:00',
   },
-  ...buildDemoControls('p-000', ['高处坠落', '起重伤害', '触电', '火灾爆炸', '物体打击', '车辆伤害'], 'prog-p-000-1', 'loc-conc-1'),
-  ...buildDemoControls('p-001', ['坍塌'], 'prog-p-001-1', 'loc-rwy-1'),
+  ...buildDemoControls('p-000', ['高处坠落', '起重伤害', '触电', '火灾爆炸', '物体打击', '车辆伤害'], 'prog-p-000-1', 'loc-conc-1', '2026-09-19'),
+  ...buildDemoControls('p-001', ['坍塌'], 'prog-p-001-1', 'loc-rwy-1', '2026-09-20'),
 ])
 
 /** 位置节点标识统一为字符串数组（兼容历史单值） */
@@ -916,11 +916,39 @@ export function listConfigRiskTypes(projectId) {
   return listRiskTypeNames(projectId)
 }
 
+/**
+ * 类型筛选解析：入参可为「类型标识」或「类型名称（快照）」。
+ * Q12 B / C3：标识是稳定关联键，名称仅作展示快照；联动优先按标识匹配，
+ * 兼容按名称匹配（历史快照名或旧调用）。
+ */
+function resolveRiskTypeKeys(projectId, riskTypeOrId) {
+  const raw = String(riskTypeOrId || '').trim()
+  if (!raw) return { ids: [], names: [] }
+  const source = airportRiskSourceList.find(
+    (r) => r.project_id === projectId && (r.id === raw || r.source_name === raw),
+  )
+  const ids = new Set()
+  const names = new Set()
+  if (source && source.id === raw) ids.add(raw)
+  else names.add(raw)
+  if (source) {
+    ids.add(source.id)
+    names.add(source.source_name)
+  }
+  return { ids: [...ids], names: [...names] }
+}
+
+function configRowMatchesType(row, keys) {
+  if (row.risk_type_id) return keys.ids.includes(row.risk_type_id)
+  return keys.names.includes(String(row.risk_type || '').trim())
+}
+
 /** 指定风险类型下的风险点（去重，供管控登记联动） */
-export function listConfigRiskPoints(projectId, riskType) {
+export function listConfigRiskPoints(projectId, riskTypeOrId) {
+  const keys = resolveRiskTypeKeys(projectId, riskTypeOrId)
   const set = new Set()
   riskPointConfigList.forEach((row) => {
-    if (row.project_id === projectId && row.risk_type === riskType && row.risk_point) {
+    if (row.project_id === projectId && configRowMatchesType(row, keys) && row.risk_point) {
       set.add(row.risk_point)
     }
   })
@@ -928,12 +956,13 @@ export function listConfigRiskPoints(projectId, riskType) {
 }
 
 /** 指定类型+风险点下的风险细分（去重；空细分不参与联动选项） */
-export function listConfigRiskSegments(projectId, riskType, riskPoint) {
+export function listConfigRiskSegments(projectId, riskTypeOrId, riskPoint) {
+  const keys = resolveRiskTypeKeys(projectId, riskTypeOrId)
   const set = new Set()
   riskPointConfigList.forEach((row) => {
     if (
       row.project_id === projectId
-      && row.risk_type === riskType
+      && configRowMatchesType(row, keys)
       && row.risk_point === riskPoint
     ) {
       const seg = (row.risk_segment || '').trim()
@@ -944,13 +973,14 @@ export function listConfigRiskSegments(projectId, riskType, riskPoint) {
 }
 
 /** 按类型+风险点+细分匹配配置行（细分按 trim 比较；多条取第一条） */
-export function findRiskPointConfig(projectId, riskType, riskPoint, riskSegment = '') {
+export function findRiskPointConfig(projectId, riskTypeOrId, riskPoint, riskSegment = '') {
   const seg = (riskSegment || '').trim()
+  const keys = resolveRiskTypeKeys(projectId, riskTypeOrId)
   return (
     riskPointConfigList.find(
       (row) =>
         row.project_id === projectId
-        && row.risk_type === riskType
+        && configRowMatchesType(row, keys)
         && row.risk_point === riskPoint
         && (row.risk_segment || '').trim() === seg,
     ) || null
@@ -958,19 +988,20 @@ export function findRiskPointConfig(projectId, riskType, riskPoint, riskSegment 
 }
 
 /** 校验管控登记的类型/风险点/细分：类型来自风险类型配置，点与细分来自配置库 */
-export function matchControlToConfig(projectId, riskType, riskPoint, riskSegment = '') {
-  if (!listRiskTypeNames(projectId).includes(riskType)) {
+export function matchControlToConfig(projectId, riskTypeOrId, riskPoint, riskSegment = '') {
+  const keys = resolveRiskTypeKeys(projectId, riskTypeOrId)
+  if (!keys.ids.length && !keys.names.length) {
     return { ok: false, msg: '风险类型须从风险类型配置中选择' }
   }
-  if (!listConfigRiskPoints(projectId, riskType).includes(riskPoint)) {
+  if (!listConfigRiskPoints(projectId, riskTypeOrId).includes(riskPoint)) {
     return { ok: false, msg: '风险点须从配置库选择，并与风险类型联动' }
   }
-  const segs = listConfigRiskSegments(projectId, riskType, riskPoint)
+  const segs = listConfigRiskSegments(projectId, riskTypeOrId, riskPoint)
   const seg = (riskSegment || '').trim()
   if (!segs.includes(seg)) {
     return { ok: false, msg: '风险细分须从配置库选择，并与风险类型、风险点联动' }
   }
-  return { ok: true, config: findRiskPointConfig(projectId, riskType, riskPoint, seg) }
+  return { ok: true, config: findRiskPointConfig(projectId, riskTypeOrId, riskPoint, seg) }
 }
 
 export function getRiskPointConfig(id) {
@@ -997,10 +1028,11 @@ export function saveRiskPointConfig(projectId, payload, editorName = '系统管�
   if (control_measure.length > 300) return { ok: false, msg: '管控措施不超过300字' }
   if (!projectId) return { ok: false, msg: '请先选择项目' }
 
+  const selectedTypeId = riskTypeIdByName(projectId, risk_type)
   const dup = riskPointConfigList.find(
     (r) =>
       r.project_id === projectId
-      && r.risk_type === risk_type
+      && (selectedTypeId ? r.risk_type_id === selectedTypeId : r.risk_type === risk_type)
       && r.risk_point === risk_point
       && r.id !== payload.id,
   )
@@ -1017,6 +1049,7 @@ export function saveRiskPointConfig(projectId, payload, editorName = '系统管�
     const row = riskPointConfigList.find((r) => r.id === payload.id && r.project_id === projectId)
     if (!row) return { ok: false, msg: '记录不存在' }
     Object.assign(row, {
+      risk_type_id: riskTypeIdByName(projectId, risk_type),
       risk_type,
       risk_point,
       risk_segment,
@@ -1029,6 +1062,7 @@ export function saveRiskPointConfig(projectId, payload, editorName = '系统管�
   const row = {
     id: `rpc-${String(++configSeq).padStart(3, '0')}`,
     project_id: projectId,
+    risk_type_id: riskTypeIdByName(projectId, risk_type),
     risk_type,
     risk_point,
     risk_segment,
@@ -1041,16 +1075,17 @@ export function saveRiskPointConfig(projectId, payload, editorName = '系统管�
   return { ok: true, data: row }
 }
 
-/** 台账引用条数：同项目「风险类型+风险点+风险细分」与配置项一致 */
+/** 台账引用条数：同项目「类型标识+风险点+风险细分」与配置项一致。 */
 export function countControlRefsToConfig(projectId, configRow) {
   if (!configRow || !projectId) return 0
-  const type = (configRow.risk_type || '').trim()
+  const typeId = configRow.risk_type_id || riskTypeIdByName(projectId, configRow.risk_type)
+  const typeName = (configRow.risk_type || '').trim()
   const point = (configRow.risk_point || '').trim()
   const segment = (configRow.risk_segment || '').trim()
   return riskPointControlList.filter(
     (r) =>
       r.project_id === projectId
-      && (r.risk_type || '').trim() === type
+      && (typeId ? r.risk_type_id === typeId : (r.risk_type || '').trim() === typeName)
       && (r.risk_point || '').trim() === point
       && (r.risk_segment || '').trim() === segment,
   ).length
@@ -1072,14 +1107,26 @@ export function removeRiskPointConfig(projectId, id) {
   return { ok: true }
 }
 
-export function countControlsUsingRiskType(projectId, typeName) {
-  if (!projectId || !typeName) return 0
-  const name = String(typeName).trim()
-  const controlCount = riskPointControlList.filter(
-    (row) => row.project_id === projectId && (row.risk_type || '').trim() === name,
+export function countControlsUsingRiskType(projectId, typeIdOrName) {
+  if (!projectId || !typeIdOrName) return 0
+  const keys = resolveRiskTypeKeys(projectId, typeIdOrName)
+  const source = airportRiskSourceList.find((r) => r.project_id === projectId && r.id === String(typeIdOrName))
+  const ids = new Set(keys.ids)
+  const names = new Set(keys.names)
+  if (source) names.add(source.source_name)
+  const controlCount = riskPointControlList.filter((row) =>
+    row.project_id === projectId && (
+      row.risk_type_id
+        ? ids.has(row.risk_type_id)
+        : names.has((row.risk_type || '').trim())
+    ),
   ).length
-  const configCount = riskPointConfigList.filter(
-    (row) => row.project_id === projectId && (row.risk_type || '').trim() === name,
+  const configCount = riskPointConfigList.filter((row) =>
+    row.project_id === projectId && (
+      row.risk_type_id
+        ? ids.has(row.risk_type_id)
+        : names.has((row.risk_type || '').trim())
+    ),
   ).length
   return controlCount + configCount
 }
@@ -1100,16 +1147,9 @@ export function saveAirportRiskSource(projectId, payload, editorName = '系统�
   if (payload.id) {
     const row = airportRiskSourceList.find((item) => item.id === payload.id && item.project_id === projectId)
     if (!row) return { ok: false, msg: '记录不存在' }
-    const oldName = row.source_name
+    // Q12 B / C3：标识关联 + 名称快照。改名只改类型配置本身，
+    // 不级联更新下游配置库/台账（历史保留旧名称快照）。
     row.source_name = source_name
-    if (oldName !== source_name) {
-      riskPointControlList.forEach((item) => {
-        if (item.project_id === projectId && item.risk_type === oldName) item.risk_type = source_name
-      })
-      riskPointConfigList.forEach((item) => {
-        if (item.project_id === projectId && item.risk_type === oldName) item.risk_type = source_name
-      })
-    }
     return { ok: true, data: row }
   }
   const row = {
@@ -1127,7 +1167,7 @@ export function removeAirportRiskSource(projectId, id) {
   const idx = airportRiskSourceList.findIndex((row) => row.id === id && row.project_id === projectId)
   if (idx < 0) return { ok: false, msg: '记录不存在' }
   const row = airportRiskSourceList[idx]
-  const refCount = countControlsUsingRiskType(projectId, row.source_name)
+  const refCount = countControlsUsingRiskType(projectId, row.id)
   if (refCount > 0) {
     return { ok: false, msg: `该风险类型已被 ${refCount} 条配置或辨识引用，请先处理后再删除` }
   }
@@ -1201,10 +1241,12 @@ export function listRiskPointControls(projectId, filters = {}) {
 export function listRiskControlMetrics(projectId) {
   const rows = listRiskPointControls(projectId)
   const activated = rows.filter((row) => riskRunStatus(row) === 'activated')
-  const typeDist = listRiskTypeNames(projectId)
-    .map((name) => ({
-      name,
-      value: activated.filter((row) => row.risk_type === name).length,
+  const typeDist = listAirportRiskSources(projectId)
+    .map((type) => ({
+      name: type.source_name,
+      value: activated.filter((row) =>
+        row.risk_type_id ? row.risk_type_id === type.id : row.risk_type === type.source_name,
+      ).length,
     }))
     .filter((item) => item.value > 0)
   return {
@@ -1225,10 +1267,11 @@ export function getConfigProjectName(projectId) {
   return getProjectLabel(projectId) || '--'
 }
 
-function nextRiskSourceNo(reportDate) {
+function nextRiskSourceNo(projectId, reportDate) {
   const day = String(reportDate || '').replace(/-/g, '')
   const prefix = `FX-${day}-`
   const max = riskPointControlList.reduce((acc, row) => {
+    if (row.project_id !== projectId) return acc
     const no = row.risk_source_no || ''
     if (!no.startsWith(prefix)) return acc
     const n = Number(no.slice(prefix.length))
@@ -1306,6 +1349,7 @@ export function saveRiskPointControl(projectId, payload, editorName = '系统管
     hazard_consequence,
     construction_stage,
     construction_progress_id,
+    risk_type_id: riskTypeIdByName(projectId, risk_type),
     risk_type,
     risk_point,
     risk_segment,
@@ -1338,7 +1382,7 @@ export function saveRiskPointControl(projectId, payload, editorName = '系统管
 
   const row = {
     id: `rpk-${String(++controlSeq).padStart(3, '0')}`,
-    risk_source_no: nextRiskSourceNo(report_date),
+    risk_source_no: nextRiskSourceNo(projectId, report_date),
     project_id: projectId,
     ...base,
     creator: editorName,
@@ -1391,14 +1435,31 @@ export function closeRiskPointControl(projectId, id) {
   return { ok: true, data: row }
 }
 
-export function removeRiskPointControl(projectId, id) {
-  const idx = riskPointControlList.findIndex((r) => r.id === id && r.project_id === projectId)
-  if (idx < 0) return { ok: false, msg: '记录不存在' }
-  const row = riskPointControlList[idx]
-  if (row.approval_status !== 'rejected') return { ok: false, msg: '当前不可删除' }
-  riskPointControlList.splice(idx, 1)
-  return { ok: true }
+/**
+ * 关闭后重新激活（Q7 B，C2：不重新审批）
+ * 仅「已通过且已关闭」可重新激活；激活后回到未关闭，
+ * 由风险状态三态判定（关联进度进行中→已激活，否则→未激活）。
+ */
+export function reactivateRiskPointControl(projectId, id) {
+  const row = riskPointControlList.find((item) => item.id === id && item.project_id === projectId)
+  if (!row) return { ok: false, msg: '记录不存在' }
+  if (row.approval_status !== 'approved' || row.close_status !== 'closed') {
+    return { ok: false, msg: '当前不可重新激活' }
+  }
+  row.close_status = 'open'
+  row.closed_at = ''
+  return { ok: true, data: row }
 }
+
+// Q12 B / C3 归一：为已有种子（配置库 + 台账）回填 risk_type_id 快照，
+// 使「标识关联 + 名称快照」对历史数据也成立；已有关键 user 新增时也生效。
+function backfillRiskTypeId(row) {
+  if (!row || row.risk_type_id) return
+  const id = riskTypeIdByName(row.project_id, row.risk_type)
+  if (id) row.risk_type_id = id
+}
+riskPointConfigList.forEach(backfillRiskTypeId)
+riskPointControlList.forEach(backfillRiskTypeId)
 
 riskPointControlList
   .filter((row) => row.approval_status === 'reviewing')

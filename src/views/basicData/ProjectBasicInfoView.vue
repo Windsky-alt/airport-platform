@@ -72,7 +72,7 @@ function openViewPortrait(row) {
 }
 
 function formatPeriod(row) {
-  return formatConstructionPeriod(row) || '—'
+  return formatConstructionPeriod(row) || '--'
 }
 </script>
 
@@ -132,7 +132,7 @@ function formatPeriod(row) {
         <el-table-column prop="shortName" label="项目简称" width="140" show-overflow-tooltip />
         <el-table-column prop="projectCode" label="国家统一编码" min-width="150" show-overflow-tooltip>
           <template #default="{ row }">
-            {{ row.projectCode || '—' }}
+            {{ row.projectCode || '--' }}
           </template>
         </el-table-column>
         <el-table-column prop="status" label="项目状态" width="96" align="center">
@@ -152,7 +152,7 @@ function formatPeriod(row) {
         </el-table-column>
         <el-table-column label="项目经理" width="110" align="center" show-overflow-tooltip>
           <template #default="{ row }">
-            {{ displayProjectManagerName(row) || '—' }}
+            {{ displayProjectManagerName(row) || '--' }}
           </template>
         </el-table-column>
         <el-table-column v-if="isHqSelected" label="是否隐藏" width="96" align="center">

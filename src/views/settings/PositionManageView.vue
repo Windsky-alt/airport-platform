@@ -172,7 +172,7 @@ async function handleSubmit() {
           <el-button v-if="row.headcount" link type="primary" @click="showHeadcount(row)">
             {{ row.headcount }}
           </el-button>
-          <span v-else>—</span>
+          <span v-else>--</span>
         </template>
       </el-table-column>
       <el-table-column prop="duty" label="岗位职责" min-width="220" show-overflow-tooltip />

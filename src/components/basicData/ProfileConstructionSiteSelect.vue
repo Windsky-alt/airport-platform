@@ -40,7 +40,7 @@ const selected = computed({
   },
 })
 
-const displayText = computed(() => selected.value || '—')
+const displayText = computed(() => selected.value || '--')
 </script>
 
 <template>

@@ -20,7 +20,7 @@ const props = defineProps({
 })
 
 function displayValue(value) {
-  return value?.trim?.() ? value : '—'
+  return value?.trim?.() ? value : '--'
 }
 
 function statusTagType(status) {
@@ -180,7 +180,7 @@ watch(
         <el-tag :type="statusTagType(record.status)" size="small">{{ record.status }}</el-tag>
       </div>
       <div class="summary-meta">
-        <span>{{ record.project || '—' }}</span>
+        <span>{{ record.project || '--' }}</span>
       </div>
     </div>
 
@@ -192,15 +192,15 @@ watch(
           <span class="panel-sub">开单事实</span>
         </template>
         <el-descriptions :column="2" border size="small">
-          <el-descriptions-item label="类型" :span="2">{{ record.workType || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="处罚内容" :span="2">{{ record.penaltyContent || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="类型" :span="2">{{ record.workType || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="处罚内容" :span="2">{{ record.penaltyContent || '--' }}</el-descriptions-item>
           <el-descriptions-item label="指派人">
             {{ resolveExecutorDisplay(record.assignee || record.executor) }}
           </el-descriptions-item>
-          <el-descriptions-item label="完成时限">{{ record.deadline || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="完成时限">{{ record.deadline || '--' }}</el-descriptions-item>
           <el-descriptions-item label="条款" :span="2">{{ displayValue(record.penaltyClause) }}</el-descriptions-item>
           <el-descriptions-item label="金额">{{ displayValue(record.amount) }}</el-descriptions-item>
-          <el-descriptions-item label="下发时间">{{ record.issueTime || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="下发时间">{{ record.issueTime || '--' }}</el-descriptions-item>
           <el-descriptions-item label="处罚单补充附件" :span="2">
             <DispatchImageAttachments
               :model-value="supplementAttachments"
@@ -223,12 +223,12 @@ watch(
         </template>
         <el-empty v-if="!hasReport" :image-size="48" description="责任单位尚未提交上报结果" />
         <el-descriptions v-else :column="2" border size="small">
-          <el-descriptions-item label="上报时间">{{ record.reportTime || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="指定验收人">{{ record.acceptor || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="上报时间">{{ record.reportTime || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="指定验收人">{{ record.acceptor || '--' }}</el-descriptions-item>
           <el-descriptions-item label="条款" :span="2">{{ displayValue(record.penaltyClause) }}</el-descriptions-item>
           <el-descriptions-item label="金额">{{ displayValue(record.amount) }}</el-descriptions-item>
           <el-descriptions-item label="上报结果" :span="2">
-            <div class="multi-text">{{ record.reportResult || '—' }}</div>
+            <div class="multi-text">{{ record.reportResult || '--' }}</div>
           </el-descriptions-item>
           <el-descriptions-item label="上报结果附件" :span="2">
             <DispatchImageAttachments
@@ -254,7 +254,7 @@ watch(
           </el-tag>
         </template>
         <el-descriptions :column="2" border size="small">
-          <el-descriptions-item label="申诉时间">{{ record.appealTime || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="申诉时间">{{ record.appealTime || '--' }}</el-descriptions-item>
           <el-descriptions-item label="申诉结论">
             <el-tag
               v-if="appealConclusion"
@@ -263,10 +263,10 @@ watch(
             >
               {{ appealConclusion.label }}
             </el-tag>
-            <span v-else>—</span>
+            <span v-else>--</span>
           </el-descriptions-item>
           <el-descriptions-item label="申诉理由" :span="2">
-            <div class="multi-text">{{ record.appealReason || '—' }}</div>
+            <div class="multi-text">{{ record.appealReason || '--' }}</div>
           </el-descriptions-item>
           <el-descriptions-item label="申诉附件" :span="2">
             <DispatchImageAttachments
@@ -300,10 +300,10 @@ watch(
             >
               {{ acceptConclusion.label }}
             </el-tag>
-            <span v-else>—</span>
+            <span v-else>--</span>
           </el-descriptions-item>
           <el-descriptions-item label="验收人">
-            {{ record.acceptedBy || record.acceptor || '—' }}
+            {{ record.acceptedBy || record.acceptor || '--' }}
           </el-descriptions-item>
           <el-descriptions-item v-if="record.acceptedTime" label="验收时间">
             {{ record.acceptedTime }}
@@ -318,7 +318,7 @@ watch(
             {{ record.closedTime }}
           </el-descriptions-item>
           <el-descriptions-item label="验收说明" :span="2">
-            <div class="multi-text">{{ record.acceptRemark || '—' }}</div>
+            <div class="multi-text">{{ record.acceptRemark || '--' }}</div>
           </el-descriptions-item>
         </el-descriptions>
       </el-collapse-item>
@@ -330,11 +330,11 @@ watch(
           <el-tag size="small" type="info" effect="plain">{{ closeTypeLabel || '已关闭' }}</el-tag>
         </template>
         <el-descriptions :column="2" border size="small">
-          <el-descriptions-item label="关闭方式">{{ closeTypeLabel || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="关闭人">{{ record.closedBy || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="关闭时间" :span="2">{{ record.closedTime || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="关闭方式">{{ closeTypeLabel || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="关闭人">{{ record.closedBy || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="关闭时间" :span="2">{{ record.closedTime || '--' }}</el-descriptions-item>
           <el-descriptions-item v-if="isManualClosed || record.closeRemark" label="关闭说明" :span="2">
-            <div class="multi-text">{{ record.closeRemark || '—' }}</div>
+            <div class="multi-text">{{ record.closeRemark || '--' }}</div>
           </el-descriptions-item>
         </el-descriptions>
       </el-collapse-item>

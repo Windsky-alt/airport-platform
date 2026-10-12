@@ -30,7 +30,7 @@ function personPhoto(item) {
 }
 
 function personRole(item) {
-  return item.role || item.position || '—'
+  return item.role || item.position || '--'
 }
 
 function formatTime() {

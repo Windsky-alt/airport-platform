@@ -337,7 +337,7 @@ export const orgUserMap = Object.fromEntries(
     members.map((m) => ({
       id: m.id,
       name: m.name,
-      gender: '—',
+      gender: '--',
       dept: m.orgPath.split('/').pop() || m.orgPath,
       phone: m.phone,
       email: `${m.loginAccount}@szairport.com`,
@@ -539,7 +539,7 @@ export function getUsersByNodeId(nodeId, treeNode) {
   return collectUsersUnderNodes(ids).map((m) => ({
     id: m.id,
     name: m.name,
-    gender: '—',
+    gender: '--',
     dept: m.orgPath.split('/').pop() || m.orgPath,
     phone: m.phone,
     email: `${m.loginAccount}@szairport.com`,
@@ -561,14 +561,14 @@ export function getOrgInfo(nodeId) {
   ensureUnifiedOrgTree()
   const raw = findRawNode(nodeId)
   if (!raw) return null
-  const parentLabel = raw.parent?.label || '—'
+  const parentLabel = raw.parent?.label || '--'
   return {
     parentOrg: parentLabel,
     orgName: raw.node.label,
-    orgType: raw.node.orgType || '—',
-    shortName: raw.node.shortName || '—',
+    orgType: raw.node.orgType || '--',
+    shortName: raw.node.shortName || '--',
     sortOrder: raw.node.sortOrder ?? 0,
-    orgCode: raw.node.orgCode || '—',
+    orgCode: raw.node.orgCode || '--',
     enabled: raw.node.enabled !== false,
     orgPath: findTreeNode(unifiedOrgTree.value, nodeId)?.orgPath || raw.node.label,
   }
@@ -840,7 +840,7 @@ export function addOrgMember(orgId, payload) {
   orgUserMap[orgId].push({
     id: member.id,
     name: member.name,
-    gender: '—',
+    gender: '--',
     dept: member.orgPath.split('/').pop(),
     phone: member.phone,
     email: `${member.loginAccount}@szairport.com`,

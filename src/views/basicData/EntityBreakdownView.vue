@@ -528,7 +528,7 @@ function addChildLabel(row) {
           </template>
         </el-table-column>
         <el-table-column prop="code" label="编码" width="120" show-overflow-tooltip>
-          <template #default="{ row }">{{ row.code || '—' }}</template>
+          <template #default="{ row }">{{ row.code || '--' }}</template>
         </el-table-column>
         <el-table-column label="专业" min-width="180">
           <template #default="{ row }">
@@ -543,7 +543,7 @@ function addChildLabel(row) {
                 {{ wbsSpecialtyLabel(sp) }}
               </el-tag>
             </div>
-            <span v-else>—</span>
+            <span v-else>--</span>
           </template>
         </el-table-column>
         <el-table-column prop="full_path" label="完整路径" min-width="240" show-overflow-tooltip />

@@ -67,7 +67,7 @@ const defaultHelmets = [
     bindPerson: '',
     project: '综合配套',
     online: false,
-    location: '—',
+    location: '--',
     lastHeartbeat: '2026-06-25 17:20',
   },
 ]

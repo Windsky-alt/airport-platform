@@ -81,8 +81,8 @@ onUnmounted(() => {
         <el-descriptions :column="1" border size="small">
           <el-descriptions-item label="工程名称">{{ current.name }}</el-descriptions-item>
           <el-descriptions-item label="危大类别">{{ current.category }}</el-descriptions-item>
-          <el-descriptions-item label="施工项目">{{ current.projectName || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="施工内容">{{ current.detail?.workContent || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="施工项目">{{ current.projectName || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="施工内容">{{ current.detail?.workContent || '--' }}</el-descriptions-item>
           <el-descriptions-item label="专项方案">{{ current.scheme }}</el-descriptions-item>
         </el-descriptions>
       </template>

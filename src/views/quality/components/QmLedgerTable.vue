@@ -36,7 +36,7 @@ function reset() {
 
 function passRateText(row) {
   const taskTotal = Number(row.task_total ?? row.taskTotal)
-  if (!taskTotal) return '—'
+  if (!taskTotal) return '--'
   return `${row.pass_rate ?? row.passRate ?? 0}%`
 }
 

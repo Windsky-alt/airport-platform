@@ -52,10 +52,10 @@ const hasCoords = computed(() => {
   return lngNum !== null && latNum !== null
 })
 
-const displaySite = computed(() => String(props.site || '').trim() || '—')
+const displaySite = computed(() => String(props.site || '').trim() || '--')
 
 const displayCoords = computed(() => {
-  if (!hasCoords.value) return '—'
+  if (!hasCoords.value) return '--'
   return formatConstructionSiteCoords(props.lng, props.lat)
 })
 

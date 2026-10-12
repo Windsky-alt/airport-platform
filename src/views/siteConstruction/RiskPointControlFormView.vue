@@ -15,10 +15,8 @@ import {
   findRiskPointConfig,
   formatMatSupervisorApproverLabel,
   getRiskPointControl,
-  constructionProgressStatus,
+  constructionProgressLabel,
   listConstructionProgressOptions,
-  PROGRESS_STATUS_OPTIONS,
-  updateConstructionProgressStatus,
   listConfigRiskPoints,
   listConfigRiskSegments,
   listConfigRiskTypes,
@@ -67,13 +65,7 @@ const form = reactive({
 const typeOptions = computed(() => listConfigRiskTypes(laborProjectId.value))
 const progressOptions = computed(() => listConstructionProgressOptions(laborProjectId.value))
 const supervisorOptions = computed(() => listMatSupervisorApprovers(laborProjectId.value))
-const selectedProgressStatus = computed(() => constructionProgressStatus(form.construction_progress_id))
 
-function onProgressStatusChange(status) {
-  if (!form.construction_progress_id) return
-  const r = updateConstructionProgressStatus(form.construction_progress_id, status)
-  if (!r.ok) ElMessage.warning(r.msg)
-}
 const pointOptions = computed(() => {
   if (!form.risk_type) return []
   return listConfigRiskPoints(laborProjectId.value, form.risk_type)
@@ -284,7 +276,7 @@ function handleSubmit() {
               <el-option v-for="p in pointOptions" :key="p" :label="p" :value="p" />
             </el-select>
             <p v-if="form.risk_type && !pointOptions.length" class="field-hint">
-              该类型下暂无风险点，请先在「风险点管控配置库」维护
+              该类型下暂无风险点，请先在「风险配置库」维护
             </p>
           </el-form-item>
         </el-col>
@@ -301,7 +293,7 @@ function handleSubmit() {
               <el-option v-for="s in segmentOptions" :key="s" :label="s" :value="s" />
             </el-select>
             <p v-if="form.risk_point && !segmentOptions.length" class="field-hint">
-              该风险点下暂无风险细分，请先在「风险点管控配置库」维护
+              该风险点下暂无风险细分，请先在「风险配置库」维护
             </p>
           </el-form-item>
         </el-col>
@@ -446,16 +438,12 @@ function handleSubmit() {
         </el-col>
         <el-col :span="8">
           <el-form-item label="施工进度状态">
-            <el-select
-              :model-value="selectedProgressStatus"
-              :disabled="!form.construction_progress_id"
+            <el-input
+              :model-value="constructionProgressLabel(form.construction_progress_id)"
+              disabled
               placeholder="请先选施工进度"
-              style="width: 100%"
-              @change="onProgressStatusChange"
-            >
-              <el-option v-for="item in PROGRESS_STATUS_OPTIONS" :key="item" :label="item" :value="item" />
-            </el-select>
-            <p class="field-hint">进度为「进行中」时，未关闭的风险为已激活；关闭后为已关闭，其余为未激活。</p>
+            />
+            <p class="field-hint">施工进度为只读引用（进度名称与状态取自施工进度台账，本模块不回写）。进度为「进行中」时，未关闭的风险为已激活；关闭后为已关闭，其余为未激活。</p>
           </el-form-item>
         </el-col>
       </el-row>

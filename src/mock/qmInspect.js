@@ -25,12 +25,12 @@ export const TASK_STATUS_FILTER_OPTIONS = Object.entries(TASK_STATUS).map(([valu
 
 /** 列表「当前状态」展示 */
 export function getTaskDisplayStatus(task) {
-  if (!task) return { key: '', label: '—', tagType: 'info' }
+  if (!task) return { key: '', label: '--', tagType: 'info' }
   const s = Number(task.status)
   const tagType = s === 0 ? 'info' : s === 1 ? 'warning' : s === 2 ? 'success' : s === 3 ? 'danger' : 'info'
   return {
     key: String(task.status),
-    label: TASK_STATUS[task.status] || '—',
+    label: TASK_STATUS[task.status] || '--',
     tagType,
   }
 }
@@ -113,7 +113,7 @@ export const NODE_TO_TASK_TYPE = {
 
 export function resolveProjectName(project_id) {
   const hit = COC_PROJECT_OPTIONS.find((p) => p.id === project_id)
-  return hit?.fullName || hit?.label || project_id || '—'
+  return hit?.fullName || hit?.label || project_id || '--'
 }
 
 export { nowStr }
@@ -902,7 +902,7 @@ export const BATCH_TYPE_LABEL = Object.fromEntries(
 )
 
 export function resolveBatchTypeName(batch_type_id) {
-  if (!batch_type_id) return '—'
+  if (!batch_type_id) return '--'
   return BATCH_TYPE_LABEL[batch_type_id] || batch_type_id
 }
 

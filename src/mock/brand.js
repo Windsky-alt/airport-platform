@@ -39,7 +39,7 @@ export function statusLabel(status) {
   // 废止码仅只读兼容展示；旧 pending 映射为审批中，新草稿用 draft=待提交
   if (status === 'pending') return '审批中'
   if (status === 'withdrawn') return '已驳回'
-  return STATUS_LABEL[status] || status || '—'
+  return STATUS_LABEL[status] || status || '--'
 }
 export const NODE_LABEL = {
   supervisor: '待监理审',
@@ -115,7 +115,7 @@ export function formatBrandProjectUserLabel(user) {
 
 /** 提交时快照审批人组织/岗位；详情与待办优先读快照 */
 export function formatBrandApproverSnapshot(app, role) {
-  if (!app) return '—'
+  if (!app) return '--'
   const isSupervisor = role === 'supervisor'
   const name = isSupervisor ? app.supervisor_approver_name : app.pm_approver_name
   const org = isSupervisor ? app.supervisor_approver_org : app.pm_approver_org
@@ -124,7 +124,7 @@ export function formatBrandApproverSnapshot(app, role) {
   const userId = isSupervisor ? app.supervisor_approver_user_id : app.pm_approver_user_id
   const user = findBrandProjectUser(userId)
   if (user) return formatBrandProjectUserLabel(user)
-  return name || '—'
+  return name || '--'
 }
 
 function pickApproverSnapshot(user) {

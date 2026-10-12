@@ -88,7 +88,7 @@ const selectedNode = computed(() => flatWbsRows.value.find((r) => r.id === selec
 const locationRows = computed(() => {
   if (!selectedNode.value) return []
   const code = selectedNode.value.location_code || displayTaskLocationName(props.task) || selectedNode.value.name
-  const base = code || '—'
+  const base = code || '--'
   // 演示：同一节点下挂若干工程部位
   return [
     { no: 1, location: base },
@@ -477,7 +477,7 @@ function formStatusTagType(s) {
             <el-collapse-item title="项目信息" name="project">
               <el-descriptions :column="1" size="small" border>
                 <el-descriptions-item label="任务">{{ task.task_name || task.task_no }}</el-descriptions-item>
-                <el-descriptions-item label="施工部位">{{ displayTaskLocationName(task) || '—' }}</el-descriptions-item>
+                <el-descriptions-item label="施工部位">{{ displayTaskLocationName(task) || '--' }}</el-descriptions-item>
               </el-descriptions>
             </el-collapse-item>
           </el-collapse>

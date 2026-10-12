@@ -46,7 +46,7 @@ function splitDateTime(value) {
 export function formatMeetingPeriod(start, end) {
   const s = String(start || '').trim()
   const e = String(end || '').trim()
-  if (!s && !e) return '—'
+  if (!s && !e) return '--'
   if (!e || e === s) return s || e
   const a = splitDateTime(s)
   const b = splitDateTime(e)

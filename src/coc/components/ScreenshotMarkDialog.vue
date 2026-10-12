@@ -88,7 +88,7 @@ function docTypeMeta(type) {
 const currentDocMeta = computed(() => docTypeMeta(form.docType))
 
 const formContextText = computed(() =>
-  [form.projectName, form.cameraName, form.cameraLocation].filter(Boolean).join(' · ') || '—',
+  [form.projectName, form.cameraName, form.cameraLocation].filter(Boolean).join(' · ') || '--',
 )
 
 const brushColors = ['#f56c6c', '#e6a23c', '#409eff', '#67c23a', '#ffffff']

@@ -120,7 +120,7 @@ function submitForm() {
   }
   if (formMode.value === 'create') {
     payload.status = NOTICE_STATUSES.PENDING
-    payload.issueTime = '—'
+    payload.issueTime = '--'
   }
   saveDispatchReminderRecord(payload)
   load()
@@ -276,17 +276,17 @@ onMounted(load)
     <el-dialog v-model="detailVisible" title="提示函详情" width="720px" destroy-on-close>
       <template v-if="current">
         <el-descriptions :column="2" border size="small" class="detail-desc">
-          <el-descriptions-item label="编号">{{ current.id || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="编号">{{ current.id || '--' }}</el-descriptions-item>
           <el-descriptions-item label="状态">
-            <el-tag :type="statusTagType(current.status)" size="small">{{ current.status || '—' }}</el-tag>
+            <el-tag :type="statusTagType(current.status)" size="small">{{ current.status || '--' }}</el-tag>
           </el-descriptions-item>
-          <el-descriptions-item label="项目名称" :span="2">{{ current.project || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="事项描述" :span="2">{{ current.matterDescription || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="项目名称" :span="2">{{ current.project || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="事项描述" :span="2">{{ current.matterDescription || '--' }}</el-descriptions-item>
           <el-descriptions-item label="指派人">
             {{ resolveExecutorDisplay(current.assignee || current.executor) }}
           </el-descriptions-item>
-          <el-descriptions-item label="完成时限">{{ current.deadline || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="下发时间">{{ current.issueTime && current.issueTime !== '—' ? current.issueTime : '—' }}</el-descriptions-item>
+          <el-descriptions-item label="完成时限">{{ current.deadline || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="下发时间">{{ current.issueTime && current.issueTime !== '--' ? current.issueTime : '--' }}</el-descriptions-item>
           <el-descriptions-item v-if="current.issuer" label="登记人">{{ current.issuer }}</el-descriptions-item>
           <el-descriptions-item label="附件" :span="2">
             <DispatchImageAttachments

@@ -12,6 +12,7 @@ import {
   APPROVAL_STATUS_LABEL,
   approvalStatusTagType,
   closeRiskPointControl,
+  reactivateRiskPointControl,
   constructionProgressLabel,
   formatMatSupervisorApproverLabel,
   formatRiskCell,
@@ -41,6 +42,10 @@ const canClose = computed(() => {
   return riskRunStatus(row) !== 'closed'
 })
 const canResubmit = computed(() => detail.value?.approval_status === 'rejected')
+const canReactivate = computed(() => {
+  const row = detail.value
+  return !!(row && row.approval_status === 'approved' && row.close_status === 'closed')
+})
 
 const supervisorLabel = computed(() => {
   const row = detail.value
@@ -75,6 +80,21 @@ function handleClose() {
     })
     .catch(() => {})
 }
+
+function handleReactivate() {
+  const row = detail.value
+  if (!row || !laborProjectId.value) return
+  ElMessageBox.confirm(`确认重新激活风险点「${row.risk_point}」？激活后恢复跟踪。`, '提示', { type: 'warning' })
+    .then(() => {
+      const r = reactivateRiskPointControl(laborProjectId.value, row.id)
+      if (!r.ok) {
+        ElMessage.warning(r.msg)
+        return
+      }
+      ElMessage.success('已重新激活')
+    })
+    .catch(() => {})
+}
 </script>
 
 <template>
@@ -95,6 +115,11 @@ function handleClose() {
               type="warning"
               @click="handleClose"
             >关闭</el-button>
+            <el-button
+              v-if="canReactivate"
+              type="warning"
+              @click="handleReactivate"
+            >重新激活</el-button>
             <el-button @click="goBack">返回列表</el-button>
           </div>
         </div>
@@ -133,6 +158,7 @@ function handleClose() {
           {{ APPROVAL_STATUS_LABEL[detail.approval_status] || '--' }}
         </el-tag>
       </el-descriptions-item>
+      <el-descriptions-item label="最近审批意见" :span="2">{{ formatRiskCell(detail.last_opinion) }}</el-descriptions-item>
       <el-descriptions-item label="风险状态">{{ riskRunStatusLabel(detail) }}</el-descriptions-item>
     </el-descriptions>
   </div>

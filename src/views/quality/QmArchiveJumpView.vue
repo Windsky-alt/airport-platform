@@ -24,6 +24,8 @@ const route = useRoute()
 const router = useRouter()
 const nodeId = computed(() => String(route.query.node_id || ''))
 const taskId = computed(() => String(route.query.task_id || ''))
+const isProvincialEntry = computed(() => String(route.query.entry || '') === 'provincial')
+const menuEntryLabel = computed(() => (isProvincialEntry.value ? '省统表管理' : '档案管理'))
 const fromMenu = computed(() => !nodeId.value && !taskId.value)
 
 const task = computed(() => {
@@ -56,15 +58,15 @@ onMounted(() => {
 <template>
   <div class="qm-page page-card">
     <div class="page-header">
-      <div class="page-breadcrumb">档案管理 / 档案管理（外跳模拟）</div>
-      <h1 class="page-title">档案管理 · 外跳模拟</h1>
+      <div class="page-breadcrumb">档案管理 / {{ fromMenu ? menuEntryLabel : '档案管理（外跳模拟）' }}</div>
+      <h1 class="page-title">{{ fromMenu ? `${menuEntryLabel} · 外跳模拟` : '档案管理 · 外跳模拟' }}</h1>
       <p class="page-tip">
         <template v-if="fromMenu">
           模拟外部档案系统入口（新标签打开）· 可从「节点档案清单」或验评「填报电子档案」携带节点进入
         </template>
         <template v-else>
-          已同步验收节点 ID：<code>{{ nodeId || '—' }}</code>
-          · 节点：{{ node?.node_name || '—' }}
+          已同步验收节点 ID：<code>{{ nodeId || '--' }}</code>
+          · 节点：{{ node?.node_name || '--' }}
           · 与验评清单「填报电子档案」同一页面
         </template>
       </p>
@@ -92,7 +94,7 @@ onMounted(() => {
             >
               标记已填报
             </el-button>
-            <span v-else class="muted">—</span>
+            <span v-else class="muted">--</span>
           </template>
         </el-table-column>
       </el-table>

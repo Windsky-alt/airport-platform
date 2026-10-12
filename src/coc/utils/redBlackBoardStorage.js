@@ -60,7 +60,7 @@ export function parseRedBlackPeriod(periodKey) {
 
 export function formatRedBlackPeriod(periodKey) {
   const { year, periodNo, key } = parseRedBlackPeriod(periodKey)
-  if (!year || !periodNo) return periodKey || '—'
+  if (!year || !periodNo) return periodKey || '--'
   return `${year}年第${periodNo}期`
 }
 
@@ -292,7 +292,7 @@ export function importPenaltyToBlackBoard(penalty, period) {
   const description = [
     reason,
     contentText,
-    penalty.amount && penalty.amount !== '—' ? `处罚金额：${penalty.amount}` : '',
+    penalty.amount && penalty.amount !== '--' ? `处罚金额：${penalty.amount}` : '',
   ]
     .filter(Boolean)
     .join(' · ')

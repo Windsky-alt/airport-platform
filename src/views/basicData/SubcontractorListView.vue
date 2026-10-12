@@ -387,7 +387,7 @@ function handleSubmit() {
           show-overflow-tooltip
         >
           <template #default="{ row }">
-            {{ row.submitTime || '—' }}
+            {{ row.submitTime || '--' }}
           </template>
         </el-table-column>
         <el-table-column
@@ -408,7 +408,7 @@ function handleSubmit() {
           show-overflow-tooltip
         >
           <template #default="{ row }">
-            {{ row.approvalFlow?.find((s) => s.status === 'current')?.title || '—' }}
+            {{ row.approvalFlow?.find((s) => s.status === 'current')?.title || '--' }}
           </template>
         </el-table-column>
         <el-table-column label="操作" :width="isHqSelected ? 88 : 160" fixed="right" align="center">

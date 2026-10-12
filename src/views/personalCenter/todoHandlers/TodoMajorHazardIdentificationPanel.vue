@@ -41,19 +41,19 @@ const majorHazardIdentificationContext = computed(() => {
   const detail = props.todo.detail || {}
   return {
     record: {
-      categoryName: detail.hazardCategory || '—',
-      identifiedBy: props.todo.applicant || '—',
-      identifiedAt: String(props.todo.applyTime || '').slice(0, 10) || '—',
-      remark: detail.summary || '—',
+      categoryName: detail.hazardCategory || '--',
+      identifiedBy: props.todo.applicant || '--',
+      identifiedAt: String(props.todo.applyTime || '').slice(0, 10) || '--',
+      remark: detail.summary || '--',
       approvalStatus: props.todo.status || (props.todo.handleLabel ? '已通过' : '审批中'),
       items: [
         {
           id: `${props.todo.id}-item`,
-          description: detail.workName || '—',
-          isSuperMajor: detail.superMajor || '—',
+          description: detail.workName || '--',
+          isSuperMajor: detail.superMajor || '--',
           conclusion: '√',
-          plannedStart: detail.plannedStart || '—',
-          plannedEnd: detail.plannedEnd || '—',
+          plannedStart: detail.plannedStart || '--',
+          plannedEnd: detail.plannedEnd || '--',
           controlPoints: detail.identificationPoints || [
             ...(detail.identificationBasis
               ? [{ id: `${props.todo.id}-point`, classification: '辨识依据', content: detail.identificationBasis }]
@@ -121,16 +121,16 @@ function onSubmit() {
     </div>
     <el-descriptions :column="2" border size="small" class="desc-panel">
       <el-descriptions-item label="危大工程类别">
-        {{ majorHazardIdentificationContext?.record?.categoryName || '—' }}
+        {{ majorHazardIdentificationContext?.record?.categoryName || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="辨识人">
-        {{ majorHazardIdentificationContext?.record?.identifiedBy || '—' }}
+        {{ majorHazardIdentificationContext?.record?.identifiedBy || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="辨识时间">
-        {{ majorHazardIdentificationContext?.record?.identifiedAt || '—' }}
+        {{ majorHazardIdentificationContext?.record?.identifiedAt || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="备注">
-        {{ majorHazardIdentificationContext?.record?.remark || '—' }}
+        {{ majorHazardIdentificationContext?.record?.remark || '--' }}
       </el-descriptions-item>
     </el-descriptions>
   </section>
@@ -153,7 +153,7 @@ function onSubmit() {
       </el-table-column>
       <el-table-column label="计划施工起止时间" width="205">
         <template #default="{ row }">
-          <span>{{ row.plannedStart || '—' }} 至 {{ row.plannedEnd || '—' }}</span>
+          <span>{{ row.plannedStart || '--' }} 至 {{ row.plannedEnd || '--' }}</span>
         </template>
       </el-table-column>
       <el-table-column label="管控要点" width="100" align="center">

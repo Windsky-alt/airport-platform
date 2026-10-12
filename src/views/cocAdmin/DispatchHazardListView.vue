@@ -83,7 +83,7 @@ function rectifyStatusTag(status) {
 }
 
 function sourceTypeLabel(type) {
-  return { live: '实时', playback: '回放', meeting: '会议' }[type] || type || '—'
+  return { live: '实时', playback: '回放', meeting: '会议' }[type] || type || '--'
 }
 
 function openDetail(row) {
@@ -172,18 +172,18 @@ onMounted(load)
     <el-dialog v-model="detailVisible" title="调度隐患详情" width="720px" destroy-on-close>
       <template v-if="current">
         <el-descriptions :column="2" border size="small">
-          <el-descriptions-item label="项目名称">{{ current.projectName || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="项目名称">{{ current.projectName || '--' }}</el-descriptions-item>
           <el-descriptions-item label="隐患类型">{{ hazardTypeLabel(current.hazardType) }}</el-descriptions-item>
-          <el-descriptions-item label="隐患描述" :span="2">{{ current.description || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="隐患等级">{{ current.hazardLevel || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="隐患描述" :span="2">{{ current.description || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="隐患等级">{{ current.hazardLevel || '--' }}</el-descriptions-item>
           <el-descriptions-item label="整改状态">{{ current.rectifyStatus || '待整改' }}</el-descriptions-item>
-          <el-descriptions-item label="整改人">{{ current.rectifier || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="整改期限">{{ current.hazardDeadline || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="摄像头">{{ current.cameraName || '—' }}</el-descriptions-item>
-          <el-descriptions-item label="监控点位">{{ current.cameraLocation || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="整改人">{{ current.rectifier || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="整改期限">{{ current.hazardDeadline || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="摄像头">{{ current.cameraName || '--' }}</el-descriptions-item>
+          <el-descriptions-item label="监控点位">{{ current.cameraLocation || '--' }}</el-descriptions-item>
           <el-descriptions-item label="截图方式">{{ sourceTypeLabel(current.sourceType) }}</el-descriptions-item>
           <el-descriptions-item label="登记来源">{{ current.source || '问题截图' }}</el-descriptions-item>
-          <el-descriptions-item label="登记时间" :span="2">{{ current.uploadTime || '—' }}</el-descriptions-item>
+          <el-descriptions-item label="登记时间" :span="2">{{ current.uploadTime || '--' }}</el-descriptions-item>
           <el-descriptions-item :label="`${hazardTypeLabel(current.hazardType)}隐患截图`" :span="2">
             <div class="detail-snapshot-thumb">
               <el-image
@@ -198,7 +198,7 @@ onMounted(load)
             </div>
           </el-descriptions-item>
           <el-descriptions-item v-if="current.rectifyStatus !== '待整改'" label="整改说明" :span="2">
-            {{ current.rectifyRemark || '—' }}
+            {{ current.rectifyRemark || '--' }}
           </el-descriptions-item>
           <el-descriptions-item v-if="current.rectifyStatus !== '待整改'" label="整改照片" :span="2">
             <div v-if="current.rectifyPhotos?.length" class="detail-photo-thumbs">
@@ -213,7 +213,7 @@ onMounted(load)
                 :alt="resolveDispatchHazardPhotoName(photo, index)"
               />
             </div>
-            <span v-else>—</span>
+            <span v-else>--</span>
           </el-descriptions-item>
         </el-descriptions>
 
@@ -227,7 +227,7 @@ onMounted(load)
               placement="top"
             >
               <div class="log-title">
-                {{ log.action }}：{{ log.fromStatus || '—' }} → {{ log.toStatus }}
+                {{ log.action }}：{{ log.fromStatus || '--' }} → {{ log.toStatus }}
               </div>
               <div class="log-meta">{{ log.operator }}（{{ log.operatorRole }}）</div>
               <div v-if="log.remark" class="log-remark">备注：{{ log.remark }}</div>

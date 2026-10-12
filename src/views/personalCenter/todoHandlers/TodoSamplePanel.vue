@@ -58,7 +58,7 @@ const currentNodeText = computed(() => {
   if (app.current_node === 'none' || !app.current_node) {
     if (app.status === 'approved') return '已办结'
     if (app.status === 'rejected') return '已驳回'
-    return '—'
+    return '--'
   }
   return NODE_LABEL[app.current_node] || app.current_node
 })
@@ -67,7 +67,7 @@ const bizTypeText = computed(() => {
   if (props.todo?.sampleBizType && BIZ_TYPE_LABEL[props.todo.sampleBizType]) {
     return BIZ_TYPE_LABEL[props.todo.sampleBizType]
   }
-  return props.todo?.detail?.bizType || '—'
+  return props.todo?.detail?.bizType || '--'
 })
 
 const samplePhotos = computed(() => {
@@ -120,7 +120,7 @@ const processDocFiles = computed(() => {
     </div>
     <el-descriptions :column="2" border class="info-desc">
       <el-descriptions-item label="报审编号">
-        {{ liveDetail?.application_id || todo.detail?.applicationId || todo.sampleApplicationId || '—' }}
+        {{ liveDetail?.application_id || todo.detail?.applicationId || todo.sampleApplicationId || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="状态">
         <el-tag size="small" :type="statusTagType(appStatus)">{{ statusLabel(appStatus) }}</el-tag>
@@ -133,26 +133,26 @@ const processDocFiles = computed(() => {
           liveDetail?.material_name ||
           liveDetail?.process_name ||
           todo.detail?.title ||
-          '—'
+          '--'
         }}
       </el-descriptions-item>
       <el-descriptions-item label="使用部位">
-        {{ liveDetail?.use_part || todo.detail?.usePart || '—' }}
+        {{ liveDetail?.use_part || todo.detail?.usePart || '--' }}
       </el-descriptions-item>
       <el-descriptions-item v-if="isMaterial && (liveDetail?.unit_name || todo.detail?.unitName)" label="单位工程">
         {{ liveDetail?.unit_name || todo.detail?.unitName }}
       </el-descriptions-item>
       <el-descriptions-item label="项目">
-        {{ liveDetail?.project_label || todo.detail?.project || '—' }}
+        {{ liveDetail?.project_label || todo.detail?.project || '--' }}
       </el-descriptions-item>
       <el-descriptions-item label="申请人">
-        {{ liveDetail?.applicant_name || todo.applicant || '—' }}
+        {{ liveDetail?.applicant_name || todo.applicant || '--' }}
       </el-descriptions-item>
       <el-descriptions-item v-if="isMaterial" label="材料类型">
         {{
           liveDetail?.material_type
             ? materialTypeLabel(liveDetail.material_type)
-            : todo.detail?.materialType || '—'
+            : todo.detail?.materialType || '--'
         }}
       </el-descriptions-item>
       <el-descriptions-item
@@ -176,7 +176,7 @@ const processDocFiles = computed(() => {
           ]
             .filter(Boolean)
             .join(' · ') ||
-          '—'
+          '--'
         }}
       </el-descriptions-item>
       <el-descriptions-item v-if="isMaterial" label="规格（或技术参数）" :span="2">
@@ -186,11 +186,11 @@ const processDocFiles = computed(() => {
           todo.detail?.spec ||
           todo.detail?.indicatorDesc ||
           todo.detail?.briefing ||
-          '—'
+          '--'
         }}
       </el-descriptions-item>
       <el-descriptions-item v-else label="关键工序样板说明" :span="2">
-        {{ liveDetail?.briefing_content || todo.detail?.briefing || '—' }}
+        {{ liveDetail?.briefing_content || todo.detail?.briefing || '--' }}
       </el-descriptions-item>
       <el-descriptions-item
         v-if="liveDetail?.copy_from_application_id || todo.detail?.copyFromApplicationId"
@@ -200,7 +200,7 @@ const processDocFiles = computed(() => {
         {{ liveDetail?.copy_from_application_id || todo.detail?.copyFromApplicationId }}
       </el-descriptions-item>
       <el-descriptions-item label="备注" :span="2">
-        {{ liveDetail?.remark || todo.detail?.remark || '—' }}
+        {{ liveDetail?.remark || todo.detail?.remark || '--' }}
       </el-descriptions-item>
     </el-descriptions>
 

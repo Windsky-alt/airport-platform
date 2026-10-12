@@ -57,7 +57,7 @@ export function mapDangerCategoryToType(category) {
 export function formatTimeRange(start, end) {
   const s = String(start || '').trim()
   const e = String(end || '').trim()
-  if (!s && !e) return '—'
+  if (!s && !e) return '--'
   const pickTime = (v) => {
     const m = v.match(/(\d{1,2}:\d{2})/)
     return m ? m[1] : v.slice(11, 16) || v

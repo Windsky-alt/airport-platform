@@ -43,17 +43,17 @@ const pickerSelectedId = ref('')
 const dialogPhoneVisibleIds = ref([])
 
 function getUserOrgPath(orgId) {
-  if (!orgId) return '—'
+  if (!orgId) return '--'
   ensureUnifiedOrgTree()
   const node = findTreeNode(unifiedOrgTree.value, orgId)
-  return node?.orgPath || node?.rawLabel || '—'
+  return node?.orgPath || node?.rawLabel || '--'
 }
 
 function getUserPositionLabels(positionIds) {
   const labels = (positionIds || [])
     .map((id) => findOrgPositionById(id)?.name || getPosition(id)?.name)
     .filter(Boolean)
-  return labels.length ? labels.join('、') : '—'
+  return labels.length ? labels.join('、') : '--'
 }
 
 function findSysUserByContact(name, phone) {
@@ -208,7 +208,7 @@ function confirmPicker() {
 }
 
 const readonlyDisplayPhone = computed(() => {
-  if (!contactPhone.value) return '—'
+  if (!contactPhone.value) return '--'
   if (phoneRevealed.value) return contactPhone.value
   return maskPhone(contactPhone.value)
 })
@@ -219,7 +219,7 @@ const hasContact = computed(() => !!(contactName.value || contactPhone.value))
 <template>
   <div v-if="readonly" class="profile-person-contact-readonly">
     <template v-if="contactName || contactPhone">
-      <span class="readonly-name">{{ contactName || '—' }}</span>
+      <span class="readonly-name">{{ contactName || '--' }}</span>
       <span class="readonly-phone">
         <span>{{ readonlyDisplayPhone }}</span>
         <el-button
@@ -233,7 +233,7 @@ const hasContact = computed(() => !!(contactName.value || contactPhone.value))
         </el-button>
       </span>
     </template>
-    <span v-else class="readonly-empty">—</span>
+    <span v-else class="readonly-empty">--</span>
   </div>
 
   <div
@@ -243,7 +243,7 @@ const hasContact = computed(() => !!(contactName.value || contactPhone.value))
   >
     <div class="select-only-field" role="button" tabindex="0" @click="openPicker" @keydown.enter="openPicker">
       <template v-if="hasContact">
-        <span class="select-only-name">{{ contactName || '—' }}</span>
+        <span class="select-only-name">{{ contactName || '--' }}</span>
         <span class="select-only-phone">
           <span>{{ phoneRevealed || !contactPhone ? contactPhone : maskPhone(contactPhone) }}</span>
           <el-button
