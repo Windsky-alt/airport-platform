@@ -141,6 +141,49 @@ export function closeStatusLabel(status) {
   return CLOSE_STATUS_LABEL[status] || '--'
 }
 
+/**
+ * 审批过程步骤（本模块仅监理一级审批，步骤固定 2 步）。
+ * 审批中 → 第 2 步为「当前」；已通过/已驳回 → 第 2 步已完成（时间取 finish_time）。
+ */
+export function riskApprovalFlow(row) {
+  if (!row) return []
+  const submitUser = row.creator || '--'
+  const supervisorUser = formatMatSupervisorApproverLabel({
+    name: row.supervisor_approver_name,
+    org: row.supervisor_approver_org,
+    post_label: row.supervisor_approver_post_label,
+  }) || '--'
+  const reviewing = row.approval_status === 'reviewing'
+  const done = row.approval_status === 'approved' || row.approval_status === 'rejected'
+  let remark = '待审批'
+  if (row.approval_status === 'approved') remark = '已通过'
+  if (row.approval_status === 'rejected') {
+    remark = `已驳回：${row.last_opinion || '--'}`
+  }
+  return [
+    {
+      title: '发起风险辨识',
+      time: row.submit_time || '',
+      user: submitUser,
+      remark: '已提交风险辨识申请',
+      status: 'done',
+    },
+    {
+      title: '监理审批',
+      time: done ? (row.finish_time || '') : '',
+      user: supervisorUser,
+      remark,
+      status: reviewing ? 'current' : (done ? 'done' : 'pending'),
+    },
+  ]
+}
+
+/** 重新报审来源（展示用）：无来源时返回 `--` */
+export function riskCopyFromLabel(row) {
+  const no = String(row?.copy_from_source_no || '').trim()
+  return no || '--'
+}
+
 export function airportRiskSourceName(id) {
   if (!id) return '--'
   return airportRiskSourceList.find((row) => row.id === id)?.source_name || '--'
@@ -443,6 +486,8 @@ function buildDemoControls(projectId, skipTypes, progressId, locationId, reportD
     severity: item.severity,
     approval_status: 'approved',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     ...DEMO_SUPERVISOR,
     submit_time: '2026-09-19 09:00:00',
     finish_time: '2026-09-19 15:00:00',
@@ -561,6 +606,8 @@ export const riskPointControlList = reactive([
     severity: '高',
     approval_status: 'approved',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -595,6 +642,8 @@ export const riskPointControlList = reactive([
     severity: '超高',
     approval_status: 'approved',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -629,6 +678,8 @@ export const riskPointControlList = reactive([
     severity: '高',
     approval_status: 'reviewing',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -664,6 +715,8 @@ export const riskPointControlList = reactive([
     approval_status: 'approved',
     close_status: 'closed',
     closed_at: '2026-09-08 17:20:00',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -698,6 +751,8 @@ export const riskPointControlList = reactive([
     severity: '低',
     approval_status: 'approved',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -732,6 +787,8 @@ export const riskPointControlList = reactive([
     severity: '中',
     approval_status: 'rejected',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     last_opinion: '交叉作业时段和隔离措施请补充后再报。',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
@@ -767,6 +824,8 @@ export const riskPointControlList = reactive([
     severity: '高',
     approval_status: 'reviewing',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -801,6 +860,8 @@ export const riskPointControlList = reactive([
     severity: '中',
     approval_status: 'approved',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -835,6 +896,8 @@ export const riskPointControlList = reactive([
     severity: '超高',
     approval_status: 'approved',
     close_status: 'open',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -870,6 +933,8 @@ export const riskPointControlList = reactive([
     approval_status: 'approved',
     close_status: 'closed',
     closed_at: '2026-09-15 16:00:00',
+    copy_from_pk: '',
+    copy_from_source_no: '',
     supervisor_approver_user_id: 'u-jl-01',
     supervisor_approver_name: '李总监',
     supervisor_approver_org: '深圳某监理有限公司',
@@ -881,7 +946,68 @@ export const riskPointControlList = reactive([
   },
   ...buildDemoControls('p-000', ['高处坠落', '起重伤害', '触电', '火灾爆炸', '物体打击', '车辆伤害'], 'prog-p-000-1', 'loc-conc-1', '2026-09-19'),
   ...buildDemoControls('p-001', ['坍塌'], 'prog-p-001-1', 'loc-rwy-1', '2026-09-20'),
+  // 演示「重新报审 + 审批过程」：源单 = 已驳回的 rpk-006，新记录按今天生成编号（同日序号接排）
+  ...buildResubmitControl(
+    {
+      id: 'rpk-006',
+      project_id: 'p-000',
+      risk_source_no: 'FX-20260905-001',
+      risk_factor: '楼层上下同时作业，防护棚未按方案搭设。',
+      hazard_consequence: '上方物料坠落，打击下方作业人员。',
+      construction_stage: '施工',
+      construction_progress_id: 'prog-p-000-2',
+      risk_type: '物体打击',
+      risk_point: '交叉作业防护缺失',
+      risk_segment: '垂直交叉作业区',
+      risk_location_wbs_id: ['loc-rebar-a'],
+      risk_location: '',
+      risk_desc: '交叉作业时段和隔离措施描述不完整，监理驳回。',
+      control_measure: '错时作业；设置隔离棚；物料绑扎；下方禁止停留。',
+      plan_start: '2026-09-12',
+      plan_end: '2026-10-15',
+      control_person_id: 'u-sd-01',
+      implement_person_id: 'u-cpm-01',
+      frequency_x: '周',
+      frequency_n: 10,
+      severity: '中',
+      supervisor_approver_user_id: 'u-jl-01',
+      supervisor_approver_name: '李总监',
+      supervisor_approver_org: '深圳某监理有限公司',
+      supervisor_approver_post_label: '总监理工程师',
+      creator: '张安全',
+    },
+    1,
+  ),
 ])
+
+/**
+ * 「重新报审」演示种子：由已驳回原单 rpk-006（FX-20260905-001）复制生成的新记录。
+ * 原单保持已驳回、只读、不可再提；新记录按新填报日期生成新的风险源编号，并保留来源追溯。
+ * 注意：本函数在 riskPointControlList 初始化表达式中被调用，不能反向引用该常量（TDZ），
+ * 故源单对象与「同日序号」由调用处传入。
+ */
+function buildResubmitControl(source, seq) {
+  if (!source) return []
+  const report_date = nowStr().slice(0, 10)
+  const stamp = nowStr()
+  return [{
+    ...source,
+    id: 'rpk-011',
+    risk_source_no: `FX-${report_date.replace(/-/g, '')}-${String(seq).padStart(3, '0')}`,
+    report_date,
+    approval_status: 'reviewing',
+    close_status: 'open',
+    last_opinion: '',
+    last_operator: '',
+    closed_at: '',
+    submit_time: stamp,
+    finish_time: '',
+    copy_from_pk: source.id,
+    copy_from_source_no: source.risk_source_no,
+    creator: source.creator,
+    created_at: stamp,
+  }]
+}
 
 /** 位置节点标识统一为字符串数组（兼容历史单值） */
 export function normalizeLocationWbsIds(value) {
@@ -1225,6 +1351,7 @@ export function listRiskPointControls(projectId, filters = {}) {
   const {
     report_date = '',
     risk_type = '',
+    severity = '',
     approval_status = '',
     risk_status = '',
   } = filters
@@ -1232,6 +1359,7 @@ export function listRiskPointControls(projectId, filters = {}) {
     if (row.project_id !== projectId) return false
     if (report_date && row.report_date !== report_date) return false
     if (risk_type && row.risk_type !== risk_type) return false
+    if (severity && row.severity !== severity) return false
     if (approval_status && row.approval_status !== approval_status) return false
     if (risk_status && riskRunStatus(row) !== risk_status) return false
     return true
@@ -1280,9 +1408,16 @@ function nextRiskSourceNo(projectId, reportDate) {
   return `${prefix}${String(max + 1).padStart(3, '0')}`
 }
 
+/**
+ * 新增风险辨识（唯一写入口）。
+ * - 普通新增：不传 `copy_from_control_id`。
+ * - 重新报审：传 `copy_from_control_id`，源单须为同项目已驳回记录；
+ *   原单保留、只读、不可再提，本方法只生成新记录（新风险源编号，按本次填报日期）。
+ */
 export function saveRiskPointControl(projectId, payload, editorName = '系统管理员') {
   if (!projectId) return { ok: false, msg: '请先选择项目' }
   ensureAirportRiskSources(projectId)
+  const copy_from_control_id = String(payload.copy_from_control_id || '').trim()
   const report_date = (payload.report_date || '').trim()
   const risk_factor = (payload.risk_factor || '').trim()
   const hazard_consequence = (payload.hazard_consequence || '').trim()
@@ -1307,6 +1442,19 @@ export function saveRiskPointControl(projectId, payload, editorName = '系统管
   const implement_person_id = payload.implement_person_id || ''
   const supervisor = resolveSupervisor(payload)
   if (!supervisor.ok) return supervisor
+
+  // 重新报审来源校验：放在字段校验之前，确保「来源非法」如实报错
+  let copySource = null
+  if (copy_from_control_id) {
+    copySource = riskPointControlList.find((r) => r.id === copy_from_control_id) || null
+    if (!copySource) return { ok: false, msg: '重新报审来源记录不存在' }
+    if (copySource.project_id !== projectId) {
+      return { ok: false, msg: '重新报审来源须为本项目已驳回风险辨识' }
+    }
+    if (copySource.approval_status !== 'rejected') {
+      return { ok: false, msg: '仅已驳回的风险辨识可重新报审（生成新风险源编号）' }
+    }
+  }
 
   if (!report_date) return { ok: false, msg: '请选择填报日期' }
   if (!risk_factor) return { ok: false, msg: '请填写风险因素' }
@@ -1371,20 +1519,13 @@ export function saveRiskPointControl(projectId, payload, editorName = '系统管
     finish_time: '',
   }
 
-  if (payload.id) {
-    const row = riskPointControlList.find((r) => r.id === payload.id && r.project_id === projectId)
-    if (!row) return { ok: false, msg: '记录不存在' }
-    if (row.approval_status !== 'rejected') return { ok: false, msg: '当前不可编辑' }
-    Object.assign(row, base)
-    pushSupervisorTodo(row)
-    return { ok: true, data: row }
-  }
-
   const row = {
     id: `rpk-${String(++controlSeq).padStart(3, '0')}`,
     risk_source_no: nextRiskSourceNo(projectId, report_date),
     project_id: projectId,
     ...base,
+    copy_from_pk: copySource ? copySource.id : '',
+    copy_from_source_no: copySource ? (copySource.risk_source_no || '') : '',
     creator: editorName,
     created_at: nowStr(),
   }

@@ -7,7 +7,7 @@
 export const APP_VERSION_BASE = '2.11.1'
 
 /** GitHub Pages 发布序号（从 0 开始；仓库内为「当前即将发布 / 下一版」序号） */
-export const APP_VERSION_PATCH = 21
+export const APP_VERSION_PATCH = 20
 
 export const APP_VERSION = `v${APP_VERSION_BASE}.${APP_VERSION_PATCH}`
 
@@ -16,6 +16,22 @@ export const APP_VERSION = `v${APP_VERSION_BASE}.${APP_VERSION_PATCH}`
  * highlights 宜短句，便于页头问号弹窗快速阅读
  */
 export const VERSION_CHANGELOG = [
+  {
+    version: 'v2.11.1.21',
+    date: '2026-10-13',
+    highlights: [
+      '顶栏「选择组织 / 项目」下拉：修复被安全态势大屏样式串味导致的深蓝黑底色，恢复白底深灰字',
+      '安全态势大屏：样式作用域收敛到屏内根节点，不再影响主平台其它页面（同源缺陷：页面滚动锁定、深色变量泄漏）',
+      '风险管理：详情 / 个人中心待办新增审批过程步骤条；已驳回可「重新报审」生成新单；列表新增严重程度筛选',
+    ],
+  },
+  {
+    version: 'v2.11.1.20',
+    date: '2026-10-12',
+    highlights: [
+      '巡检与危大工程：合并 1010 版本模块改动',
+    ],
+  },
   {
     version: 'v2.11.1.19',
     date: '2026-10-09',

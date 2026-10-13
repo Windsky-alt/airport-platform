@@ -1,12 +1,14 @@
 <script setup>
 /**
  * 风险点管控 — 详情（只读）
- * 审批在个人中心办理；已通过且未关闭可在此关闭；已驳回可重新申报。
+ * 审批在个人中心办理；已通过且未关闭可在此关闭；
+ * 已驳回原单只读、不可再提，可从此处「重新报审」生成新单。
  */
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import PersonalCenterReadonlyHint from '../../components/PersonalCenterReadonlyHint.vue'
+import TodoApprovalFlowSection from '../personalCenter/components/TodoApprovalFlowSection.vue'
 import { useCurrentProject } from '../../composables/useCurrentProject'
 import {
   APPROVAL_STATUS_LABEL,
@@ -18,6 +20,8 @@ import {
   formatRiskCell,
   formatRiskFrequency,
   getRiskPointControl,
+  riskApprovalFlow,
+  riskCopyFromLabel,
   riskLocationLabel,
   riskPersonLabel,
   riskRunStatus,
@@ -57,13 +61,23 @@ const supervisorLabel = computed(() => {
   })
 })
 
+/** 审批过程（本模块仅监理一级审批，固定 2 步） */
+const approvalFlow = computed(() => riskApprovalFlow(detail.value))
+
 function goBack() {
   router.push('/site-construction/risk-point-control')
 }
 
+/** 重新报审：跳本模块编辑页并带源单 id，由表单页预填后提交生成新单 */
 function goResubmit() {
-  if (!detail.value) return
-  router.push(`/site-construction/risk-point-control/${detail.value.id}/edit`)
+  const row = detail.value
+  if (!row) return
+  const href = router.resolve({
+    name: 'RiskPointControlEdit',
+    params: { id: row.id },
+    query: { from: row.id },
+  }).href
+  router.push(href)
 }
 
 function handleClose() {
@@ -109,7 +123,7 @@ function handleReactivate() {
               v-if="canResubmit"
               type="primary"
               @click="goResubmit"
-            >重新申报</el-button>
+            >重新报审</el-button>
             <el-button
               v-if="canClose"
               type="warning"
@@ -136,6 +150,9 @@ function handleReactivate() {
     <el-descriptions v-else :column="2" border>
       <el-descriptions-item label="填报日期">{{ formatRiskCell(detail.report_date) }}</el-descriptions-item>
       <el-descriptions-item label="风险源编号">{{ formatRiskCell(detail.risk_source_no) }}</el-descriptions-item>
+      <el-descriptions-item v-if="detail.copy_from_source_no" label="重新申报来源">
+        {{ riskCopyFromLabel(detail) }}
+      </el-descriptions-item>
       <el-descriptions-item label="风险类型">{{ formatRiskCell(detail.risk_type) }}</el-descriptions-item>
       <el-descriptions-item label="风险点">{{ formatRiskCell(detail.risk_point) }}</el-descriptions-item>
       <el-descriptions-item label="风险细分">{{ formatRiskCell(detail.risk_segment) }}</el-descriptions-item>
@@ -161,10 +178,15 @@ function handleReactivate() {
       <el-descriptions-item label="最近审批意见" :span="2">{{ formatRiskCell(detail.last_opinion) }}</el-descriptions-item>
       <el-descriptions-item label="风险状态">{{ riskRunStatusLabel(detail) }}</el-descriptions-item>
     </el-descriptions>
+
+    <TodoApprovalFlowSection v-if="detail" class="approval-flow" :approval-flow="approvalFlow" />
   </div>
 </template>
 
 <style scoped>
+.approval-flow {
+  margin-top: 16px;
+}
 .page-head {
   margin-bottom: 16px;
 }

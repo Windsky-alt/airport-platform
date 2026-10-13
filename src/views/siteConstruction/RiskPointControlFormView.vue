@@ -1,7 +1,9 @@
 <script setup>
 /**
- * 风险点管控 — 新增 / 编辑风险辨识
+ * 风险点管控 — 新增 / 重新报审风险辨识
  * 风险类型来自风险类型配置；风险点 → 风险细分来自配置库联动。
+ * 重新报审：路由 query `from=<源记录id>`，源单须为同项目已驳回记录；
+ * 提交后生成新的风险源编号（按新的填报日期），原单保留、只读、不可再提。
  */
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -33,11 +35,11 @@ const route = useRoute()
 const router = useRouter()
 const { laborProjectId, isHqSelected } = useCurrentProject()
 
-const editId = computed(() => {
-  const id = route.params.id
-  return id && id !== 'create' ? String(id) : ''
-})
-const pageTitle = computed(() => (editId.value ? '编辑风险辨识' : '新增风险辨识'))
+/** 重新报审来源（源记录 id），来自列表/详情「重新报审」入口的 query */
+const copyFromId = computed(() => String(route.query.from || '').trim())
+const copyFromNo = ref('')
+const isCopyResubmit = computed(() => !!copyFromNo.value)
+const pageTitle = computed(() => (isCopyResubmit.value ? '重新报审风险辨识' : '新增风险辨识'))
 
 const form = reactive({
   report_date: nowStr().slice(0, 10),
@@ -134,25 +136,29 @@ function onRiskSegmentChange() {
   applyConfigTemplate()
 }
 
-function loadEdit() {
-  if (!editId.value) {
+/**
+ * 重新报审预填：仅同项目已驳回记录可作为来源；
+ * 填报日期默认今天（因此新单的风险源编号按今天的日期生成），其余字段由源单带出。
+ */
+function loadCopyFrom() {
+  if (!copyFromId.value) {
     loaded.value = true
     return
   }
-  const row = getRiskPointControl(editId.value)
+  const row = getRiskPointControl(copyFromId.value)
   if (!row || row.project_id !== laborProjectId.value) {
-    ElMessage.warning('记录不存在或不属于当前项目')
+    ElMessage.warning('重新报审来源不存在或不属于当前项目')
     goBack()
     return
   }
   if (row.approval_status !== 'rejected') {
-    ElMessage.warning('当前不可编辑')
+    ElMessage.warning('仅已驳回的风险辨识可重新报审')
     goBack()
     return
   }
   syncing.value = true
-  form.report_date = row.report_date || nowStr().slice(0, 10)
-  form.risk_source_no = row.risk_source_no || ''
+  form.report_date = nowStr().slice(0, 10)
+  form.risk_source_no = ''
   form.risk_type = row.risk_type || ''
   form.risk_point = row.risk_point || ''
   form.risk_segment = row.risk_segment || ''
@@ -171,6 +177,7 @@ function loadEdit() {
   form.control_person_id = row.control_person_id || ''
   form.implement_person_id = row.implement_person_id || ''
   form.supervisor_approver_user_id = row.supervisor_approver_user_id || ''
+  copyFromNo.value = row.risk_source_no || copyFromId.value
   loaded.value = true
   syncing.value = false
 }
@@ -181,12 +188,16 @@ onMounted(() => {
     goBack()
     return
   }
-  if (!editId.value && !typeOptions.value.length) {
+  if (copyFromId.value) {
+    loadCopyFrom()
+    return
+  }
+  if (!typeOptions.value.length) {
     ElMessage.warning('请先在「风险类型配置」维护风险类型')
     goBack()
     return
   }
-  loadEdit()
+  loaded.value = true
 })
 
 watch(
@@ -200,11 +211,13 @@ watch(
 )
 
 function handleSubmit() {
+  // 风险源编号由提交时按本次填报日期生成，不随表单提交
+  const { risk_source_no, ...rest } = form
   const r = saveRiskPointControl(
     laborProjectId.value,
     {
-      id: editId.value || undefined,
-      ...form,
+      ...rest,
+      copy_from_control_id: isCopyResubmit.value ? copyFromId.value : '',
     },
     '系统管理员',
   )
@@ -212,7 +225,7 @@ function handleSubmit() {
     ElMessage.warning(r.msg)
     return
   }
-  ElMessage.success(editId.value ? '已保存' : '已提交')
+  ElMessage.success('已提交')
   goBack()
 }
 </script>
@@ -229,6 +242,22 @@ function handleSubmit() {
       </div>
     </div>
 
+    <el-alert
+      v-if="isCopyResubmit"
+      type="info"
+      :closable="false"
+      show-icon
+      class="copy-alert"
+      :title="`将从 ${copyFromNo} 重新报审，提交后生成新的风险源编号`"
+    >
+      <template #default>
+        <span>
+          已带出源单 <b>{{ copyFromNo }}</b> 的风险类型、风险点、风险因素、危害后果、管控措施与责任人信息，可修改后提交；
+          原单保留为已驳回记录（只读、不可再提），新单按填报日期生成新的风险源编号并保留来源追溯。
+        </span>
+      </template>
+    </el-alert>
+
     <el-form label-width="132px" class="risk-form" @submit.prevent>
       <el-row :gutter="16">
         <el-col :span="8">
@@ -244,7 +273,10 @@ function handleSubmit() {
         </el-col>
         <el-col :span="8">
           <el-form-item label="风险源编号">
-            <el-input :model-value="form.risk_source_no || '提交后自动生成'" disabled />
+            <el-input
+              :model-value="isCopyResubmit ? `提交后按填报日期生成（源单 ${copyFromNo}）` : '提交后自动生成'"
+              disabled
+            />
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -525,7 +557,7 @@ function handleSubmit() {
                 :value="u.user_id"
               />
             </el-select>
-            <p class="field-hint">本单仅需监理单位审批，通过后进入管控；驳回后可修改再提交。</p>
+            <p class="field-hint">本单仅需监理单位审批，通过后进入管控；驳回后原单只读，请从原单「重新报审」（生成新的风险源编号）。</p>
           </el-form-item>
         </el-col>
       </el-row>
@@ -559,6 +591,10 @@ function handleSubmit() {
   color: #1f2329;
 }
 .risk-form {
+  max-width: 1100px;
+}
+.copy-alert {
+  margin-bottom: 16px;
   max-width: 1100px;
 }
 .form-footer {

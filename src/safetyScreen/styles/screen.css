@@ -1,4 +1,8 @@
-:root {
+/* 本表所有规则仅作用于安全态势大屏（.safety-screen-app），
+   禁止写成全局选择器：本样式随路由懒加载常驻，
+   全局规则会串味到主平台顶栏等其它路由（历史缺陷：.project-select 深蓝底）。*/
+.safety-screen-app {
+  /* 大屏主题变量：必须挂在根节点而非 :root，避免常驻后污染主平台 */
   --screen-bg: #031126;
   --panel-bg: rgba(7, 29, 57, 0.9);
   --panel-bg-deep: rgba(3, 20, 43, 0.96);
@@ -14,26 +18,7 @@
   --purple: #b78aff;
   --text: #e8fbff;
   --muted: #84a9bc;
-}
 
-* { box-sizing: border-box; }
-
-html,
-body,
-#app { width: 100%; height: 100%; margin: 0; overflow: hidden; }
-
-body.coc-hq-shell {
-  background: var(--screen-bg);
-  color: var(--text);
-  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-}
-
-button,
-select { font: inherit; }
-
-button { color: inherit; }
-
-.safety-screen-app {
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -45,6 +30,26 @@ button { color: inherit; }
     #031126;
   background-size: auto, 42px 42px, 42px 42px, auto;
 }
+
+* { box-sizing: border-box; }
+
+html,
+body,
+#app { width: 100%; height: 100%; }
+
+/* 大屏挂载期间锁定页面滚动（作用域限定，离开大屏后不影响主平台） */
+body:has(.safety-screen-app) { overflow: hidden; }
+
+body.coc-hq-shell:has(.safety-screen-app) {
+  background: var(--screen-bg);
+  color: var(--text);
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+
+.safety-screen-app button,
+.safety-screen-app select { font: inherit; }
+
+.safety-screen-app button { color: inherit; }
 
 .safety-screen-app::before {
   position: absolute;
@@ -123,7 +128,7 @@ button { color: inherit; }
   box-shadow: 0 0 9px #45f2c4;
 }
 
-.project-select {
+.safety-screen-app .project-select {
   width: 195px;
   height: 30px;
   padding: 0 30px 0 10px;
@@ -134,7 +139,7 @@ button { color: inherit; }
   font-size: 13px;
 }
 
-.project-select option { color: #12283a; background: #fff; }
+.safety-screen-app .project-select option { color: #12283a; background: #fff; }
 
 .refresh-time {
   color: #76a5bb;
@@ -646,7 +651,7 @@ button { color: inherit; }
   .dashboard-shell { grid-template-columns: 300px minmax(590px, 1fr) 310px; padding-left: 10px; padding-right: 10px; }
   .refresh-time,
   .temperature { display: none; }
-  .project-select { width: 165px; }
+  .safety-screen-app .project-select { width: 165px; }
   .metric-quad strong { font-size: 18px; }
   .panel-heading > span { font-size: 13px; }
 }

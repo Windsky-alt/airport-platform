@@ -1,7 +1,7 @@
 <script setup>
 /**
  * 风险点管控列表（项目级）
- * 审批状态 / 操作对齐质量管理：el-tag；详情 + 已驳回重新申报
+ * 审批状态 / 操作对齐质量管理：el-tag；详情 + 已驳回重新报审（生成新单）
  */
 import { computed, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
@@ -10,6 +10,7 @@ import { useCurrentProject } from '../../composables/useCurrentProject'
 import {
   APPROVAL_STATUS_LABEL,
   RISK_RUN_STATUS_LABEL,
+  SEVERITY_LEVELS,
   approvalStatusLabel,
   approvalStatusTagType,
   constructionProgressLabel,
@@ -29,6 +30,7 @@ const { laborProjectId, isHqSelected } = useCurrentProject()
 const filters = reactive({
   report_date: '',
   risk_type: '',
+  severity: '',
   approval_status: '',
   risk_status: '',
 })
@@ -37,6 +39,7 @@ const filters = reactive({
 const query = reactive({
   report_date: '',
   risk_type: '',
+  severity: '',
   approval_status: '',
   risk_status: '',
 })
@@ -56,6 +59,7 @@ const typeOptions = computed(() => listConfigRiskTypes(laborProjectId.value))
 function doSearch() {
   query.report_date = filters.report_date
   query.risk_type = filters.risk_type
+  query.severity = filters.severity
   query.approval_status = filters.approval_status
   query.risk_status = filters.risk_status
 }
@@ -67,6 +71,7 @@ watch(laborProjectId, () => {
 function resetFilters() {
   filters.report_date = ''
   filters.risk_type = ''
+  filters.severity = ''
   filters.approval_status = ''
   filters.risk_status = ''
   doSearch()
@@ -90,10 +95,15 @@ function goDetail(row) {
 
 function goResubmit(row) {
   if (row.approval_status !== 'rejected') {
-    ElMessage.warning('仅已驳回记录可重新申报')
+    ElMessage.warning('仅已驳回记录可重新报审')
     return
   }
-  router.push(`/site-construction/risk-point-control/${row.id}/edit`)
+  const href = router.resolve({
+    name: 'RiskPointControlEdit',
+    params: { id: row.id },
+    query: { from: row.id },
+  }).href
+  router.push(href)
 }
 </script>
 
@@ -150,6 +160,15 @@ function goResubmit(row) {
           aria-label="风险类型"
         >
           <el-option v-for="t in typeOptions" :key="t" :label="t" :value="t" />
+        </el-select>
+        <el-select
+          v-model="filters.severity"
+          clearable
+          placeholder="严重程度"
+          style="width: 140px"
+          aria-label="严重程度"
+        >
+          <el-option v-for="lv in SEVERITY_LEVELS" :key="lv" :label="lv" :value="lv" />
         </el-select>
         <el-select
           v-model="filters.approval_status"
@@ -234,7 +253,7 @@ function goResubmit(row) {
               type="primary"
               size="small"
               @click="goResubmit(row)"
-            >重新申报</el-button>
+            >重新报审</el-button>
           </template>
         </el-table-column>
       </el-table>
