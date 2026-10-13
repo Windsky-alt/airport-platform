@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 应用版本与更新说明
  * - 格式：v{BASE}.x（x 从 0 起，每次 GitHub Pages 成功发布后 +1）
  * - 由 scripts/bump-pages-version.mjs 在发布流水线中递增 patch
